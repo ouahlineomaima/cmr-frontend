@@ -3,10 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EnfantComponent } from './enfant/enfant.component';
+import { ChoixLangueComponent } from './pages/choix-langue/choix-langue.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EnfantComponent,
+    ChoixLangueComponent
   ],
   imports: [
     BrowserModule,
