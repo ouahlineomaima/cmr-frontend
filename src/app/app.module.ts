@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EnfantComponent } from './enfant/enfant.component';
 import { ChoixLangueComponent } from './pages/choix-langue/choix-langue.component';
+import { EligibiliteComponent } from './pages/eligibilite/eligibilite.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EnfantComponent,
-    ChoixLangueComponent
+    ChoixLangueComponent,
+    EligibiliteComponent
   ],
   imports: [
     BrowserModule,
