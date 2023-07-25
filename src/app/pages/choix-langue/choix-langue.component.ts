@@ -10,7 +10,7 @@ export class ChoixLangueComponent {
 
   constructor(private router: Router) {}
   // navigate to eligibility page on button click event
-  goToEligibilitePage() {
+  goToAccueilPage() {
     this.router.navigate(['/eligibilite']);
   }
 }

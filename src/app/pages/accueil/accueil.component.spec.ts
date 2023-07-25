@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EligibiliteComponent } from './eligibilite.component';
+import { EligibiliteComponent } from './accueil.component';
 
 describe('EligibiliteComponent', () => {
   let component: EligibiliteComponent;
