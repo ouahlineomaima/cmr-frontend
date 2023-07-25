@@ -11,6 +11,6 @@ export class ChoixLangueComponent {
   constructor(private router: Router) {}
   // navigate to eligibility page on button click event
   goToAccueilPage() {
-    this.router.navigate(['/eligibilite']);
+    this.router.navigate(['/accueil']);
   }
 }
