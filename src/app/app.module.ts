@@ -9,11 +9,13 @@ import { AccueilComponent } from './pages/accueil/accueil.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactComponent } from './pages/contact/contact.component';
 
+
 const appRoutes : Routes = [
   {path:'', redirectTo:'choixLangue', pathMatch:'full'},
   {path:'choixLangue', component:ChoixLangueComponent},
   {path:'accueil', component:AccueilComponent},
-  {path:'contact', component:ContactComponent}
+  {path:'contact', component:ContactComponent},
+
 
 ]
 
