@@ -9,6 +9,8 @@ import { AccueilComponent } from './pages/accueil/accueil.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactComponent } from './pages/contact/contact.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { ResultBoxOnlineComponent } from './components/result-box-online/result-box-online.component';
+import { ResultatComponent } from './pages/resultat/resultat.component';
 
 
 const appRoutes : Routes = [
@@ -27,7 +29,9 @@ const appRoutes : Routes = [
     ChoixLangueComponent,
     AccueilComponent,
     ContactComponent,
-    TimelineComponent
+    TimelineComponent,
+    ResultBoxOnlineComponent,
+    ResultatComponent,
   ],
   imports: [
     BrowserModule,
