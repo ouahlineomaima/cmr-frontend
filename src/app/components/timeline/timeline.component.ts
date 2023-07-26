@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-timeline',
@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent {
-  currentItemClassName = 'current-item';
+  @Input() classNames: Array<String> = [];
 
 }
