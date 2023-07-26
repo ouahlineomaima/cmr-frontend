@@ -8,12 +8,15 @@ import { ChoixLangueComponent } from './pages/choix-langue/choix-langue.componen
 import { AccueilComponent } from './pages/accueil/accueil.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactComponent } from './pages/contact/contact.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+
 
 const appRoutes : Routes = [
   {path:'', redirectTo:'choixLangue', pathMatch:'full'},
   {path:'choixLangue', component:ChoixLangueComponent},
   {path:'accueil', component:AccueilComponent},
-  {path:'contact', component:ContactComponent}
+  {path:'contact', component:ContactComponent},
+
 
 ]
 
@@ -23,7 +26,8 @@ const appRoutes : Routes = [
     EnfantComponent,
     ChoixLangueComponent,
     AccueilComponent,
-    ContactComponent
+    ContactComponent,
+    TimelineComponent
   ],
   imports: [
     BrowserModule,
