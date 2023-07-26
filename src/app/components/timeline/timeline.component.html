@@ -1,0 +1,8 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+<ul class="step-wizard-list">
+    <li *ngFor="let className of classNames; let i = index" class="step-wizard-item" [ngClass]="className" >
+        <span class="progress-count">{{ i + 1 }}</span>
+    </li>
+</ul>
