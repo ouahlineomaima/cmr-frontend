@@ -1,0 +1,51 @@
+.logo {
+    display: block;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60;
+    height: 70;
+}
+
+.result-btn{
+    width: 289px;
+    height: 35px;
+    border: 1px solid #47B1ED;
+    background: rgba(255, 255, 255, 0.00);
+    flex-shrink: 0;
+    color: #47B1ED;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 10px;
+}
+
+.retour-btn{
+    margin-top: 40px;
+    width: 142px;
+    height: 41.28px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #FFF;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.container-btns{
+    margin-top: 20px;
+    display: grid;
+	place-items: center;
+}
+
+.container-resultat{
+    margin-top: 10px;
+    
+}
