@@ -18,7 +18,7 @@ const appRoutes : Routes = [
   {path:'choixLangue', component:ChoixLangueComponent},
   {path:'accueil', component:AccueilComponent},
   {path:'contact', component:ContactComponent},
-
+  {path:'resultat', component:ResultatComponent}
 
 ]
 
