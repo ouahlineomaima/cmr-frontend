@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Itim&display=swap');
+
 .container-resultat {
     display: flex;
     flex-direction: column;
@@ -59,4 +60,19 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.qst{
+    align-self: flex-start;
+    margin-left: 7%;
+    margin-top: 3%;
+}
+
+h4 {
+    color: #00487C;
+    font-family: Itim;
+    font-size: 1.1875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
