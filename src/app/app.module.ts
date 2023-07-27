@@ -11,6 +11,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { ResultBoxOnlineComponent } from './components/result-box-online/result-box-online.component';
 import { ResultatComponent } from './pages/resultat/resultat.component';
+import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulation.component';
 
 
 const appRoutes : Routes = [
@@ -32,11 +33,13 @@ const appRoutes : Routes = [
     TimelineComponent,
     ResultBoxOnlineComponent,
     ResultatComponent,
+    ChoixSimulationComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [],
   bootstrap: [AppComponent]
