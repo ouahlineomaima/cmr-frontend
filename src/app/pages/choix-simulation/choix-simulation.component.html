@@ -10,7 +10,7 @@
         <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required>
         <h4 class="qst">Vous êtes:</h4>
         <form>
-            <mat-form-field>
+            <mat-form-field class="select">
                 <mat-label>Vous êtes</mat-label>
                 <mat-select [(ngModel)]="selectedValue" name="humans">
                     <mat-option *ngFor="let human of humans" [value]="human.value">
@@ -19,6 +19,7 @@
                 </mat-select>
             </mat-form-field>
         </form>
+        <h4 class="qst">Type de simulation:</h4>
     </div>
 
 </div>
