@@ -6,7 +6,8 @@
     <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
     <div class="main-container">
         <h3 class="title">Pour commencer votre simulation vueillez saisir :</h3>
-        <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt">
+        <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt" required>
+        <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required>
     </div>
 
 </div>

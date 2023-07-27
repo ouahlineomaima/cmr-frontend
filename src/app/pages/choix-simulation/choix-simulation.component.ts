@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 export class ChoixSimulationComponent {
   classNamesForTimeline: Array<string> = ['current-item', 'comming', 'comming'];
   cin: string = '';
+  tel: string = '';
   constructor(private router: Router) {}
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
