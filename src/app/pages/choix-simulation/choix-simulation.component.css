@@ -1,0 +1,31 @@
+.container-resultat {
+    display: flex;          
+    flex-direction: column;
+    
+    height: 100vh;          
+}
+.header{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.logo {
+    width: 5.8125rem;
+    height: 3.75rem;
+}
+.main-container {
+    display: flex;
+    justify-content: center; 
+}
+
+.title {
+    width: 19.875rem;
+    height: 2.625rem;
+    color: #000;
+    text-align: center;
+    font-family: Itim;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
