@@ -29,6 +29,8 @@ export class ChoixSimulationComponent {
   isRetired: boolean | null = null;
   selectedSimulationType: string | null = null;
   selectedBooleanIsRetired: string | null = null;
+  isButtonDisabled: boolean = true;
+  showPopup: boolean = false;
   humans: Human[] = [
     {value: 'veuf', viewValue: 'Le veuf'},
     {value: 'veuve', viewValue: 'La veuve'},
@@ -57,6 +59,13 @@ export class ChoixSimulationComponent {
   onChipClickBoolean(chipName: string) {
     this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
     this.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
+  }
+  updateButtonState() {
+    this.isButtonDisabled = !(this.cin && this.tel && this.userRelationship && this.selectedSimulationType && this.selectedBooleanIsRetired);
+  }
+
+  onSubmit(){
+
   }
 
 }

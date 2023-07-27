@@ -5,6 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ const appRoutes : Routes = [
     MatInputModule,
     BrowserAnimationsModule,
     MatChipsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
