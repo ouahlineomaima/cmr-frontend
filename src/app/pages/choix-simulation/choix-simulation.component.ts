@@ -52,19 +52,24 @@ export class ChoixSimulationComponent {
     this.router.navigate(['/accueil']);
   }
   onChipClick(chipName: string) {
-    this.selectedBooleanIsRetired = this.selectedBooleanIsRetired === chipName ? null : chipName;
-    this.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
+    
+    this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
+    this.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
   }
 
   onChipClickBoolean(chipName: string) {
-    this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
-    this.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
+    this.selectedBooleanIsRetired = this.selectedBooleanIsRetired === chipName ? null : chipName;
+    this.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
+    
   }
   updateButtonState() {
     this.isButtonDisabled = !(this.cin && this.tel && this.userRelationship && this.selectedSimulationType && this.selectedBooleanIsRetired);
   }
 
   onSubmit(){
+    if(this.simulationType === SimulationType.enLigne && this.isRetired === true){
+      this.router.navigate(['/simulation-en-ligne']);
+    } 
 
   }
 
