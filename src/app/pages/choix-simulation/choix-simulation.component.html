@@ -6,13 +6,13 @@
     <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
     <div class="main-container">
         <h3 class="title">Pour commencer votre simulation veuillez saisir :</h3>
-        <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt" required>
-        <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required>
+        <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt" required (ngModelChange)="updateButtonState()">
+        <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required (ngModelChange)="updateButtonState()">
         <h4 class="qst">Vous êtes:</h4>
         <form>
             <mat-form-field class="select">
                 <mat-label>Vous êtes</mat-label>
-                <mat-select [(ngModel)]="userRelationship" name="humans">
+                <mat-select [(ngModel)]="userRelationship" name="humans" (ngModelChange)="updateButtonState()">
                     <mat-option *ngFor="let human of humans" [value]="human.value">
                         {{human.viewValue}}
                     </mat-option>
@@ -22,17 +22,19 @@
         <h4 class="qst">Type de simulation:</h4>
         <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
             <mat-chip-option *ngFor="let chip of availableSimulationTypes"
-                [color]="selectedSimulationType === chip.name ? chip.color : null" (click)="onChipClick(chip.name)">
+                [color]="selectedSimulationType === chip.name ? chip.color : null" (click)="onChipClick(chip.name); updateButtonState();">
                 {{chip.name}}
             </mat-chip-option>
         </mat-chip-listbox>
         <h4 class="qst">Le défunt est-il retraité:</h4>
         <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
             <mat-chip-option *ngFor="let chip of availableBooleans"
-                [color]="selectedBooleanIsRetired === chip.name ? chip.color : null" (click)="onChipClickBoolean(chip.name)">
+                [color]="selectedBooleanIsRetired === chip.name ? chip.color : null"
+                (click)="onChipClickBoolean(chip.name); updateButtonState();">
                 {{chip.name}}
             </mat-chip-option>
         </mat-chip-listbox>
+        <button mat-raised-button [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Suivant</button>
     </div>
 
 </div>
