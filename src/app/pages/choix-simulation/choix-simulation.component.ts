@@ -26,23 +26,37 @@ export class ChoixSimulationComponent {
   tel: string = '';
   userRelationship: string = '';
   simulationType!: SimulationType;
+  isRetired: boolean | null = null;
+  selectedSimulationType: string | null = null;
+  selectedBooleanIsRetired: string | null = null;
   humans: Human[] = [
     {value: 'veuf', viewValue: 'Le veuf'},
     {value: 'veuve', viewValue: 'La veuve'},
     {value: 'enfant', viewValue: 'Le fils / la fille'},
   ];
-  availableColors: ChipColor[] = [
+  availableSimulationTypes: ChipColor[] = [
     {name: 'En ligne', color: 'primary'},
     {name: 'Téléphonique', color: 'primary'}
   ];
-  selectedColor: string | null = null;
+  
+
+  availableBooleans: ChipColor[] = [
+    {name: 'Oui', color: 'primary'},
+    {name: 'Non', color: 'primary'}
+  ];
+  
   constructor(private router: Router) {}
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
   }
   onChipClick(chipName: string) {
-    this.selectedColor = this.selectedColor === chipName ? null : chipName;
-    this.simulationType = this.selectedColor === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
+    this.selectedBooleanIsRetired = this.selectedBooleanIsRetired === chipName ? null : chipName;
+    this.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
+  }
+
+  onChipClickBoolean(chipName: string) {
+    this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
+    this.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
   }
 
 }

@@ -60,13 +60,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    font-family: Roboto, sans-serif;
 }
 
-.qst{
+.qst {
     margin-top: 3%;
+    align-self: flex-start;
+    margin-left: 7%;
 }
-.select{
+
+.select {
     margin-top: -0.25rem;
+}
+
+.mat-mdc-chip-set {
+    width: 17.5625rem;  
 }
 
 h4 {
