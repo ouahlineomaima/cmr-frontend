@@ -1,10 +1,11 @@
 .container-resultat {
-    display: flex;          
+    display: flex;
     flex-direction: column;
-    
-    height: 100vh;          
+
+    height: 100vh;
 }
-.header{
+
+.header {
     display: flex;
     flex-direction: row-reverse;
 }
@@ -13,9 +14,12 @@
     width: 5.8125rem;
     height: 3.75rem;
 }
+
 .main-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .title {
@@ -28,4 +32,28 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.main-container input {
+    width: 17.5625rem;
+    height: 2.8125rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    border: 1px solid #000;
+    background: #FFF;
+    position: relative;
+    text-align: center;
+    font-family: Itim;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+
+.main-container input::placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
