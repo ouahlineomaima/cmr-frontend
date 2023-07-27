@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +16,8 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { ResultBoxOnlineComponent } from './components/result-box-online/result-box-online.component';
 import { ResultatComponent } from './pages/resultat/resultat.component';
 import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 const appRoutes : Routes = [
@@ -41,7 +46,13 @@ const appRoutes : Routes = [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    BrowserAnimationsModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

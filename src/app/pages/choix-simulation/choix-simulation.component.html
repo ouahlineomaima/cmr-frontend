@@ -5,9 +5,20 @@
     </section>
     <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
     <div class="main-container">
-        <h3 class="title">Pour commencer votre simulation vueillez saisir :</h3>
+        <h3 class="title">Pour commencer votre simulation veuillez saisir :</h3>
         <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt" required>
         <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required>
+        <h4 class="qst">Vous êtes:</h4>
+        <form>
+            <mat-form-field>
+                <mat-label>Vous êtes</mat-label>
+                <mat-select [(ngModel)]="selectedValue" name="humans">
+                    <mat-option *ngFor="let human of humans" [value]="human.value">
+                        {{human.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
     </div>
 
 </div>
