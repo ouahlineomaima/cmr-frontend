@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
 import { SimulationType } from 'src/app/enums/SimulationType';
+import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 
 interface Human {
   value: string;
@@ -22,15 +23,9 @@ interface ChipColor {
 
 export class ChoixSimulationComponent {
   classNamesForTimeline: Array<string> = ['current-item', 'comming', 'comming'];
-  cin: string = '';
-  tel: string = '';
-  userRelationship: string = '';
-  simulationType!: SimulationType;
-  isRetired: boolean | null = null;
   selectedSimulationType: string | null = null;
   selectedBooleanIsRetired: string | null = null;
   isButtonDisabled: boolean = true;
-  showPopup: boolean = false;
   humans: Human[] = [
     {value: 'veuf', viewValue: 'Le veuf'},
     {value: 'veuve', viewValue: 'La veuve'},
@@ -47,27 +42,27 @@ export class ChoixSimulationComponent {
     {name: 'Non', color: 'primary'}
   ];
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
   }
   onChipClick(chipName: string) {
     
     this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
-    this.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
+    this.sharedVariablesService.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
   }
 
   onChipClickBoolean(chipName: string) {
     this.selectedBooleanIsRetired = this.selectedBooleanIsRetired === chipName ? null : chipName;
-    this.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
+    this.sharedVariablesService.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
     
   }
   updateButtonState() {
-    this.isButtonDisabled = !(this.cin && this.tel && this.userRelationship && this.selectedSimulationType && this.selectedBooleanIsRetired);
+    this.isButtonDisabled = !(this.sharedVariablesService.cin && this.sharedVariablesService.tel && this.sharedVariablesService.userRelationship && this.selectedSimulationType && this.selectedBooleanIsRetired);
   }
 
   onSubmit(){
-    if(this.simulationType === SimulationType.enLigne && this.isRetired === true){
+    if(this.sharedVariablesService.simulationType === SimulationType.enLigne && this.sharedVariablesService.isRetired === true){
       this.router.navigate(['/simulation-en-ligne']);
     } 
 

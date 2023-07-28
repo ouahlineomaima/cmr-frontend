@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Itim&display=swap');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.container-resultat {
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+}
+.header {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.logo {
+    width: 5.8125rem;
+    height: 3.75rem;
+} 
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.qst {
+    margin-top: 3%;
+    align-self: flex-start;
+    margin-left: 7%;
+}
+.mat-mdc-chip-set {
+    width: 17.5625rem;  
+}
+h4 {
+    color: #00487C;
+    font-family: Itim;
+    font-size: 1.1875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 95%;
+}
+.next{
+    margin: 0 5%;
+}
