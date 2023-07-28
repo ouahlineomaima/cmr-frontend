@@ -17,7 +17,6 @@ interface ChipColor {
 export class SimulationEnLigneComponent {
   classNamesForTimeline: Array<string> = ['done', 'current-item', 'comming'];
 
-  selectedSimulationType: string | null = null;
   selectedBooleanHasChildren: string | null = null;
   isButtonDisabled: boolean = true;
 
@@ -38,21 +37,23 @@ export class SimulationEnLigneComponent {
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
   }
-  
-  onChipClick(chipName: string) {
-    
-    this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
-    this.sharedVariablesService.simulationType = this.selectedSimulationType === 'En ligne' ? SimulationType.enLigne : SimulationType.telephonique;
-  }
 
-  onChipClickBoolean(chipName: string) {
+  onChipClickHasChildren(chipName: string) {
     this.selectedBooleanHasChildren = this.selectedBooleanHasChildren === chipName ? null : chipName;
-    this.sharedVariablesService.hasChildren = this.selectedBooleanHasChildren === 'Oui' ? true : false;
+    if(this.selectedBooleanHasChildren === 'Oui'){
+      this.sharedVariablesService.hasChildren = true;
+    }
+    else if (this.selectedBooleanHasChildren === 'Non'){
+      this.sharedVariablesService.hasChildren = false;
+    }
+    else{
+      this.sharedVariablesService.hasChildren = null;
+    }
     
   }
 
   updateButtonState() {
-    this.isButtonDisabled = !(this.sharedVariablesService.cin && this.sharedVariablesService.tel && this.sharedVariablesService.userRelationship && this.selectedSimulationType && this.selectedBooleanHasChildren);
+    
   }
 
 // need to be fixed at the end of all variables
