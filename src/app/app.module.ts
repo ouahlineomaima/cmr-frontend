@@ -6,6 +6,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { ResultBoxOnlineComponent } from './components/result-box-online/result-
 import { ResultatComponent } from './pages/resultat/resultat.component';
 import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulation-en-ligne.component';
 
 
 
@@ -27,7 +29,9 @@ const appRoutes : Routes = [
   {path:'choixLangue', component:ChoixLangueComponent},
   {path:'accueil', component:AccueilComponent},
   {path:'contact', component:ContactComponent},
-  {path:'resultat', component:ResultatComponent}
+  {path:'resultat', component:ResultatComponent},
+  {path:'simulation-en-ligne', component:SimulationEnLigneComponent},
+  {path:'choix-simulation', component:ChoixSimulationComponent}
 
 ]
 
@@ -41,7 +45,8 @@ const appRoutes : Routes = [
     TimelineComponent,
     ResultBoxOnlineComponent,
     ResultatComponent,
-    ChoixSimulationComponent
+    ChoixSimulationComponent,
+    SimulationEnLigneComponent
     
   ],
   imports: [
@@ -54,7 +59,8 @@ const appRoutes : Routes = [
     MatInputModule,
     BrowserAnimationsModule,
     MatChipsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
