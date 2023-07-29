@@ -21,6 +21,7 @@ import { ResultatComponent } from './pages/resultat/resultat.component';
 import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulation-en-ligne.component';
+import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
 
 
 
@@ -31,7 +32,8 @@ const appRoutes : Routes = [
   {path:'contact', component:ContactComponent},
   {path:'resultat', component:ResultatComponent},
   {path:'simulation-en-ligne', component:SimulationEnLigneComponent},
-  {path:'choix-simulation', component:ChoixSimulationComponent}
+  {path:'choix-simulation', component:ChoixSimulationComponent},
+  {path:'simulation-telephonique', component:SimulationTelephoniqueComponent}
 
 ]
 
@@ -46,7 +48,8 @@ const appRoutes : Routes = [
     ResultBoxOnlineComponent,
     ResultatComponent,
     ChoixSimulationComponent,
-    SimulationEnLigneComponent
+    SimulationEnLigneComponent,
+    SimulationTelephoniqueComponent
     
   ],
   imports: [
