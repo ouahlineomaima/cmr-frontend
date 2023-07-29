@@ -42,6 +42,19 @@ h4 {
     font-weight: 400;
     line-height: normal;
 }
+.condition{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_child{
+    width: 17.5625rem !important;
+    height: 2.25rem !important;
+    color: #47B1ED;
+    background: transparent !important;
+}
 
 .footer{
     display: flex;
