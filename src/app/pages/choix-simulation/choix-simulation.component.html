@@ -6,13 +6,13 @@
     <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
     <div class="main-container">
         <h3 class="title">Pour commencer votre simulation veuillez saisir :</h3>
-        <input type="text" [(ngModel)]="cin" placeholder="CIN du défunt" required (ngModelChange)="updateButtonState()">
-        <input type="tel" [(ngModel)]="tel" placeholder="Votre numéro de téléphone" required (ngModelChange)="updateButtonState()">
+        <input type="text" [(ngModel)]="sharedVariablesService.cin" placeholder="CIN du défunt" required (ngModelChange)="updateButtonState()">
+        <input type="tel" [(ngModel)]="sharedVariablesService.tel" placeholder="Votre numéro de téléphone" required (ngModelChange)="updateButtonState()">
         <h4 class="qst">Vous êtes:</h4>
         <form>
             <mat-form-field class="select">
                 <mat-label>Vous êtes</mat-label>
-                <mat-select [(ngModel)]="userRelationship" name="humans" (ngModelChange)="updateButtonState()">
+                <mat-select [(ngModel)]="sharedVariablesService.userRelationship" name="humans" (ngModelChange)="updateButtonState()">
                     <mat-option *ngFor="let human of humans" [value]="human.value">
                         {{human.viewValue}}
                     </mat-option>
