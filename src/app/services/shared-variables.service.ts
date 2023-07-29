@@ -11,6 +11,7 @@ export class SharedVariablesService {
   simulationType!: SimulationType;
   isRetired: boolean | null = null;
   hasChildren: boolean | null = null;
+  isValidMarriagePeriod: boolean | null = null;
 
   constructor() { }
 }

@@ -4,6 +4,7 @@ import { SimulationType } from 'src/app/enums/SimulationType';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import {ThemePalette} from '@angular/material/core';
 
+
 interface ChipColor {
   name: string;
   color: ThemePalette;
@@ -18,7 +19,9 @@ export class SimulationEnLigneComponent {
   classNamesForTimeline: Array<string> = ['done', 'current-item', 'comming'];
 
   selectedBooleanHasChildren: string | null = null;
+  selectedIsValidMarriagePeriod: string | null = null;
   isButtonDisabled: boolean = true;
+
 
   availableSimulationTypes: ChipColor[] = [
     {name: 'En ligne', color: 'primary'},
@@ -48,6 +51,20 @@ export class SimulationEnLigneComponent {
     }
     else{
       this.sharedVariablesService.hasChildren = null;
+    }
+    
+  }
+
+  onChipClickMarriagePeriod(chipName: string) {
+    this.selectedIsValidMarriagePeriod = this.selectedIsValidMarriagePeriod === chipName ? null : chipName;
+    if(this.selectedIsValidMarriagePeriod === 'Oui'){
+      this.sharedVariablesService.isValidMarriagePeriod = true;
+    }
+    else if (this.selectedIsValidMarriagePeriod === 'Non'){
+      this.sharedVariablesService.isValidMarriagePeriod = false;
+    }
+    else{
+      this.sharedVariablesService.isValidMarriagePeriod = null;
     }
     
   }
