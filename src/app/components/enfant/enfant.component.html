@@ -1,5 +1,5 @@
 <div class="main-container">
-    <h3 class="title">Fils/Fille {{this.sharedVariablesService.childOrder}}</h3>
+    <h3 class="title">Fils/Fille {{this.order}}</h3>
     <mat-form-field>
         <mat-label>Date de naissance</mat-label>
         <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirthRaw" (dateChange)="updateButtonState(); formatDate()">

@@ -27,8 +27,10 @@
         </div>
         <div *ngIf="sharedVariablesService.hasChildren === true" class="condition">
             <h4 class="qst">Veuillez saisir les informations relatives aux enfants du défunt:</h4>
-            <app-enfant ></app-enfant>
-            <button mat-fab extended class="add_child">
+            <div *ngFor="let item of childrenArray">
+                <app-enfant [order]="item + 1"></app-enfant>
+              </div>
+            <button mat-fab extended class="add_child" (click)="declare()">
                 <mat-icon>plus_one</mat-icon>
                 Déclarer un autre enfant
               </button>

@@ -22,6 +22,7 @@ export class SimulationEnLigneComponent {
   selectedIsValidMarriagePeriod: string | null = null;
   isButtonDisabled: boolean = true;
 
+  childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
 
   availableSimulationTypes: ChipColor[] = [
     {name: 'En ligne', color: 'primary'},
@@ -71,6 +72,13 @@ export class SimulationEnLigneComponent {
 
   updateButtonState() {
     
+  }
+  declare(){
+    this.childrenArray = new Array(this.sharedVariablesService.childOrder);
+    this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
+    console.log(1);
+    console.log(this.childrenArray)
+
   }
 
 // need to be fixed at the end of all variables

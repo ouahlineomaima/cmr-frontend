@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Child, SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { DatePipe } from '@angular/common';
 
@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class EnfantComponent {
+  @Input() order: number = 1;
 
   constructor(public sharedVariablesService: SharedVariablesService, private datePipe: DatePipe) { }
 
