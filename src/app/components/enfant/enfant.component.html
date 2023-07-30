@@ -2,31 +2,32 @@
     <h3 class="title">Fils/Fille {{this.sharedVariablesService.childOrder}}</h3>
     <mat-form-field>
         <mat-label>Date de naissance</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirth">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirthRaw" (dateChange)="updateButtonState(); formatDate()">
+        <mat-hint>JJ/MM/AAAA</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <h4 class="qst">Le fils/la fille poursuit-il(elle) actuellement ses études ?</h4>
-    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsCurrentlyStudying" color="primary">
+    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsCurrentlyStudying" color="primary" (change)="updateButtonState()">
         <mat-radio-button class="option" value=true>Oui</mat-radio-button>
         <mat-radio-button class="option" value=false>Non</mat-radio-button>
     </mat-radio-group>
     <h4 class="qst">Etat civil:</h4>
-    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedMarialStatus" color="primary">
+    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedMarialStatus" color="primary" (change)="updateButtonState()">
         <mat-radio-button class="option" value="marié">Marié(e)</mat-radio-button>
         <mat-radio-button class="option" value="non marié">Non marié(e)</mat-radio-button>
     </mat-radio-group>
     <h4 class="qst">Le fils / la fille est-il(elle) infirme?</h4>
-    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsInfirm" color="primary">
+    <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsInfirm" color="primary" (change)="updateButtonState()">
         <mat-radio-button class="option" value=true>Oui</mat-radio-button>
         <mat-radio-button class="option" value=false>Non</mat-radio-button>
     </mat-radio-group>
     <div *ngIf="selectedIsInfirm === 'true'" class="condition">
         <h4 class="qst">Type de l'infirmité:</h4>
         <form>
-            <mat-form-field class="select">
+            <mat-form-field class="select" >
                 <mat-label>Type d'infirmité:</mat-label>
-                <mat-select [(ngModel)]="selectedInfirmityType" name="infirmities">
+                <mat-select [(ngModel)]="selectedInfirmityType" name="infirmities" (ngModelChange)="updateButtonState()">
                     <mat-option *ngFor="let infirmity of infirmities" [value]="infirmity">
                         {{infirmity}}
                     </mat-option>
@@ -34,6 +35,7 @@
             </mat-form-field>
         </form>
     </div>
+    <button mat-raised-button class="next" [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Déclarer</button>
     
 
 

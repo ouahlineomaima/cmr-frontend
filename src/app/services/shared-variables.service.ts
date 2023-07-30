@@ -3,11 +3,11 @@ import { SimulationType } from '../enums/SimulationType';
 
 
 export interface Child{
-  dateOfBirth: Date;
-  isCurrentlyStudying: boolean;
-  marialStatus: String;
-  isInfirm: boolean;
-  infirmityType: string;
+  dateOfBirth: string | null;
+  isCurrentlyStudying: boolean | null;
+  marialStatus: String | null;
+  isInfirm: boolean | null;
+  infirmityType: string | null;
   
 }
 
