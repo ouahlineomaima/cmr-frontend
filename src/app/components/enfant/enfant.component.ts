@@ -14,7 +14,7 @@ export class EnfantComponent {
 
   selectedDateOfBirthRaw: object | any = null;
   selectedDateOfBirth: Date | null = null;
-  selectedIsCurrentlyStudying: boolean | null = null;
+  selectedIsCurrentlyStudying: string | null = null;
   selectedMarialStatus: string = '';
   selectedIsInfirm: string | null = null;
   selectedInfirmityType: string | null = null;
@@ -30,15 +30,32 @@ export class EnfantComponent {
   }
 
   infirmities: Array<string> = ['Physique', 'Mentale']
+
+
   updateButtonState() {
-    
+    console.log('called');
+    const isDateOfBirthSelected = this.selectedDateOfBirthRaw !== null;
+    const isIsCurrentlyStudyingSelected = this.selectedIsCurrentlyStudying !== null;
+    const isMarialStatusSelected = this.selectedMarialStatus !== '';
+    const isIsInfirmSelected = this.selectedIsInfirm !== null;
+
+    if (isIsInfirmSelected && this.selectedIsInfirm === 'true') {
+      this.isButtonDisabled =
+        !(isDateOfBirthSelected && isIsCurrentlyStudyingSelected && isMarialStatusSelected && this.selectedInfirmityType !== null);
+    } else if(isIsInfirmSelected && this.selectedIsInfirm === 'false') {
+      this.isButtonDisabled =
+        !(isDateOfBirthSelected && isIsCurrentlyStudyingSelected && isMarialStatusSelected);
+    }
+
+
+
   }
 
-  formatDate(){
+  formatDate() {
     this.selectedDateOfBirth = this.selectedDateOfBirthRaw?.toDate();
 
   }
 
-  onSubmit(){
+  onSubmit() {
   }
 }
