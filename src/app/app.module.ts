@@ -7,6 +7,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,7 +63,10 @@ const appRoutes : Routes = [
     BrowserAnimationsModule,
     MatChipsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
