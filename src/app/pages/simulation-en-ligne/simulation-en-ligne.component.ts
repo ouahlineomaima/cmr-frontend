@@ -20,6 +20,9 @@ export class SimulationEnLigneComponent {
 
   selectedBooleanHasChildren: string | null = null;
   selectedIsValidMarriagePeriod: string | null = null;
+  selectedIsStillPartner: string | null = null;
+  selectedIsPartnerInfirm: string | null = null;
+  selectedIsPartnerRetired: string | null = null;
   isButtonDisabled: boolean = true;
 
   childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
@@ -70,6 +73,18 @@ export class SimulationEnLigneComponent {
     
   }
 
+  onChipClickStillPartner(chipName: string){
+
+  }
+
+  onChipClickPartnerInfirm(chipName: string){
+
+  }
+
+  onChipClickPartnerRetired(chipName: string){
+    
+  }
+
   updateButtonState() {
     
   }
@@ -87,6 +102,10 @@ export class SimulationEnLigneComponent {
       this.router.navigate(['/choix-simulation']);
     } 
 
+  }
+
+  goBack(){
+    this.router.navigate(['/choix-simulation']);
   }
 
 }
