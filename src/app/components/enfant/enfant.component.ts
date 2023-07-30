@@ -15,6 +15,7 @@ export class EnfantComponent {
   selectedMarialStatus: string = '';
   selectedIsInfirm: string | null = null;
   selectedInfirmityType: string | null = null;
+  isButtonDisabled: boolean = true;
 
 
   child = {
@@ -26,7 +27,11 @@ export class EnfantComponent {
   }
 
   infirmities: Array<string> = ['Physique', 'Mentale']
+  updateButtonState() {
+    
+    
+  }
 
-
-
+  onSubmit(){
+  }
 }
