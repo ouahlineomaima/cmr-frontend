@@ -91,9 +91,6 @@ export class SimulationEnLigneComponent {
   declare(){
     this.childrenArray = new Array(this.sharedVariablesService.childOrder);
     this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
-    console.log(1);
-    console.log(this.childrenArray)
-
   }
 
 // need to be fixed at the end of all variables
