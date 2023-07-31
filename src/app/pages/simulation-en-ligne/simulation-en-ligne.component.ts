@@ -70,6 +70,7 @@ export class SimulationEnLigneComponent {
   }
 
   updateButtonState() {
+    console.log(1);
     
   }
 
