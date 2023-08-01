@@ -3,6 +3,7 @@ import { SimulationType } from '../enums/SimulationType';
 
 
 export interface Child{
+  name: string;
   dateOfBirth: string | null;
   isCurrentlyStudying: boolean | null;
   marialStatus: String | null;
