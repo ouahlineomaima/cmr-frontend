@@ -30,7 +30,7 @@
             <div *ngFor="let item of childrenArray">
                 <app-enfant [order]="item + 1"></app-enfant>
             </div>
-            <button mat-fab extended class="add_child" (click)="declare()">
+            <button mat-fab extended class="add_child" (click)="declareNewChild()">
                 <mat-icon>plus_one</mat-icon>
                 Déclarer un autre enfant
             </button>

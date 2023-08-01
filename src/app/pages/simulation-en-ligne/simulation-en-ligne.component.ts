@@ -87,21 +87,55 @@ export class SimulationEnLigneComponent {
   }
 
   onChipClickStillPartner(chipName: string){
+    this.selectedIsStillPartner = this.selectedIsStillPartner === chipName ? null : chipName;
+    switch(this.selectedIsStillPartner){
+      case 'Aucun des cas':
+        this.sharedVariablesService.isStillPartner = true;
+        break;
+      case 'Divorcé':
+      case 'Divorcée':
+      case 'Remariée':
+      case 'Remarié':
+      case 'Répudiée':
+        this.sharedVariablesService.isStillPartner = false;
+        this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
+        break;
+    }
 
   }
 
   onChipClickPartnerInfirm(chipName: string){
+    this.selectedIsPartnerInfirm = this.selectedIsPartnerInfirm === chipName ? null : chipName;
+    if(this.selectedIsPartnerInfirm === 'Oui'){
+      this.sharedVariablesService.isPartnerInfirm = true;
+    }
+    else if (this.selectedIsPartnerInfirm === 'Non'){
+      this.sharedVariablesService.isPartnerInfirm= false;
+    }
+    else{
+      this.sharedVariablesService.isPartnerInfirm = null;
+    }
 
   }
 
   onChipClickPartnerRetired(chipName: string){
+    this.selectedIsPartnerRetired = this.selectedIsPartnerRetired === chipName ? null : chipName;
+    if(this.selectedIsPartnerRetired === 'Oui'){
+      this.sharedVariablesService.isPartnerRetired = true;
+    }
+    else if (this.selectedIsPartnerRetired === 'Non'){
+      this.sharedVariablesService.isPartnerRetired= false;
+    }
+    else{
+      this.sharedVariablesService.isPartnerRetired = null;
+    }
     
   }
 
   updateButtonState() {
     
   }
-  declare(){
+  declareNewChild(){
     this.childrenArray = new Array(this.sharedVariablesService.childOrder);
     this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
   }

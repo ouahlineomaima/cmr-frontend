@@ -31,7 +31,7 @@ export class SharedVariablesService {
   isStillPartner: boolean | null = null;
   isPartnerInfirm: boolean | null = null;
   isPartnerRetired: boolean | null = null;
-  partnerMarialStatus: string = '';
+  partnerMarialStatus: string | null = null;
   
 
   constructor() { }
