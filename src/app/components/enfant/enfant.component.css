@@ -23,6 +23,23 @@
     line-height: normal;
     padding: 2%;
 }
+.name {
+    width: 15.3625rem;
+    height: 2.8125rem;
+    flex-shrink: 0;
+    margin: 1%;
+    margin-bottom: 5%;
+    border-radius: 4px;
+    border: 1px solid #000;
+    background: #FFF;
+    position: relative;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
 .qst {
     margin-top: 0.08rem;
     align-self: flex-start;
@@ -34,6 +51,7 @@
     font-weight: 400;
     line-height: normal;
 }
+
 
 .radio-button{
     align-self: flex-start;

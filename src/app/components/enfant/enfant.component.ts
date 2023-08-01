@@ -12,6 +12,7 @@ export class EnfantComponent {
 
   constructor(public sharedVariablesService: SharedVariablesService, private datePipe: DatePipe) { }
 
+  childName : string = '';
   selectedDateOfBirthRaw: object | any = null;
   selectedDateOfBirth: Date | null = null;
   selectedIsCurrentlyStudying: string | null = null;
@@ -51,6 +52,7 @@ export class EnfantComponent {
 
   onSubmit() {
     let child: Child = {
+      name: this.childName,
       dateOfBirth: `${this.selectedDateOfBirth?.getDate().toString().padStart(2, '0')}/${(this.selectedDateOfBirth!.getMonth() + 1).toString().padStart(2, '0')}/${this.selectedDateOfBirth?.getFullYear()}`,
       isCurrentlyStudying: this.selectedIsCurrentlyStudying === 'true',
       marialStatus: this.selectedMarialStatus,
@@ -59,8 +61,8 @@ export class EnfantComponent {
     }
     this.sharedVariablesService.children.push(child)
     this.sharedVariablesService.childOrder += 1;
-    console.log(this.sharedVariablesService.children, this.sharedVariablesService.childOrder);
     this.isButtonDisabled = true;
     this.isDeclared = true;
   }
+  
 }
