@@ -37,6 +37,19 @@ export class SimulationEnLigneComponent {
     {name: 'Non', color: 'primary'}
   ];
 
+  availablePartnerStatesMale: ChipColor[] = [
+    {name: 'Divorcé', color: 'primary'},
+    {name: 'Remarié', color: 'primary'},
+    {name: 'Aucun des cas', color: 'primary'}
+  ];
+  availablePartnerStatesFemale: ChipColor[] = [
+    {name: 'Divorcée', color: 'primary'},
+    {name: 'Remariée', color: 'primary'},
+    {name: 'Répudiée', color: 'primary'},
+    {name: 'Aucun des cas', color: 'primary'}
+
+  ];
+
   constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
   
 
