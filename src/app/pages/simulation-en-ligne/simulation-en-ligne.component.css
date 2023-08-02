@@ -31,6 +31,7 @@
     align-self: flex-start;
     margin-left: 7%;
 }
+
 .mat-mdc-chip-set {
     width: 17.5625rem;  
 }
@@ -47,6 +48,8 @@ h4 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .add_child{
@@ -54,6 +57,9 @@ h4 {
     height: 2.25rem !important;
     color: #47B1ED;
     background: transparent !important;
+}
+.select {
+    margin-top: -0.25rem;
 }
 
 .footer{

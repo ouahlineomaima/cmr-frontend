@@ -29,8 +29,9 @@ export class SimulationEnLigneComponent {
   selectedIsPartnerInfirm: string | null = null;
   selectedIsPartnerRetired: string | null = null;
   isButtonDisabled: boolean = true;
+  childrenArray : Array<number> | null = null;
 
-  childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
+  
 
   availableSimulationTypes: ChipColor[] = [
     {name: 'En ligne', color: 'primary'},
@@ -69,6 +70,8 @@ export class SimulationEnLigneComponent {
     this.selectedBooleanHasChildren = this.selectedBooleanHasChildren === chipName ? null : chipName;
     if(this.selectedBooleanHasChildren === 'Oui'){
       this.sharedVariablesService.hasChildren = true;
+      this.sharedVariablesService.childOrder = 1;
+      this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
     }
     else if (this.selectedBooleanHasChildren === 'Non'){
       this.sharedVariablesService.hasChildren = false;
@@ -90,14 +93,30 @@ export class SimulationEnLigneComponent {
     else{
       this.sharedVariablesService.isValidMarriagePeriod = null;
     }
+    if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+      this.isButtonDisabled = false;
+    }
+    this.sharedVariablesService.isPartnerAlive = true;
     
   }
 
   onChipClickStillPartner(chipName: string){
     this.selectedIsStillPartner = this.selectedIsStillPartner === chipName ? null : chipName;
+    this.sharedVariablesService.partnerSexe = this.sharedVariablesService.userRelationship == 'veuve'?'femelle':'male';
+    this.sharedVariablesService.isPartnerAlive = true;
     switch(this.selectedIsStillPartner){
       case 'Aucun des cas':
         this.sharedVariablesService.isStillPartner = true;
+        if(this.sharedVariablesService.partnerSexe === 'femelle'){
+          this.sharedVariablesService.partnerMarialStatus = 'veuve';
+          if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+            this.isButtonDisabled = false;
+          }
+        }
+        else{
+          this.sharedVariablesService.partnerMarialStatus = 'veuf';
+          this.isButtonDisabled = true;
+        }
         break;
       case 'Divorcé':
       case 'Divorcée':
@@ -106,15 +125,8 @@ export class SimulationEnLigneComponent {
       case 'Répudiée':
         this.sharedVariablesService.isStillPartner = false;
         this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
-        break;
-      default:
-        this.sharedVariablesService.partnerSexe = this.sharedVariablesService.userRelationship == 'veuve'?'femelle':'male';
-        this.sharedVariablesService.isPartnerAlive = true;
-        if(this.sharedVariablesService.partnerSexe === 'femelle'){
-          this.sharedVariablesService.partnerMarialStatus = 'veuve';
-        }
-        else{
-          this.sharedVariablesService.partnerMarialStatus = 'veuf';
+        if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+          this.isButtonDisabled = false;
         }
         break;
     }
@@ -124,12 +136,17 @@ export class SimulationEnLigneComponent {
     this.selectedIsPartnerInfirm = this.selectedIsPartnerInfirm === chipName ? null : chipName;
     if(this.selectedIsPartnerInfirm === 'Oui'){
       this.sharedVariablesService.isPartnerInfirm = true;
+      if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+        this.isButtonDisabled = false;
+      }
     }
     else if (this.selectedIsPartnerInfirm === 'Non'){
       this.sharedVariablesService.isPartnerInfirm= false;
+      this.isButtonDisabled = true;
     }
     else{
       this.sharedVariablesService.isPartnerInfirm = null;
+      this.isButtonDisabled = true;
     }
 
   }
@@ -144,6 +161,10 @@ export class SimulationEnLigneComponent {
     }
     else{
       this.sharedVariablesService.isPartnerRetired = null;
+      this.isButtonDisabled = true;
+    }
+    if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+      this.isButtonDisabled = false;
     }
     
   }
@@ -152,12 +173,17 @@ export class SimulationEnLigneComponent {
     this.selectedIsStillPartner = this.selectedIsStillPartner === chipName ? null : chipName;
     if(this.selectedIsStillPartner === 'Oui'){
       this.sharedVariablesService.isPartnerAlive = true;
+      this.isButtonDisabled = true;
     }
     else if (this.selectedIsStillPartner === 'Non'){
       this.sharedVariablesService.isPartnerAlive = false;
+      if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+        this.isButtonDisabled = false;
+      }
     }
     else{
       this.sharedVariablesService.isPartnerAlive = null;
+      this.isButtonDisabled = true;
     }
 
   }
@@ -167,6 +193,16 @@ export class SimulationEnLigneComponent {
     switch(this.selectedIsStillPartner){
       case 'Aucun des cas':
         this.sharedVariablesService.isStillPartner = true;
+        if(this.sharedVariablesService.partnerSexe === 'femelle'){
+          if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+            this.isButtonDisabled = false;
+          }
+          this.sharedVariablesService.partnerMarialStatus = 'veuve';
+        }
+        else{
+          this.sharedVariablesService.partnerMarialStatus = 'veuf';
+          this.isButtonDisabled = true;
+        }
         break;
       case 'Divorcé':
       case 'Divorcée':
@@ -175,8 +211,12 @@ export class SimulationEnLigneComponent {
       case 'Répudiée':
         this.sharedVariablesService.isStillPartner = false;
         this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
+        if(this.sharedVariablesService.children.length == this.sharedVariablesService.childOrder -1){
+          this.isButtonDisabled = false;
+        }
         break;
     }
+    
   }
 
 
@@ -189,16 +229,9 @@ export class SimulationEnLigneComponent {
     this.childrenArray = new Array(this.sharedVariablesService.childOrder);
     this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
   }
-
-  updateButtonState() {
-  }
   
-
-// need to be fixed at the end of all variables
   onSubmit(){
-    if(this.sharedVariablesService.simulationType === SimulationType.enLigne && this.sharedVariablesService.isRetired === true){
-      this.router.navigate(['/choix-simulation']);
-    } 
+    /* this.router.navigate(['/choix-simulation']); */
 
   }
 
