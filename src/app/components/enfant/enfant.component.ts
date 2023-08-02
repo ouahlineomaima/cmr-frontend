@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Child, SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { DatePipe } from '@angular/common';
 
@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EnfantComponent {
   @Input() order: number = 1;
+  @Output() inputChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public sharedVariablesService: SharedVariablesService, private datePipe: DatePipe) { }
 
@@ -64,6 +65,7 @@ export class EnfantComponent {
     this.sharedVariablesService.childOrder += 1;
     this.isButtonDisabled = true;
     this.isDeclared = true;
+    this.inputChange.emit();
   }
   
 }
