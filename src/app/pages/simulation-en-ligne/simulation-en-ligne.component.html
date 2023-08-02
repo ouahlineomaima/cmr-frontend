@@ -77,7 +77,7 @@
                         </mat-chip-option>
                     </mat-chip-listbox>
 
-                    <div *ngIf="sharedVariablesService.isPartnerInfirm === false">
+                    <div *ngIf="sharedVariablesService.isPartnerInfirm === false" class="condition">
                         <h4 class="qst">Êtes-vous retraité?</h4>
                         <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
                             <mat-chip-option *ngFor="let chip of availableBooleans"
