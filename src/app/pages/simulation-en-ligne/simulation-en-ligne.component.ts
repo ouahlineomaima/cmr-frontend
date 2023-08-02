@@ -62,10 +62,8 @@ export class SimulationEnLigneComponent {
   constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
   
 
-
-  goToAccueilPage() {
-    this.router.navigate(['/accueil']);
-  }
+  // Material UI functions
+  
 
   onChipClickHasChildren(chipName: string) {
     this.selectedBooleanHasChildren = this.selectedBooleanHasChildren === chipName ? null : chipName;
@@ -109,8 +107,17 @@ export class SimulationEnLigneComponent {
         this.sharedVariablesService.isStillPartner = false;
         this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
         break;
+      default:
+        this.sharedVariablesService.partnerSexe = this.sharedVariablesService.userRelationship == 'veuve'?'femelle':'male';
+        this.sharedVariablesService.isPartnerAlive = true;
+        if(this.sharedVariablesService.partnerSexe === 'femelle'){
+          this.sharedVariablesService.partnerMarialStatus = 'veuve';
+        }
+        else{
+          this.sharedVariablesService.partnerMarialStatus = 'veuf';
+        }
+        break;
     }
-
   }
 
   onChipClickPartnerInfirm(chipName: string){
@@ -142,20 +149,50 @@ export class SimulationEnLigneComponent {
   }
 
   onChipClickStillPartnerAlive(chipName: string){
+    this.selectedIsStillPartner = this.selectedIsStillPartner === chipName ? null : chipName;
+    if(this.selectedIsStillPartner === 'Oui'){
+      this.sharedVariablesService.isPartnerAlive = true;
+    }
+    else if (this.selectedIsStillPartner === 'Non'){
+      this.sharedVariablesService.isPartnerAlive = false;
+    }
+    else{
+      this.sharedVariablesService.isPartnerAlive = null;
+    }
 
   }
 
   onChipClickStillPartnerChild(chipName: string){
-    
+    this.selectedIsStillPartner = this.selectedIsStillPartner === chipName ? null : chipName;
+    switch(this.selectedIsStillPartner){
+      case 'Aucun des cas':
+        this.sharedVariablesService.isStillPartner = true;
+        break;
+      case 'Divorcé':
+      case 'Divorcée':
+      case 'Remariée':
+      case 'Remarié':
+      case 'Répudiée':
+        this.sharedVariablesService.isStillPartner = false;
+        this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
+        break;
+    }
   }
 
-  updateButtonState() {
-    
+
+// Buttons functions
+  goToAccueilPage() {
+    this.router.navigate(['/accueil']);
   }
+
   declareNewChild(){
     this.childrenArray = new Array(this.sharedVariablesService.childOrder);
     this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
   }
+
+  updateButtonState() {
+  }
+  
 
 // need to be fixed at the end of all variables
   onSubmit(){

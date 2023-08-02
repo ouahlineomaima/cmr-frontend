@@ -29,6 +29,7 @@ export class SharedVariablesService {
   children: Array<Child> = [];
   childOrder: number = 1;
   isStillPartner: boolean | null = null;
+  isPartnerAlive: boolean | null = null;
   isPartnerInfirm: boolean | null = null;
   isPartnerRetired: boolean | null = null;
   partnerMarialStatus: string | null = null;
