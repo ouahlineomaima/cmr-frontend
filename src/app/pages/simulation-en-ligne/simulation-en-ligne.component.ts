@@ -9,6 +9,11 @@ interface ChipColor {
   name: string;
   color: ThemePalette;
 }
+interface Human {
+  value: string;
+  viewValue: string;
+  
+}
 
 @Component({
   selector: 'app-simulation-en-ligne',
@@ -48,6 +53,10 @@ export class SimulationEnLigneComponent {
     {name: 'Répudiée', color: 'primary'},
     {name: 'Aucun des cas', color: 'primary'}
 
+  ];
+  humans: Human[] = [
+    {value: 'male', viewValue: 'Mâle'},
+    {value: 'femelle', viewValue: 'Femelle'},
   ];
 
   constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
@@ -129,6 +138,14 @@ export class SimulationEnLigneComponent {
     else{
       this.sharedVariablesService.isPartnerRetired = null;
     }
+    
+  }
+
+  onChipClickStillPartnerAlive(chipName: string){
+
+  }
+
+  onChipClickStillPartnerChild(chipName: string){
     
   }
 
