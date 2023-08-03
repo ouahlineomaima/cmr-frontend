@@ -11,9 +11,13 @@ export class AccueilComponent {
 
   constructor(private router: Router) {}
   // navigate to eligibility page on button click event
+  goToElligibilityPage(){
+    this.router.navigate(['/choix-simulation']);
+  }
   goToContactPage() {
     this.router.navigate(['/contact']);
   }
+  
 
   
 

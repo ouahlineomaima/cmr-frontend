@@ -26,7 +26,7 @@
                 {{chip.name}}
             </mat-chip-option>
         </mat-chip-listbox>
-        <h4 class="qst">Le défunt est-il retraité:</h4>
+        <h4 class="qst">Le défunt était-il retraité:</h4>
         <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
             <mat-chip-option *ngFor="let chip of availableBooleans"
                 [color]="selectedBooleanIsRetired === chip.name ? chip.color : null"
