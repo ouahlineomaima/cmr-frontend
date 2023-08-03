@@ -3,6 +3,7 @@ import { SimulationType } from '../enums/SimulationType';
 
 
 export interface Child{
+  name: string;
   dateOfBirth: string | null;
   isCurrentlyStudying: boolean | null;
   marialStatus: String | null;
@@ -27,6 +28,12 @@ export class SharedVariablesService {
   isValidMarriagePeriod: boolean | null = null;
   children: Array<Child> = [];
   childOrder: number = 1;
+  isStillPartner: boolean | null = null;
+  isPartnerAlive: boolean | null = null;
+  isPartnerInfirm: boolean | null = null;
+  isPartnerRetired: boolean | null = null;
+  partnerMarialStatus: string | null = null;
+  partnerSexe: string | null = null;
   
 
   constructor() { }
