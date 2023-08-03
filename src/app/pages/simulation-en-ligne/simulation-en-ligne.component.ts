@@ -144,7 +144,6 @@ export class SimulationEnLigneComponent {
     else {
       this.sharedVariablesService.isPartnerRetired = null;
     }
-
   }
 
   onChipClickStillPartnerAlive(chipName: string) {
@@ -158,7 +157,6 @@ export class SimulationEnLigneComponent {
     else {
       this.sharedVariablesService.isPartnerAlive = null;
     }
-
   }
 
   onChipClickStillPartnerChild(chipName: string) {
@@ -182,7 +180,6 @@ export class SimulationEnLigneComponent {
         this.sharedVariablesService.partnerMarialStatus = this.selectedIsStillPartner;
         break;
     }
-
   }
 
 

@@ -10,7 +10,7 @@ export class ResultatComponent {
 
   constructor(private router: Router) {}
 
-  classNamesForTimeline: Array<string> = ['current-item', 'current-item', 'current-item'];
+  classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
   }
