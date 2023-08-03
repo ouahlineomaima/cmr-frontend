@@ -106,7 +106,6 @@
                     <h4 class="qst">Son sexe:</h4>
                     <form>
                         <mat-form-field class="select">
-                            <mat-label>Vous êtes</mat-label>
                             <mat-select [(ngModel)]="sharedVariablesService.partnerSexe" name="humans" (ngModelChange)="updateButtonState();">
                                 <mat-option *ngFor="let human of humans" [value]="human.value">
                                     {{human.viewValue}}

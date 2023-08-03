@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SimulationType } from 'src/app/enums/SimulationType';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { ThemePalette } from '@angular/material/core';
 
@@ -9,10 +8,10 @@ interface ChipColor {
   name: string;
   color: ThemePalette;
 }
+
 interface Human {
   value: string;
   viewValue: string;
-
 }
 
 @Component({
@@ -22,6 +21,7 @@ interface Human {
 })
 export class SimulationEnLigneComponent {
   classNamesForTimeline: Array<string> = ['done', 'current-item', 'comming'];
+
 
   selectedBooleanHasChildren: string | null = null;
   selectedIsValidMarriagePeriod: string | null = null;
@@ -49,13 +49,14 @@ export class SimulationEnLigneComponent {
     { name: 'Remarié', color: 'primary' },
     { name: 'Aucun des cas', color: 'primary' }
   ];
+
   availablePartnerStatesFemale: ChipColor[] = [
     { name: 'Divorcée', color: 'primary' },
     { name: 'Remariée', color: 'primary' },
     { name: 'Répudiée', color: 'primary' },
     { name: 'Aucun des cas', color: 'primary' }
-
   ];
+
   humans: Human[] = [
     { value: 'male', viewValue: 'Mâle' },
     { value: 'femelle', viewValue: 'Femelle' },
@@ -78,7 +79,6 @@ export class SimulationEnLigneComponent {
     else {
       this.sharedVariablesService.hasChildren = null;
     }
-
   }
 
   onChipClickMarriagePeriod(chipName: string) {
@@ -131,7 +131,6 @@ export class SimulationEnLigneComponent {
     else {
       this.sharedVariablesService.isPartnerInfirm = null;
     }
-
   }
 
   onChipClickPartnerRetired(chipName: string) {
@@ -193,8 +192,7 @@ export class SimulationEnLigneComponent {
   }
 
   updateButtonState() {
-    console.log(this.sharedVariablesService.partnerMarialStatus);
-    console.log(this.sharedVariablesService.partnerSexe);
+    this.isButtonDisabled = true;
     if (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null) {
       this.isButtonDisabled = false;
       return;
@@ -214,11 +212,22 @@ export class SimulationEnLigneComponent {
   }
 
   onSubmit() {
-    /* this.router.navigate(['/choix-simulation']); */
+    this.router.navigate(['/resultat']);
 
   }
 
   goBack() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
     this.router.navigate(['/choix-simulation']);
   }
 
