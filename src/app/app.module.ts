@@ -38,6 +38,7 @@ import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulati
 import { ParcoursComponent } from './pages/parcours/parcours.component';
 import { LayerComponent } from './components/layer/layer.component';
 import { EventComponent } from './components/event/event.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 
 
@@ -66,7 +67,8 @@ const appRoutes : Routes = [
     SimulationEnLigneComponent,
     ParcoursComponent,
     LayerComponent,
-    EventComponent
+    EventComponent,
+    EventDetailsComponent
     
   ],
   imports: [
