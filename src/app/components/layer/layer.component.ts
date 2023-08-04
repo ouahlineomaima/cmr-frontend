@@ -9,7 +9,7 @@ export class LayerComponent {
 
   @Input() layerTitle: string = "chez-soi";
   @Input() titleBgColor: string = "#FFF28C";
-  @Input() titleColor: string = "80690B";
+  @Input() titleColor: string = "#80690B";
   @Input() containerBgColor: string = "#FFFAC2";
 
 }

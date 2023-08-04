@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-event',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent {
+  @Input() eventTitle: string = "bla bla";
+  @Input() iconColor: string = "#FFF28C";
+  @Input() eventColor: string = "#80690B";
 
 }
