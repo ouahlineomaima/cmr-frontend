@@ -1,0 +1,9 @@
+<div class="details" *ngIf="showDetailsFlag" [style.top]="detailsStyle?.top" [style.left]="detailsStyle?.left">
+    <div class="details-title">
+        <i class="pi pi-file" [style.color]="iconColor" style="font-size: 1.5rem"></i>
+        <h4> {{eventTitle}}</h4>
+    </div>
+    <div class="details-paragraph" *ngIf="eventDetails != ''">
+        <p>{{eventDetails}}</p>
+    </div>
+</div>

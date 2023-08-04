@@ -1,0 +1,51 @@
+@import "primeicons/primeicons.css";
+
+i{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5%;
+}
+.details{
+    display: flex;
+    width: 50%;
+    height: 25%;
+    max-width: 150%;
+    max-height: 200%;
+    flex-direction: column;
+    border-radius: 6px;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.details-title{
+    width: 100%;
+    height: 100%;
+    background-color: #384152;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    padding-top: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.details-title h4{
+    margin-left: 0.5%;
+    color: #fff;
+    text-transform: capitalize;
+    font: bold;
+    font-size: medium;
+    word-break: break-all; 
+}
+
+.details-paragraph{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 0 0 6px 6px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
