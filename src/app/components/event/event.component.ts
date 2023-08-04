@@ -7,7 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class EventComponent {
   @Input() eventTitle: string = "";
-  @Input() eventDetails: string = "";
   @Input() iconColor: string = "";
   @Input() eventColor: string = "";
 
