@@ -1,0 +1,17 @@
+@import "primeicons/primeicons.css";
+.event{
+    display: flex;
+    flex-direction: row;
+}
+
+i{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5%;
+}
+
+.evet-title{
+    margin-left: 0.5%;
+}

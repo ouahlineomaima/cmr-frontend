@@ -37,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulation-en-ligne.component';
 import { ParcoursComponent } from './pages/parcours/parcours.component';
 import { LayerComponent } from './components/layer/layer.component';
+import { EventComponent } from './components/event/event.component';
 
 
 
@@ -64,7 +65,8 @@ const appRoutes : Routes = [
     ChoixSimulationComponent,
     SimulationEnLigneComponent,
     ParcoursComponent,
-    LayerComponent
+    LayerComponent,
+    EventComponent
     
   ],
   imports: [
