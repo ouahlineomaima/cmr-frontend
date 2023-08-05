@@ -1,0 +1,9 @@
+<div class="container">
+    <app-event 
+    [eventTitle]="eventTitle" 
+    [iconColor]="iconColor" 
+    [eventColor]="eventColor"
+    (mouseenter)="showDetails($event)"
+    (mouseleave)="hideDetails()"></app-event>
+    <app-event-details [eventTitle]="eventTitle" [eventDetails]="eventDetails" [iconColor]="iconColor" [showDetailsFlag]="showDetailsFlag" [detailsStyle]="detailsStyle"></app-event-details>
+</div>

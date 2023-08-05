@@ -16,6 +16,8 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -33,6 +35,10 @@ import { ResultatComponent } from './pages/resultat/resultat.component';
 import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulation-en-ligne.component';
+import { ParcoursComponent } from './pages/parcours/parcours.component';
+import { LayerComponent } from './components/layer/layer.component';
+import { EventComponent } from './components/event/event.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 
 
@@ -58,7 +64,11 @@ const appRoutes : Routes = [
     ResultBoxOnlineComponent,
     ResultatComponent,
     ChoixSimulationComponent,
-    SimulationEnLigneComponent
+    SimulationEnLigneComponent,
+    ParcoursComponent,
+    LayerComponent,
+    EventComponent,
+    EventDetailsComponent
     
   ],
   imports: [
@@ -75,7 +85,9 @@ const appRoutes : Routes = [
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule,
+    MatCardModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},
