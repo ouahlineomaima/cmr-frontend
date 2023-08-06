@@ -7,10 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class LayerComponent {
 
-  @Input() layerTitle: string = "chez-soi";
-  @Input() titleBgColor: string = "#FFF28C";
-  @Input() titleColor: string = "#80690B";
-  @Input() containerBgColor: string = "#FFFAC2";
+  @Input() layerTitle: string = "";
+  @Input() titleBgColor: string = "";
+  @Input() titleColor: string = "";
+  @Input() containerBgColor: string = "";
 
   
 
