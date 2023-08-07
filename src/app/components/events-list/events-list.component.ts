@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { event } from '../event/event.component';
 
 @Component({
   selector: 'app-events-list',
@@ -7,9 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class EventsListComponent {
 
-  @Input() events: object[] = [];
-  @Input() iconColor: string = "#FFF28C";
-  @Input() eventColor: string = "#80690B";
-  
+  @Input() events: event[] = [];
 
 }
