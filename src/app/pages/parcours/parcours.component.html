@@ -4,9 +4,6 @@
   </section>
   <div class="layers" *ngFor="let layer in layers">
     <app-layer 
-    [layerTitle]="layer.title"
-    [titleColor]="layer.titleColor"
-    [titleBgColor]="layer.titleBgColor"
-    [eventsLists]="layer.eventsLists"></app-layer>
+    [layer]="layer"></app-layer>
   </div>
 </section>

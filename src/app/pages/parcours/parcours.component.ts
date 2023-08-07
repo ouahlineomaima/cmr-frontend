@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
+import { layer } from 'src/app/components/layer/layer.component';
 
-
-interface layer{
-  title:string,
-  titleBgColor:string,
-  titleColor:string,
-  containerBgColor:string
-}
 
 @Component({
   selector: 'app-parcours',
@@ -15,29 +9,80 @@ interface layer{
 })
 export class ParcoursComponent {
 
-  layers: object[] = [
+  titles: Array<string> = ['chez-soi', 'District'];
+  titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6'];
+  titlesColors: Array<string> = ['#80690B', '#0F7950'];
+  containerBgColors: Array<string> = ['#FFFAC2', '#D0FAE4'];
+
+  layers: layer[] = [
     {
-      title:'chez-soi',
-      titleBgColor:'#FFF28C',
-      titleColor:'#80690B',
-      containerBgColor:'#FFFAC2',
+      title: this.titles[0],
+      titleBgColor:this.titlesBgColors[0],
+      titleColor:this.titlesColors[0],
+      containerBgColor:this.containerBgColors[0],
       eventsLists: [
-        [{ title: 'event1', details: 'details1' }, { title: 'event2', details: 'details2' }],
-        [{ title: 'event3', details: 'details3' }, { title: 'event4', details: 'details4' }]
+        [
+          { 
+            title: 'event1', 
+            iconColor: this.titlesBgColors[0], 
+            eventColor: this.titlesColors[0], 
+            details: 'details1' },
+            { 
+              title: 'event2', 
+              iconColor: this.titlesBgColors[0], 
+              eventColor: this.titlesColors[0], 
+              details: 'details2' }
+
+        ],
+        [
+          { 
+            title: 'event11', 
+            iconColor: this.titlesBgColors[0], 
+            eventColor: this.titlesColors[0], 
+            details: 'details11' },
+            { 
+              title: 'event12', 
+              iconColor: this.titlesBgColors[0], 
+              eventColor: this.titlesColors[0], 
+              details: 'details12' }
+
+        ]
       ]
     },
-
     {
-      title:'District',
-      titleBgColor:'#6DE7B6',
-      titleColor:'#0F7950',
-      containerBgColor:'#D0FAE4',
+      title: this.titles[1],
+      titleBgColor:this.titlesBgColors[1],
+      titleColor:this.titlesColors[1],
+      containerBgColor:this.containerBgColors[1],
       eventsLists: [
-        [{ title: 'event11', details: 'details11' }, { title: 'event12', details: 'details12' }],
-        [{ title: 'event13', details: 'details13' }, { title: 'event14', details: 'details14' }]
+        [
+          { 
+            title: 'event1', 
+            iconColor: this.titlesBgColors[1], 
+            eventColor: this.titlesColors[1], 
+            details: 'details1' },
+            { 
+              title: 'event2', 
+              iconColor: this.titlesBgColors[1], 
+              eventColor: this.titlesColors[1], 
+              details: 'details2' }
+
+        ],
+        [
+          { 
+            title: 'event11', 
+            iconColor: this.titlesBgColors[1], 
+            eventColor: this.titlesColors[1], 
+            details: 'details11' },
+            { 
+              title: 'event12', 
+              iconColor: this.titlesBgColors[1], 
+              eventColor: this.titlesColors[1], 
+              details: 'details12' }
+
+        ]
       ]
     }
-    
   ]
 
 }
