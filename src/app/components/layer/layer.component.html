@@ -1,13 +1,9 @@
 <div class="layer">
     <div class="title" [style.background-color]="titleBgColor" [style.color]="titleColor">{{layerTitle}}</div>
-    <div class="container"[style.background-color]="containerBgColor">
-        <app-event-pack class="content"></app-event-pack>
-        <app-event-pack class="content"></app-event-pack>
-    </div>
-</div>
-<div class="layer">
-    <div class="title" [style.background-color]="titleBgColor" [style.color]="titleColor">{{layerTitle}}</div>
-    <div class="container"[style.background-color]="containerBgColor">
-        
+    <div class="container"[style.background-color]="containerBgColor" *ngFor="let events in eventsLists">
+        <app-events-list 
+        [events]="events"
+        [iconColor]="titleBgColor"
+        [eventColor]="titleColor"></app-events-list>
     </div>
 </div>

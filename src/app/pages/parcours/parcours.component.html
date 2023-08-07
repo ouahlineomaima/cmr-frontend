@@ -1,7 +1,12 @@
-<div class="curve-container">
-    <div class="curve-path">
-      <div class="spot"></div>
-      <div class="spot"></div>
-      <!-- Add more spots as needed -->
-    </div>
+<section class="main-container">
+  <section class="header">
+    <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
+  </section>
+  <div class="layers" *ngFor="let layer in layers">
+    <app-layer 
+    [layerTitle]="layer.title"
+    [titleColor]="layer.titleColor"
+    [titleBgColor]="layer.titleBgColor"
+    [eventsLists]="layer.eventsLists"></app-layer>
   </div>
+</section>

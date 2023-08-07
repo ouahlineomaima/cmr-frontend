@@ -1,44 +1,18 @@
-body {
+.main-container{
+  width: 100%;
+  height: 100%;
+}
+
+.header {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
+  flex-direction: row;
+  width: 40px;
+  height: 40px;
 }
 
-.curve-container {
-  position: relative;
+.layers{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80%;
 }
-
-.curve-path {
-  position: relative;
-  width: 500px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: #f3f3f3;
-  transform: rotate(-45deg);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-}
-
-.spot {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: #007bff;
-  border-radius: 50%;
-}
-
-.spot:nth-child(1) {
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.spot:nth-child(2) {
-  top: 115px;
-  left: 45%;
-}
-
-/* Add more spot styles as needed */
