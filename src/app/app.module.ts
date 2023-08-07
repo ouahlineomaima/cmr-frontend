@@ -38,7 +38,7 @@ import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulati
 import { ParcoursComponent } from './pages/parcours/parcours.component';
 import { LayerComponent } from './components/layer/layer.component';
 import { EventComponent } from './components/event/event.component';
-import { EventDetailsComponent } from './event-details/event-details.component';
+import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { EventPackComponent } from './components/event-pack/event-pack.component';
 import { EventsListComponent } from './components/events-list/events-list.component';
 

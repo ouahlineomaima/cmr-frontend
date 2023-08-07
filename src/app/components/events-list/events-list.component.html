@@ -1,1 +1,7 @@
-<p>events-list works!</p>
+<div class="list" *ngFor="let event in events">
+    <app-event-pack 
+    [eventTitle]="event?.title"
+    [eventDetails]="event?.details"
+    [eventColor]="eventColor"
+    [iconColor]="iconColor"></app-event-pack>
+</div>

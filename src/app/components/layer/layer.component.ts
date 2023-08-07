@@ -11,6 +11,7 @@ export class LayerComponent {
   @Input() titleBgColor: string = "";
   @Input() titleColor: string = "";
   @Input() containerBgColor: string = "";
+  @Input() eventsLists: object[][] = [];
 
   
 

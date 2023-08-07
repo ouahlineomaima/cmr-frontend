@@ -1,14 +1,12 @@
- <section class="header">
-    <img  class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png"
-        alt="Wassini-logo-without-bg">
+<section class="main-container">
+  <section class="header">
+    <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
+  </section>
+  <div class="layers" *ngFor="let layer in layers">
+    <app-layer 
+    [layerTitle]="layer.title"
+    [titleColor]="layer.titleColor"
+    [titleBgColor]="layer.titleBgColor"
+    [eventsLists]="layer.eventsLists"></app-layer>
+  </div>
 </section>
-  <app-layer 
-  layerTitle="chez-soi" 
-  titleBgColor="#FFF28C"
-  titleColor="#80690B"
-  containerBgColor="#FFFAC2"></app-layer>
-  <app-layer 
-  layerTitle="chez-soi" 
-  titleBgColor="#6DE7B6"
-  titleColor="#0F7950"
-  containerBgColor="#D0FAE4"></app-layer>

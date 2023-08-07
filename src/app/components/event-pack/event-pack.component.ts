@@ -11,8 +11,8 @@ export class EventPackComponent {
   @Input() eventColor: string = "#80690B";
 
   @Input() eventDetails: string = "lorem ipsum torgdt zatyfgirdhdczc gvgvy ygzqfe<ytfsoqdsds zulyfqds szyugdeiuez dkdeieahzd";
-  @Input() showDetailsFlag: boolean = false;
-  @Input() detailsStyle: any = {};
+  showDetailsFlag: boolean = false;
+  detailsStyle: any = {};
 
 
   showDetails(event: MouseEvent): void {
