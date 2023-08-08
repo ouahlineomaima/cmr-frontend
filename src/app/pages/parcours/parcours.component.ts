@@ -70,7 +70,7 @@ export class ParcoursComponent {
   };
 
 
-  layers: layer[] = [
+  layers: Array<layer> = [
     {
       title: this.titles[0],
       titleBgColor: this.titlesBgColors[0],

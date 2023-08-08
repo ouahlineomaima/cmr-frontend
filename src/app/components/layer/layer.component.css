@@ -16,9 +16,11 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 2%;
+    padding-right: 2%;
     font-size: large;
     font-family: Itim;
     text-transform: capitalize;
+    flex-shrink: 0;
 }
 
 .container {
