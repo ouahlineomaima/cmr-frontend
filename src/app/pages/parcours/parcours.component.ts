@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { layer } from 'src/app/components/layer/layer.component';
+import { event } from 'src/app/components/event/event.component';
 
 
 @Component({
@@ -13,72 +14,94 @@ export class ParcoursComponent {
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6'];
   titlesColors: Array<string> = ['#80690B', '#0F7950'];
   containerBgColors: Array<string> = ['#FFFAC2', '#D0FAE4'];
+  event1: event = {
+    title: 'event1',
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: 'details1'
+  };
+  event2: event = {
+    title: 'event2',
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: 'details2'
+  };
+
+  event3: event = {
+    title: 'event11',
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: 'details11'
+  };
+
+  event4: event = {
+    title: 'event12',
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: 'details12'
+  };
+
+
+  event11: event = {
+    title: 'event1',
+    iconColor: this.titlesBgColors[1],
+    eventColor: this.titlesColors[1],
+    details: 'details1'
+  };
+  event12: event = {
+    title: 'event2',
+    iconColor: this.titlesBgColors[1],
+    eventColor: this.titlesColors[1],
+    details: 'details2'
+  };
+
+  event13: event = {
+    title: 'event11',
+    iconColor: this.titlesBgColors[1],
+    eventColor: this.titlesColors[1],
+    details: 'details11'
+  };
+
+  event14: event = {
+    title: 'event12',
+    iconColor: this.titlesBgColors[1],
+    eventColor: this.titlesColors[1],
+    details: 'details12'
+  };
+
 
   layers: layer[] = [
     {
       title: this.titles[0],
-      titleBgColor:this.titlesBgColors[0],
-      titleColor:this.titlesColors[0],
-      containerBgColor:this.containerBgColors[0],
+      titleBgColor: this.titlesBgColors[0],
+      titleColor: this.titlesColors[0],
+      containerBgColor: this.containerBgColors[0],
       eventsLists: [
         [
-          { 
-            title: 'event1', 
-            iconColor: this.titlesBgColors[0], 
-            eventColor: this.titlesColors[0], 
-            details: 'details1' },
-            { 
-              title: 'event2', 
-              iconColor: this.titlesBgColors[0], 
-              eventColor: this.titlesColors[0], 
-              details: 'details2' }
+          this.event1, this.event2
 
         ],
         [
-          { 
-            title: 'event11', 
-            iconColor: this.titlesBgColors[0], 
-            eventColor: this.titlesColors[0], 
-            details: 'details11' },
-            { 
-              title: 'event12', 
-              iconColor: this.titlesBgColors[0], 
-              eventColor: this.titlesColors[0], 
-              details: 'details12' }
+          this.event3,
+          this.event4
 
         ]
       ]
     },
     {
       title: this.titles[1],
-      titleBgColor:this.titlesBgColors[1],
-      titleColor:this.titlesColors[1],
-      containerBgColor:this.containerBgColors[1],
+      titleBgColor: this.titlesBgColors[1],
+      titleColor: this.titlesColors[1],
+      containerBgColor: this.containerBgColors[1],
       eventsLists: [
         [
-          { 
-            title: 'event1', 
-            iconColor: this.titlesBgColors[1], 
-            eventColor: this.titlesColors[1], 
-            details: 'details1' },
-            { 
-              title: 'event2', 
-              iconColor: this.titlesBgColors[1], 
-              eventColor: this.titlesColors[1], 
-              details: 'details2' }
+          this.event11,
+          this.event12
 
         ],
         [
-          { 
-            title: 'event11', 
-            iconColor: this.titlesBgColors[1], 
-            eventColor: this.titlesColors[1], 
-            details: 'details11' },
-            { 
-              title: 'event12', 
-              iconColor: this.titlesBgColors[1], 
-              eventColor: this.titlesColors[1], 
-              details: 'details12' }
+          this.event13,
+          this.event14
 
         ]
       ]
