@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { event } from '../event/event.component';
 
 @Component({
   selector: 'app-event-details',
@@ -6,10 +7,13 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./event-details.component.css']
 })
 export class EventDetailsComponent {
-  @Input() eventTitle: string = "";
-  @Input() eventDetails: string = "";
-  @Input() iconColor: string = "";
-
+  @Input() event: event = {
+    title: '',
+    iconColor: '',
+    eventColor: '',
+    details: ''
+  };
+  
   @Input() showDetailsFlag: boolean = false;
   @Input() detailsStyle: any = {};
 

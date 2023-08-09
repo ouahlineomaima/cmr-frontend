@@ -18,6 +18,7 @@ import {
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -91,7 +92,8 @@ const appRoutes : Routes = [
     MatDatepickerModule,
     MatRadioModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    CommonModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},

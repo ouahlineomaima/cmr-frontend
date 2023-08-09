@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { event } from '../event/event.component';
 
 @Component({
   selector: 'app-event-pack',
@@ -6,11 +7,12 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./event-pack.component.css']
 })
 export class EventPackComponent {
-  @Input() eventTitle: string = "Event1";
-  @Input() iconColor: string = "#FFF28C";
-  @Input() eventColor: string = "#80690B";
-
-  @Input() eventDetails: string = "lorem ipsum torgdt zatyfgirdhdczc gvgvy ygzqfe<ytfsoqdsds zulyfqds szyugdeiuez dkdeieahzd";
+  @Input() event: event = {
+    title: '',
+    iconColor: '',
+    eventColor: '',
+    details: ''
+  };
   showDetailsFlag: boolean = false;
   detailsStyle: any = {};
 
