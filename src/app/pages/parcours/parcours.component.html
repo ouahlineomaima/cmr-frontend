@@ -2,11 +2,11 @@
   <section class="header">
     <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
   </section>
-  <div class="layers" *ngFor="let layer in layers">
-    <app-layer 
-    [layerTitle]="layer.title"
-    [titleColor]="layer.titleColor"
-    [titleBgColor]="layer.titleBgColor"
-    [eventsLists]="layer.eventsLists"></app-layer>
+  <div class="layers">
+    <div *ngFor="let layer of layers">
+      <app-layer 
+      [layer]="layer"></app-layer>
+    </div>
   </div>
+  
 </section>

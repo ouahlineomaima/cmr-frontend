@@ -1,7 +1,4 @@
-<div class="list" *ngFor="let event in events">
+<div class="list" *ngFor="let event of events">
     <app-event-pack 
-    [eventTitle]="event?.title"
-    [eventDetails]="event?.details"
-    [eventColor]="eventColor"
-    [iconColor]="iconColor"></app-event-pack>
+    [event]="event"></app-event-pack>
 </div>
