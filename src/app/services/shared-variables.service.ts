@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SimulationType } from '../enums/SimulationType';
+import { Child } from '../interfaces/child';
 
-
-export interface Child{
-  name: string;
-  dateOfBirth: string | null;
-  isCurrentlyStudying: boolean | null;
-  marialStatus: String | null;
-  isInfirm: boolean | null;
-  infirmityType: string | null;
-  
-}
 
 @Injectable({
   providedIn: 'root'
