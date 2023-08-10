@@ -1,13 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { event } from '../event/event.component';
+import { Layer } from 'src/app/interfaces/layer';
 
-export interface layer{
-  title: string,
-  titleBgColor: string,
-  titleColor: string,
-  containerBgColor: string,
-  eventsLists: Array<Array<event>>,
-}
 
 @Component({
   selector: 'app-layer',
@@ -16,7 +9,7 @@ export interface layer{
 })
 export class LayerComponent {
 
-  @Input() layer: layer = {
+  @Input() layer: Layer = {
     title: '',
     titleBgColor: '',
     titleColor: '',

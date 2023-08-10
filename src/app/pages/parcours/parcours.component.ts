@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { layer } from 'src/app/components/layer/layer.component';
-import { event } from 'src/app/components/event/event.component';
+import { Event } from 'src/app/interfaces/event';
+import { Layer } from 'src/app/interfaces/layer';
 
 
 @Component({
@@ -14,27 +14,27 @@ export class ParcoursComponent {
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6'];
   titlesColors: Array<string> = ['#80690B', '#0F7950'];
   containerBgColors: Array<string> = ['#FFFAC2', '#D0FAE4'];
-  event1: event = {
+  event1: Event = {
     title: 'event1',
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
     details: 'details1'
   };
-  event2: event = {
+  event2: Event = {
     title: 'event2',
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
     details: 'details2'
   };
 
-  event3: event = {
+  event3: Event = {
     title: 'event11',
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
     details: 'details11'
   };
 
-  event4: event = {
+  event4: Event = {
     title: 'event12',
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
@@ -42,27 +42,27 @@ export class ParcoursComponent {
   };
 
 
-  event11: event = {
+  event11: Event = {
     title: 'event1',
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
     details: 'details1'
   };
-  event12: event = {
+  event12: Event = {
     title: 'event2',
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
     details: 'details2'
   };
 
-  event13: event = {
+  event13: Event = {
     title: 'event11',
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
     details: 'details11'
   };
 
-  event14: event = {
+  event14: Event = {
     title: 'event12',
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
@@ -70,7 +70,7 @@ export class ParcoursComponent {
   };
 
 
-  layers: Array<layer> = [
+  layers: Array<Layer> = [
     {
       title: this.titles[0],
       titleBgColor: this.titlesBgColors[0],

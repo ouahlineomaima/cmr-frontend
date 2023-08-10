@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { event } from '../event/event.component';
+import { Event } from 'src/app/interfaces/event';
 
 @Component({
   selector: 'app-events-list',
@@ -8,6 +8,6 @@ import { event } from '../event/event.component';
 })
 export class EventsListComponent {
 
-  @Input() events: event[] = [];
+  @Input() events: Event[] = [];
 
 }
