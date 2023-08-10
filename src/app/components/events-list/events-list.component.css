@@ -1,4 +1,18 @@
-.list{
+/* .list{
     display: flex;
     flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: auto;
 }
+
+.list:not(:last-child):after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateX(-50%);
+    width: 0.1rem;
+    height: 1.5rem;
+    background-color: #000;
+} */

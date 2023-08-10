@@ -19,7 +19,6 @@ export class EventPackComponent {
 
   showDetails(event: MouseEvent): void {
     this.showDetailsFlag = true;
-    console.log('layer')
 
     // Get the position of the hovered h3
     const position = (event.target as HTMLElement).getBoundingClientRect();

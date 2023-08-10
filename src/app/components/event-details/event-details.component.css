@@ -1,12 +1,5 @@
 @import "primeicons/primeicons.css";
 
-i{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 0.5%;
-}
 .details{
     display: flex;
     width: 30%;
@@ -20,12 +13,23 @@ i{
     top: 0;
     left: 0;
     overflow: hidden;
+    z-index: 1;
+    box-shadow: 0px 8px 8px 1px rgba(56, 65, 82,1);
 }
+
+i{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5%;
+}
+
 
 .details-title,
 .details-paragraph {
-    position: relative; /* Keep child divs within the layout flow */
-}
+    position: relative; 
+} 
 
 .details-title{
     width: 100%;
@@ -57,5 +61,5 @@ i{
     border-radius: 6px;
     padding-left: 3%;
     padding-right: 3%;
-    box-shadow: 0px 8px 8px 1px rgba(56, 65, 82,1);
+    
 }
