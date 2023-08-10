@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Event } from 'src/app/interfaces/event';
 
 export interface event{
   title:string,
@@ -13,7 +14,7 @@ export interface event{
   styleUrls: ['./event.component.css']
 })
 export class EventComponent {
-  @Input() event: event = {
+  @Input() event: Event = {
     title: '',
     iconColor: '',
     eventColor: '',

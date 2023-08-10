@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { event } from '../event/event.component';
+import { Event } from 'src/app/interfaces/event';
 
 @Component({
   selector: 'app-event-pack',
@@ -7,7 +7,7 @@ import { event } from '../event/event.component';
   styleUrls: ['./event-pack.component.css']
 })
 export class EventPackComponent {
-  @Input() event: event = {
+  @Input() event: Event = {
     title: '',
     iconColor: '',
     eventColor: '',
