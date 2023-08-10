@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Itim&display=swap');
 
-.layer {
+.layer{
     min-width: 100%;
     min-height: 15%;
     display: flex;
     flex-direction: row;
-    border-bottom: 1px #80690B double;
+    border-bottom: 1px solid;
 }
 
 .title {
