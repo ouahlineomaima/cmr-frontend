@@ -1,12 +1,33 @@
 <div class="container-result-box-online">
     <div class="text-result-box-online">
         Merci d’avoir soumettre toutes les informations ! 
+        <br>
+        <!-- Cas d'une pension totale -->
+        <div class="text-result" *ngIf="hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired != true">
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour les fils/filles du défunt. 
+        </div>
+        <div class="text-result" *ngIf="hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired === true ">
+            Vous bénificiez d'une pension resérvée pour le conjoint du défunt et de {{childrenPourcentage}}% pour les fils/filles du défunt. 
+        </div>
 
+
+        <!--Cas d'une demi pension-->
+        <div class="text-result" *ngIf="childrenPourcentage > 0 && partnerPourcentage == 0">
+            Vous bénificiez d'une pension de {{childrenPourcentage}}% pour les fils/filles du défunt. 
+        </div>
+
+        <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage > 0">
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt. 
+        </div>
+
+        <!--Cas de non éligibilité-->
+        <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage == 0">
+            Vous n'êtes pas éligible à la pension. 
+        </div>
+
+        <div class="note"> <span>NB:</span> Ce résultat dépend des informations saisies. Il est recommandé de passer par une validation téléphonique avant de commencer la préparation de dossier.</div>
+        
     
-    <div class="text-result">Les deux enfants du défunt benificent d’une pension à 100%</div>
-
-    NB: Ce résultat dépend des informations saisies. Il est recommandé de passer par une validation téléphonique avant de commencer la préparation de dossier
     </div>
-
-    
 </div>
+    
