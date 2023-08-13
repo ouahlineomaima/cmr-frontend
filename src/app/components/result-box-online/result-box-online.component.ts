@@ -8,9 +8,9 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
 })
 export class ResultBoxOnlineComponent {
 
-  @Input() hasChildren: boolean = false;
   @Input() childrenPourcentage: number = 0;
   @Input() partnerPourcentage: number = 0;
+  @Input() childrenNames: string[] = [];
 
 
   constructor(public sharedVariablesService: SharedVariablesService) {}
