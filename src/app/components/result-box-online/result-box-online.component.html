@@ -3,17 +3,17 @@
         Merci d’avoir soumettre toutes les informations ! 
         <br>
         <!-- Cas d'une pension totale -->
-        <div class="text-result" *ngIf="hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired != true">
-            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour les fils/filles du défunt. 
+        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired != true">
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
-        <div class="text-result" *ngIf="hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired === true ">
-            Vous bénificiez d'une pension resérvée pour le conjoint du défunt et de {{childrenPourcentage}}% pour les fils/filles du défunt. 
+        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired === true ">
+            Vous bénificiez d'une pension resérvée pour le conjoint du défunt et de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
 
 
         <!--Cas d'une demi pension-->
         <div class="text-result" *ngIf="childrenPourcentage > 0 && partnerPourcentage == 0">
-            Vous bénificiez d'une pension de {{childrenPourcentage}}% pour les fils/filles du défunt. 
+            Vous bénificiez d'une pension de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
 
         <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage > 0">

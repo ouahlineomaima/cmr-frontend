@@ -5,12 +5,13 @@
     </section>
     <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
     <div class="main-container">
-        <app-result-box-online></app-result-box-online>
+        <app-result-box-online [childrenPourcentage]="childrenPourcentage" [partnerPourcentage]="partnerPourcentage"></app-result-box-online>
         <div class="container-btns">
             <button class="result-btn">Effectuer une validation téléphonique</button>
             <button class="result-btn">Consulter le parcours de préparation de dossier</button>
             <button class="result-btn">Télécharger le parcours de préparation de dossier</button>
             <button class="retour-btn">Retour</button>
         </div>
+        
     </div>
 </div>
