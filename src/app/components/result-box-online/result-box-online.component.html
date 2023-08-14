@@ -2,16 +2,16 @@
     <div class="text-result-box-online">
         Merci d’avoir soumettre toutes les informations ! 
         <br>
-        <!-- Cas d'une pension totale -->
+        <!-- Cas d'une pension totale à revoir -->
         <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired != true">
             Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
-        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired === true ">
+        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0 && sharedVariablesService.isPartnerRetired === false ">
             Vous bénificiez d'une pension resérvée pour le conjoint du défunt et de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
 
 
-        <!--Cas d'une demi pension-->
+        <!--Cas d'une demi pension à revoir-->
         <div class="text-result" *ngIf="childrenPourcentage > 0 && partnerPourcentage == 0">
             Vous bénificiez d'une pension de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
         </div>
