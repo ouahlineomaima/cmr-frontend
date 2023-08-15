@@ -1,12 +1,38 @@
 <div class="container-result-box-online">
     <div class="text-result-box-online">
         Merci d’avoir soumettre toutes les informations ! 
+        <br>
+        <!-- Cas d'une pension totale -->
+        <!-- 50% 50% -->
+        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0">
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}}, </span>. 
+        </div>
+        <!-- 50% réservée -->
+        <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage === -1">
+            Vous bénificiez d'une pension de 50% réservée pour le conjoint du défunt et de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
+        </div>
 
+
+        <!--Cas d'une demi pension à revoir-->
+        <div class="text-result" *ngIf="childrenPourcentage > 0 && partnerPourcentage === 0">
+            Vous bénificiez d'une pension de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}} </span>. 
+        </div>
+
+        <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage > 0">
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt. 
+        </div>
+        <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage == -1">
+            Vous bénificiez d'une pension resérvée pour le conjoint du défunt. 
+        </div>
+
+        <!--Cas de non éligibilité-->
+        <div class="text-result" *ngIf="childrenPourcentage == 0 && partnerPourcentage == 0">
+            Vous n'êtes pas éligible à la pension. 
+        </div>
+
+        <div class="note"> <span>NB:</span> Ce résultat dépend des informations saisies. Il est recommandé de passer par une validation téléphonique avant de commencer la préparation de dossier.</div>
+        
     
-    <div class="text-result">Les deux enfants du défunt benificent d’une pension à 100%</div>
-
-    NB: Ce résultat dépend des informations saisies. Il est recommandé de passer par une validation téléphonique avant de commencer la préparation de dossier
     </div>
-
-    
 </div>
+    
