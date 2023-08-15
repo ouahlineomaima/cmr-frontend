@@ -6,7 +6,7 @@
   <div class="layers">
     <div *ngFor="let layer of layers">
       <app-layer 
-      [layer]="layer"></app-layer>
+      [layer]="layer" *ngIf="layer.eventsLists[0].length > 0"></app-layer>
     </div>
   </div>
   
