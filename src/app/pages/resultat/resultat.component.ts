@@ -17,23 +17,24 @@ export class ResultatComponent {
   classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
 
   ngOnInit(): void {
-
     this.getStatus();
   }
 
   getStatus() {
+    // cas de conjoint seul
     if (this.sharedVariablesService.hasChildren != true) {
-      // cas de conjoint seul
       if (this.sharedVariablesService.isValidMarriagePeriod === true) {
         this.partnerPourcentage = 100;
         return;
       }
+      this.partnerPourcentage = 0;
       return;
     }
     else {
       let x: boolean = false; // to know wheter at least one of the children is elligible or not
-      // cas des enfants
+      // cas des enfants + conjoint
       for (let child of this.sharedVariablesService.children) {
+        console.log(child);
         if (child.marialStatus === 'non marié') {
           if (child.isInfirm === true) {
             this.childrenNames.push(child.name);
@@ -58,49 +59,51 @@ export class ResultatComponent {
         switch (this.sharedVariablesService.partnerMarialStatus) {
           case 'veuve':
             if (x == true) {
-              this.partnerPourcentage = 50
+              this.partnerPourcentage = 50;
+              this.childrenPourcentage = 50;
             }
             else {
-              this.partnerPourcentage = 10
+              this.partnerPourcentage = 100;
+              this.childrenPourcentage = 0;
             }
             break;
-          case 'Divorcé':
-          case 'Divorcée':
-          case 'Remariée':
-          case 'Remarié':
-          case 'Répudiée':
-            this.partnerPourcentage = 0;
-            break;
-
           case 'veuf':
             if (this.sharedVariablesService.isPartnerInfirm === true) {
               if (x == true) {
-                this.partnerPourcentage = 50
+                this.partnerPourcentage = 50;
+                this.childrenPourcentage = 50;
                 break;
               }
               else {
-                this.partnerPourcentage = 100
+                this.partnerPourcentage = 100;
+                this.childrenPourcentage = 0;
                 break;
               }
             }
             if (this.sharedVariablesService.isPartnerInfirm === false) {
               if (this.sharedVariablesService.isPartnerRetired === true) {
                 if (x == true) {
-                  this.partnerPourcentage = 50
+                  this.partnerPourcentage = 50;
+                  this.childrenPourcentage = 50;
                   break;
                 }
                 else {
-                  this.partnerPourcentage = 100
+                  this.partnerPourcentage = 100;
+                  this.childrenPourcentage = 0;
                   break;
                 }
               }
               else {
-                this.partnerPourcentage = -1
+                this.childrenPourcentage = x === true ? 50:0;
+                this.partnerPourcentage = -1;
                 break;
               }
-              break;
             }
         }
+      }
+      else{
+        this.partnerPourcentage = 0;
+        this.childrenPourcentage = x === true ? 100:0;
       }
     }
   }
@@ -116,14 +119,20 @@ export class ResultatComponent {
     const birthDay = birthdateParts ? parseInt(birthdateParts[0]) : 0;
 
     const birthdate = new Date(birthYear, birthMonth, birthDay);
-    const ageMilliseconds = currentDate.getTime() - birthdate.getTime();
-    const ageDate = new Date(ageMilliseconds);
-    return Math.abs(ageDate.getUTCFullYear() - birthYear);
+    const age = currentDate.getFullYear() - birthdate.getFullYear() - (
+      (currentDate.getMonth() < birthdate.getMonth() || 
+      (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
+  );
+  return age;
   }
 
 
 
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
+  }
+
+  goBack(){ // reinitialize variables
+    this.router.navigate(['/simulation-en-ligne']);
   }
 }
