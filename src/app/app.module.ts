@@ -52,7 +52,8 @@ const appRoutes : Routes = [
   {path:'contact', component:ContactComponent},
   {path:'resultat', component:ResultatComponent},
   {path:'simulation-en-ligne', component:SimulationEnLigneComponent},
-  {path:'choix-simulation', component:ChoixSimulationComponent}
+  {path:'choix-simulation', component:ChoixSimulationComponent},
+  {path:'parcours', component:ParcoursComponent}
 
 ]
 
