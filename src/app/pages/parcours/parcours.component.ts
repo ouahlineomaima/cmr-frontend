@@ -24,6 +24,7 @@ export class ParcoursComponent {
   celibatArray: Array<string> = [];
   acteMariageArray: Array<string> = [];
   jugementArray: Array<string> = [];
+  nonEmploiArray: Array<string> = [];
 
 
 
@@ -45,7 +46,7 @@ export class ParcoursComponent {
 
   //Hôpitale
   certifDeDeces: Event = {
-    title: "Examen du certifical médicale de décès",
+    title: "Examen du certificat médicale de décès",
     iconColor: this.titlesBgColors[4],
     eventColor: this.titlesColors[4],
     details: ""
@@ -59,18 +60,17 @@ export class ParcoursComponent {
 
   //District
   acteDeDeces: Event = {
-    title: "Extrait de l'acte du décès du défunt (e)",
+    title: "Extrait de l'acte du décès du défunt(e)",
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
     details: `Livret de famille ou livret d'identification d'état civil.
   Examen du certifical médicale de décès.`
   }
-
   acteDeNaissance: Event = {
     title: "Extrait de l'acte de naissance",
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
-    details: this.acteDeNaissanceArray.length > 0 ? `Extrait de l'acte de naissance de ${this.acteDeNaissanceArray.join(', ')}.` : ""
+    details: `Extrait de l'acte de naissance de ${this.acteDeNaissanceArray.join(', ')}.`
   }
 
   //Adoul
@@ -78,9 +78,9 @@ export class ParcoursComponent {
     title: "Acte d'héridité",
     iconColor: this.titlesBgColors[2],
     eventColor: this.titlesColors[2],
-    details: `Photocopie de la CNIE ou extrait de naissance de chaque héritié.
+    details: `Photocopie de la CNIE ou extrait d'acte de naissance de chaque héritié.
   Acte du décès.
-  Photocopie de l'acte de mariage pour le veuf et la(les) veuve(s).
+  Photocopie de(s) acte(s) de mariage de défunt(e) et son(ses) conjoint(es).
   12 témoins de sexe masculin.`
   }
 
@@ -97,17 +97,11 @@ export class ParcoursComponent {
     title: "Attestation de scolarité",
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
-    details: this.acteDeNaissanceArray.length > 0 ? `Attestation de scolarité de ${this.attestationScolariteArray.join(', ')}.` : ""
+    details:`Attestation de scolarité de ${this.attestationScolariteArray.join(', ')}.`
   }
 
   //Banque
-  ribConjoint: Event = {
-    title: "Relevé d'identité bancaire (RIB) ou chèque annulé",
-    iconColor: this.titlesBgColors[3],
-    eventColor: this.titlesColors[3],
-    details: ``
-  }
-  ribEnfant: Event = {
+  rib: Event = {
     title: "Relevé d'identité bancaire (RIB) ou chèque annulé",
     iconColor: this.titlesBgColors[3],
     eventColor: this.titlesColors[3],
@@ -123,11 +117,18 @@ export class ParcoursComponent {
     details: 'Téléchargeable depuis le site web de la CMR'
   }
   declarationCelibat: Event = {
-    title: 'Demande de réversion datée et signée',
+    title: "Déclaration sur l'honneur du célibat datée et signée",
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
     details: `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
     Téléchargeable depuis le site web de la CMR.`
+  }
+  declarationNonEmploi: Event = {
+    title: "Déclaration sur l'honneur de non emploi datée et signée",
+    iconColor: this.titlesBgColors[6],
+    eventColor: this.titlesColors[6],
+    details: `Déclaration sur l'honneur de non emploi datée et signée de ${this.nonEmploiArray.join(', ')}
+    Téléchargeable depuis le site web de la CMR`
   }
 
   //CMR: Délégation régionale
@@ -173,7 +174,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[1],
       containerBgColor: this.containerBgColors[1],
       eventsLists: [
-        [this.acteDeDeces, this.acteDeNaissance
+        [this.acteDeDeces
         ]
       ]
     },
@@ -209,7 +210,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[8],
       containerBgColor: this.containerBgColors[8],
       eventsLists: [
-        [this.attestationScolarite
+        [
         ]
       ]
     },
@@ -273,7 +274,9 @@ export class ParcoursComponent {
         this.layers[7].eventsLists[0].push(declarationNonRemariage);
         this.CNIEArray.push("veuve");
         this.acteMariageArray.push("veuve");
-        this.layers[6].eventsLists[0].push(this.ribConjoint);
+        if(!this.RIBArray.includes('veuve')){
+          this.RIBArray.push('veuve');
+        }
         if (this.sharedVariablesService.hasChildren === true) {
           for (let child of this.sharedVariablesService.children) {
             const age = this.calculateAge(child.dateOfBirth);
@@ -309,13 +312,9 @@ export class ParcoursComponent {
             if (child.isInfirm === true) {
               this.rapportMedicalArray.push(child.name)
               if (age > 16) {
-                let declarationNonEmploi: Event = {
-                  title: "Déclaration sur l'honneur de non emploi datée et signée",
-                  iconColor: this.titlesBgColors[6],
-                  eventColor: this.titlesColors[6],
-                  details: `Téléchargeable depuis le site web de la CMR`
+                if(!this.nonEmploiArray.includes(child.name)){
+                  this.nonEmploiArray.push(child.name);
                 }
-                this.layers[7].eventsLists[0].push(declarationNonEmploi);
               }
             }
           }
@@ -339,8 +338,8 @@ export class ParcoursComponent {
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
                 this.jugementArray.push(child.name);
-                if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                  this.layers[6].eventsLists[0].push(this.ribConjoint);
+                if(!this.RIBArray.includes('Ex-conjointe')){
+                  this.RIBArray.push('Ex-conjointe');
                 }
               }
               else if (age < 18) {
@@ -348,8 +347,8 @@ export class ParcoursComponent {
                 this.jugementArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name)
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjointe')){
+                    this.RIBArray.push('Ex-conjointe');
                   }
                 }
               }
@@ -376,21 +375,17 @@ export class ParcoursComponent {
               if (child.isInfirm === true) {
                 this.rapportMedicalArray.push(child.name)
                 if (child.infirmityType === 'mentale') {
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjointe')){
+                    this.RIBArray.push('Ex-conjointe');
                   }
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name);
                   }
                 }
                 if (age > 16) {
-                  let declarationNonEmploi: Event = {
-                    title: "Déclaration sur l'honneur de non emploi datée et signée",
-                    iconColor: this.titlesBgColors[6],
-                    eventColor: this.titlesColors[6],
-                    details: `Téléchargeable depuis le site web de la CMR`
+                  if(!this.nonEmploiArray.includes(child.name)){
+                    this.nonEmploiArray.push(child.name);
                   }
-                  this.layers[7].eventsLists[0].push(declarationNonEmploi);
                 }
               }
 
@@ -416,8 +411,8 @@ export class ParcoursComponent {
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
                 this.jugementArray.push(child.name);
-                if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                  this.layers[6].eventsLists[0].push(this.ribConjoint);
+                if(!this.RIBArray.includes('Ex-conjointe')){
+                  this.RIBArray.push('Ex-conjointe');
                 }
               }
               else if (age < 18) {
@@ -425,8 +420,8 @@ export class ParcoursComponent {
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name)
                   this.jugementArray.push(child.name);
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjointe')){
+                    this.RIBArray.push('Ex-conjointe');
                   }
                 }
               }
@@ -451,18 +446,14 @@ export class ParcoursComponent {
                   if(!this.jugementArray.includes(child.name)){
                     this.jugementArray.push(child.name);
                   }
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjointe')){
+                    this.RIBArray.push('Ex-conjointe');
                   }
                 }
                 if (age > 16) {
-                  let declarationNonEmploi: Event = {
-                    title: "Déclaration sur l'honneur de non emploi datée et signée",
-                    iconColor: this.titlesBgColors[6],
-                    eventColor: this.titlesColors[6],
-                    details: `Téléchargeable depuis le site web de la CMR`
+                  if(!this.nonEmploiArray.includes(child.name)){
+                    this.nonEmploiArray.push(child.name);
                   }
-                  this.layers[7].eventsLists[0].push(declarationNonEmploi);
                 }
               }
 
@@ -490,13 +481,13 @@ export class ParcoursComponent {
         this.acteMariageArray.push("veuf");
         if (this.sharedVariablesService.isPartnerInfirm === true) {
           this.rapportMedicalArray.push('veuf');
-          if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-            this.layers[6].eventsLists[0].push(this.ribConjoint);
+          if(!this.RIBArray.includes('veuf')){
+            this.RIBArray.push('veuf');
           }
         }
         else if (this.sharedVariablesService.isPartnerRetired === true) {
-          if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-            this.layers[6].eventsLists[0].push(this.ribConjoint);
+          if(!this.RIBArray.includes('veuf')){
+            this.RIBArray.push('veuf');
           }
         }
         if (this.sharedVariablesService.hasChildren === true) {
@@ -504,16 +495,16 @@ export class ParcoursComponent {
             const age = this.calculateAge(child.dateOfBirth);
             if (age < 16) {
               this.acteDeNaissanceArray.push(child.name);
-              if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                this.layers[6].eventsLists[0].push(this.ribConjoint);
+              if(!this.RIBArray.includes('veuf')){
+                this.RIBArray.push('veuf');
               }
             }
             else if (age < 18) {
               this.acteDeNaissanceArray.push(child.name);
               if (child.isCurrentlyStudying === true) {
                 this.attestationScolariteArray.push(child.name);
-                if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                  this.layers[6].eventsLists[0].push(this.ribConjoint);
+                if(!this.RIBArray.includes('veuf')){
+                  this.RIBArray.push('veuf');
                 }
               }
             }
@@ -543,13 +534,9 @@ export class ParcoursComponent {
               this.rapportMedicalArray.push(child.name);
 
               if (age > 16) {
-                let declarationNonEmploi: Event = {
-                  title: "Déclaration sur l'honneur de non emploi datée et signée",
-                  iconColor: this.titlesBgColors[6],
-                  eventColor: this.titlesColors[6],
-                  details: `Téléchargeable depuis le site web de la CMR`
+                if(!this.nonEmploiArray.includes(child.name)){
+                  this.nonEmploiArray.push(child.name);
                 }
-                this.layers[7].eventsLists[0].push(declarationNonEmploi);
               }
             }
 
@@ -576,8 +563,8 @@ export class ParcoursComponent {
                 if(!this.jugementArray.includes(child.name)){
                   this.jugementArray.push(child.name)
                 }  
-                if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                  this.layers[6].eventsLists[0].push(this.ribConjoint);
+                if(!this.RIBArray.includes('Ex-conjoint')){
+                  this.RIBArray.push('Ex-conjoint');
                 }
               }
               else if (age < 18) {
@@ -587,8 +574,8 @@ export class ParcoursComponent {
                   if(!this.jugementArray.includes(child.name)){
                     this.jugementArray.push(child.name)
                   }
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjoint')){
+                    this.RIBArray.push('Ex-conjoint');
                   }
                 }
               }
@@ -612,18 +599,14 @@ export class ParcoursComponent {
               if (child.isInfirm === true) {
                 this.rapportMedicalArray.push(child.name)
                 if (child.infirmityType === 'mentale' && child.marialStatus != 'marié') {
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjoint')){
+                    this.RIBArray.push('Ex-conjoint');
                   }
                 }
                 if (age > 16) {
-                  let declarationNonEmploi: Event = {
-                    title: "Déclaration sur l'honneur de non emploi datée et signée",
-                    iconColor: this.titlesBgColors[6],
-                    eventColor: this.titlesColors[6],
-                    details: `Téléchargeable depuis le site web de la CMR`
+                  if(!this.nonEmploiArray.includes(child.name)){
+                    this.nonEmploiArray.push(child.name);
                   }
-                  this.layers[7].eventsLists[0].push(declarationNonEmploi);
                 }
               }
 
@@ -648,8 +631,8 @@ export class ParcoursComponent {
                 if(!this.jugementArray.includes(child.name)){
                   this.jugementArray.push(child.name)
                 }  
-                if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                  this.layers[6].eventsLists[0].push(this.ribConjoint);
+                if(!this.RIBArray.includes('Ex-conjoint')){
+                  this.RIBArray.push('Ex-conjoint');
                 }
               }
               else if (age < 18) {
@@ -659,8 +642,8 @@ export class ParcoursComponent {
                   if(!this.jugementArray.includes(child.name)){
                     this.jugementArray.push(child.name)
                   }
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjoint')){
+                    this.RIBArray.push('Ex-conjoint');
                   }
                 }
               }
@@ -684,18 +667,14 @@ export class ParcoursComponent {
               if (child.isInfirm === true) {
                 this.rapportMedicalArray.push(child.name)
                 if (child.infirmityType === 'mentale' && child.marialStatus != 'marié') {
-                  if (!this.layers[6].eventsLists[0].includes(this.ribConjoint)) {
-                    this.layers[6].eventsLists[0].push(this.ribConjoint);
+                  if(!this.RIBArray.includes('Ex-conjoint')){
+                    this.RIBArray.push('Ex-conjoint');
                   }
                 }
                 if (age > 16) {
-                  let declarationNonEmploi: Event = {
-                    title: "Déclaration sur l'honneur de non emploi datée et signée",
-                    iconColor: this.titlesBgColors[6],
-                    eventColor: this.titlesColors[6],
-                    details: `Téléchargeable depuis le site web de la CMR`
+                  if(!this.nonEmploiArray.includes(child.name)){
+                    this.nonEmploiArray.push(child.name);
                   }
-                  this.layers[7].eventsLists[0].push(declarationNonEmploi);
                 }
               }
 
@@ -760,13 +739,9 @@ export class ParcoursComponent {
               }
             }
             if (age > 16) {
-              let declarationNonEmploi: Event = {
-                title: "Déclaration sur l'honneur de non emploi datée et signée",
-                iconColor: this.titlesBgColors[6],
-                eventColor: this.titlesColors[6],
-                details: `Téléchargeable depuis le site web de la CMR`
+              if(!this.nonEmploiArray.includes(child.name)){
+                this.nonEmploiArray.push(child.name);
               }
-              this.layers[7].eventsLists[0].push(declarationNonEmploi);
             }
           }
 
@@ -774,10 +749,10 @@ export class ParcoursComponent {
       }
     }
 
-    //Update layers with events
+    //Add variables events to layers
       // les RIB
     if(this.RIBArray.length > 0 ){
-      this.layers[6].eventsLists[0].push(this.ribEnfant);
+      this.layers[6].eventsLists[0].push(this.rib);
     }
 
       // Actes de naissance
@@ -805,9 +780,14 @@ export class ParcoursComponent {
       this.layers[0].eventsLists[0].push(this.acteDeMariage);
     }
 
-    //Jugements
+      //Jugements
     if(this.jugementArray.length > 0 ){
       this.layers[4].eventsLists[0].push(this.jugement);
+    }
+
+      //Attestation de non emploi
+    if(this.nonEmploiArray.length > 0){
+      this.layers[7].eventsLists[0].push(this.declarationNonEmploi);
     }
   }
 
