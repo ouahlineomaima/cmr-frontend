@@ -293,9 +293,11 @@ export class ParcoursComponent {
               this.CNIEArray.push(child.name);
               if (child.isCurrentlyStudying === true) {
                 this.attestationScolariteArray.push(child.name);
-                if (!this.RIBArray.includes(child.name)) {
-                  this.RIBArray.push(child.name);
-                }
+                if(child.marialStatus === 'non marié' && child.infirmityType != 'mentale'){
+                  if (!this.RIBArray.includes(child.name)) {
+                    this.RIBArray.push(child.name);
+                  }
+                } 
               }
               if (child.marialStatus === 'non marié') {
                 this.celibatArray.push(child.name);
@@ -355,10 +357,12 @@ export class ParcoursComponent {
               else if (age < 21) {
                 this.CNIEArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
-                  this.attestationScolariteArray.push(child.name)
-                  if (!this.RIBArray.includes(child.name)) {
-                    this.RIBArray.push(child.name);
-                  }
+                  this.attestationScolariteArray.push(child.name);
+                  if(child.marialStatus === 'non marié' && child.infirmityType != 'mentale'){
+                    if (!this.RIBArray.includes(child.name)) {
+                      this.RIBArray.push(child.name);
+                    }
+                  } 
                 }
                 if (child.marialStatus === 'non marié') {
                   this.celibatArray.push(child.name);
@@ -388,11 +392,8 @@ export class ParcoursComponent {
                   }
                 }
               }
-
             }
           }
-
-
         }
 
         // Cas remariée
@@ -430,11 +431,18 @@ export class ParcoursComponent {
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name);
                   if(child.marialStatus === 'non marié' && child.infirmityType != 'mentale'){
-                    this.RIBArray.push(child.name);
+                    if (!this.RIBArray.includes(child.name)) {
+                      this.RIBArray.push(child.name);
+                    }
                   }
                 }
                 if (child.marialStatus === 'non marié') {
                   this.celibatArray.push(child.name);
+                  if (child.infirmityType === 'physique') {
+                    if (!this.RIBArray.includes(child.name)) {
+                      this.RIBArray.push(child.name);
+                    }
+                  }
                 }
                 else {
                   this.acteMariageArray.push(child.name);
@@ -456,11 +464,8 @@ export class ParcoursComponent {
                   }
                 }
               }
-
             }
           }
-
-
         }
       }
     }
