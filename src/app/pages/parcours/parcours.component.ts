@@ -19,6 +19,11 @@ export class ParcoursComponent {
   CNIEArray: Array<string> = ["défunt"];
   RIBArray: Array<string> = [];
   acteDeNaissanceArray: Array<string> = [];
+  attestationScolariteArray: Array<string> = [];
+  rapportMedicalArray: Array<string> = [];
+  celibatArray: Array<string> = [];
+  acteMariageArray: Array<string> = [];
+
 
 
   // Evenements fixes par emplacement
@@ -30,6 +35,12 @@ export class ParcoursComponent {
     eventColor: this.titlesColors[0],
     details: `Photocopie de la CNIE de ${this.CNIEArray.join(', ')}.`
   }
+  acteDeMariage: Event = {
+    title: "Photocopie de l'acte de mariage",
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: `Photocopie de l'acte de mariage de ${this.acteMariageArray.join(', ')}.`
+  }
 
   //Hôpitale
   certifDeDeces: Event = {
@@ -37,6 +48,12 @@ export class ParcoursComponent {
     iconColor: this.titlesBgColors[4],
     eventColor: this.titlesColors[4],
     details: ""
+  }
+  rapportMedical: Event = {
+    title: "Rapport médical et contre visite",
+    iconColor: this.titlesBgColors[4],
+    eventColor: this.titlesColors[4],
+    details: `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}.`
   }
 
   //District
@@ -66,6 +83,14 @@ export class ParcoursComponent {
   12 témoins de sexe masculin.`
   }
 
+  //Ecole
+  attestationScolarite: Event = {
+    title: "Attestation de scolarité",
+    iconColor: this.titlesBgColors[0],
+    eventColor: this.titlesColors[0],
+    details: this.acteDeNaissanceArray.length > 0 ? `Attestation de scolarité de ${this.attestationScolariteArray.join(', ')}.` : ""
+  }
+
   //Banque
   ribConjoint: Event = {
     title: "Relevé d'identité bancaire (RIB) ou chèque annulé",
@@ -80,7 +105,14 @@ export class ParcoursComponent {
     title: 'Demande de réversion datée et signée',
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: 'Cliquer pour télécharger le document depuis le site de la CMR'
+    details: 'Téléchargeable depuis le site web de la CMR'
+  }
+  declarationCelibat: Event = {
+    title: 'Demande de réversion datée et signée',
+    iconColor: this.titlesBgColors[6],
+    eventColor: this.titlesColors[6],
+    details: `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
+    Téléchargeable depuis le site web de la CMR.`
   }
 
   //CMR: Délégation régionale
@@ -162,7 +194,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[8],
       containerBgColor: this.containerBgColors[8],
       eventsLists: [
-        [
+        [this.attestationScolarite
         ]
       ]
     },
@@ -204,8 +236,91 @@ export class ParcoursComponent {
     }
   ]
 
+  ngOnInit(): void {
+    this.updateLayers();
+  }
+
+
+  //Fonction pour mettre à jour les événements
+  updateLayers(){
+    // Cas d'une veuve still partner
+    if (this.sharedVariablesService.partnerSexe === 'femelle'){
+      if (this.sharedVariablesService.isStillPartner === true){
+        let declarationNonRemariage: Event = {
+          title: "Déclaration sur l'honneur de non remariage.",
+          iconColor: this.titlesBgColors[7],
+          eventColor: this.titlesColors[7],
+          details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom de la veuve.
+          Téléchargeable depuis le site web de la CMR.`
+        }
+        
+        this.layers[7].eventsLists[0].push(declarationNonRemariage);
+        this.CNIEArray.push("veuve");
+        this.acteMariageArray.push("veuve");
+        this.layers[6].eventsLists[0].push(this.ribConjoint);
+        if(this.sharedVariablesService.hasChildren === true){
+          for(let child of this.sharedVariablesService.children){
+            const age = this.calculateAge(child.dateOfBirth);
+            if (age < 16){
+              this.acteDeNaissanceArray.push(child.name);
+            }
+            else if (age < 18){
+              this.acteDeNaissanceArray.push(child.name);
+              if(child.isCurrentlyStudying === true){
+                this.attestationScolariteArray.push(child.name)
+              }
+            }
+            else if (age < 21){
+              this.CNIEArray.push(child.name);
+              if(child.isCurrentlyStudying === true){
+                this.attestationScolariteArray.push(child.name)
+              }
+              if(child.marialStatus === 'non marié'){
+                this.celibatArray.push(child.name);
+              }
+              else{
+                this.acteMariageArray.push(child.name);
+              }
+            }
+            if (child.isInfirm === true){
+              this.rapportMedicalArray.push(child.name)
+              if (age > 16){
+                let declarationNonEmploi: Event = {
+                  title: "Déclaration sur l'honneur de non emploi datée et signée",
+                  iconColor: this.titlesBgColors[6],
+                  eventColor: this.titlesColors[6],
+                  details: `Téléchargeable depuis le site web de la CMR`
+                }
+                this.layers[7].eventsLists[0].push(declarationNonEmploi);
+              }
+            }
+
+          }
+        }
+      }
+    }
+
+  }
+
+  calculateAge(birthdateString: string | null): number {
+    const currentDate = new Date();
+    const birthdateParts = birthdateString?.split('/');
+    const birthYear = birthdateParts ? parseInt(birthdateParts[2]) : 0;
+    const birthMonth = birthdateParts ? parseInt(birthdateParts[1]) - 1 : 0;
+    const birthDay = birthdateParts ? parseInt(birthdateParts[0]) : 0;
+
+    const birthdate = new Date(birthYear, birthMonth, birthDay);
+    const age = currentDate.getFullYear() - birthdate.getFullYear() - (
+      (currentDate.getMonth() < birthdate.getMonth() || 
+      (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
+  );
+  return age;
+  }
 
   
+
+  
+
 
 
 
