@@ -8,7 +8,7 @@
         <app-result-box-online [childrenPourcentage]="childrenPourcentage" [partnerPourcentage]="partnerPourcentage" [childrenNames]="childrenNames"></app-result-box-online>
         <div class="container-btns">
             <button class="result-btn">Effectuer une validation téléphonique</button>
-            <button class="result-btn">Consulter le parcours de préparation de dossier</button>
+            <button class="result-btn" (click)="goParcours()">Consulter le parcours de préparation de dossier</button>
             <button class="result-btn">Télécharger le parcours de préparation de dossier</button>
             <button class="retour-btn" (click)="goBack()">Retour</button>
         </div>
