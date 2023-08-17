@@ -64,9 +64,16 @@ h3 {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  color: #47B1ED;
+  color: #00487C;
+  white-space: nowrap;
 }
 
 .btn:first-child{
   color: black;
+}
+
+@media screen and (max-width: 406px) {
+  i {
+    font-size: 0.9rem;
+  }
 }
