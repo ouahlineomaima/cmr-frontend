@@ -133,7 +133,7 @@ export class ResultatComponent {
   }
 
   goParcours(){
-    this.router.navigate(['/accueil']);
+    this.router.navigate(['/parcours']);
   }
 
   goBack(){ // reinitialize variables

@@ -1,9 +1,9 @@
-<div class="details" *ngIf="showDetailsFlag" [style.top]="detailsStyle?.top" [style.left]="detailsStyle?.left">
+<div class="details" *ngIf="showDetailsFlag" [style.x]="detailsStyle?.x" [style.y]="detailsStyle?.y">
     <div class="details-title">
         <i class="pi pi-file" [style.color]="event.iconColor" style="font-size: 1.5rem"></i>
         <h4> {{event.title}}</h4>
     </div>
     <div class="details-paragraph" *ngIf="event.details != ''">
-        <p>{{event.details}}</p>
+        <p *ngFor="let line of event.details.split('.')"><span>{{"• "}}</span>{{ line.trim() }}.</p>
     </div>
 </div>
