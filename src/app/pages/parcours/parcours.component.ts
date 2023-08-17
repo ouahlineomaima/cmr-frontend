@@ -198,7 +198,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[5],
       containerBgColor: this.containerBgColors[5],
       eventsLists: [
-        [this.jugement
+        [
         ]
       ]
     },
@@ -210,7 +210,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[8],
       containerBgColor: this.containerBgColors[8],
       eventsLists: [
-        [this.attestationScolarite
+        [
         ]
       ]
     },
@@ -222,7 +222,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[3],
       containerBgColor: this.containerBgColors[3],
       eventsLists: [
-        [this.rib
+        [
         ]
       ]
     },
