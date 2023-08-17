@@ -4,9 +4,9 @@
   </section>
   <h3>Découvrez le parcours de préparation de votre dossier</h3>
   <div class="layers">
-    <div *ngFor="let layer of layers">
+    <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
       <app-layer 
-      [layer]="layer" *ngIf="layer.eventsLists[0].length > 0"></app-layer>
+      [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*5"></app-layer>
     </div>
   </div>
   
