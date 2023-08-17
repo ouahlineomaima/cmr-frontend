@@ -24,19 +24,18 @@ export class EventPackComponent {
     const position = (event.target as HTMLElement).getBoundingClientRect();
 
     // Calculate the top and left position for the details div
-    const top = position.top;
-    const left = position.left;
+    const x = position.x;
+    const y = position.y;
 
     // Set the position of the details div
     this.detailsStyle = {
-      'top': `${top + 30}px`,
-      'left': `${left + 20}px`,
+      'x': `${x}`,
+      'y': `${y}`,
     };
   }
 
   hideDetails(): void {
     this.showDetailsFlag = false;
-    console.log('leave')
   }
 
 }

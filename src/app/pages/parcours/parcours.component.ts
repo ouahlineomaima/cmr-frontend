@@ -14,7 +14,7 @@ export class ParcoursComponent {
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
-  titlesColors: Array<string> = ['#80690B', '#0F7950', '#045884', '#4D2892', '#91390B', '#0B7189', '#063F4B', '#010114', '#B6917C'];
+  titlesColors: Array<string> = ['#80690B', '#0F7950', '#045884', '#4D2892', '#91390B', '#5E314D', '#063F4B', '#010114', '#B6917C'];
   containerBgColors: Array<string> = ['#FFFAC2', '#D0FAE4', '#E1F3FF', '#EEEBFF', '#FFEDD5', '#B979A1', '#12BCE2', '#0608B2', '#F0E9E5'];
   CNIEArray: Array<string> = ["défunt"];
   RIBArray: Array<string> = [];
@@ -35,13 +35,13 @@ export class ParcoursComponent {
     title: "Photocopie de la CNIE",
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
-    details: `Photocopie de la CNIE de ${this.CNIEArray.join(', ')}.`
+    details: ''
   }
   acteDeMariage: Event = {
     title: "Photocopie de l'acte de mariage",
     iconColor: this.titlesBgColors[0],
     eventColor: this.titlesColors[0],
-    details: `Photocopie de l'acte de mariage de ${this.acteMariageArray.join(', ')}.`
+    details: ''
   }
 
   //Hôpitale
@@ -55,7 +55,7 @@ export class ParcoursComponent {
     title: "Rapport médical et contre visite",
     iconColor: this.titlesBgColors[4],
     eventColor: this.titlesColors[4],
-    details: `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}.`
+    details: ''
   }
 
   //District
@@ -64,13 +64,13 @@ export class ParcoursComponent {
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
     details: `Livret de famille ou livret d'identification d'état civil.
-  Examen du certifical médicale de décès.`
+  Examen du certifical médicale de décès`
   }
   acteDeNaissance: Event = {
     title: "Extrait de l'acte de naissance",
     iconColor: this.titlesBgColors[1],
     eventColor: this.titlesColors[1],
-    details: `Extrait de l'acte de naissance de ${this.acteDeNaissanceArray.join(', ')}.`
+    details: ''
   }
 
   //Adoul
@@ -81,7 +81,7 @@ export class ParcoursComponent {
     details: `Photocopie de la CNIE ou extrait d'acte de naissance de chaque héritié.
   Acte du décès.
   Photocopie de(s) acte(s) de mariage de défunt(e) et son(ses) conjoint(es).
-  12 témoins de sexe masculin.`
+  12 témoins de sexe masculin`
   }
 
   //Tribunal
@@ -89,15 +89,15 @@ export class ParcoursComponent {
     title: "Copie du jugement de tutelle et Certificat de non opposition, appel ou cassation.",
     iconColor: this.titlesBgColors[5],
     eventColor: this.titlesColors[5],
-    details: `Copie du jugement de tutelle et Certificat de non opposition, appel ou cassation pour ${this.jugementArray.join(', ')}.`
+    details: ''
   }
 
   //Ecole
   attestationScolarite: Event = {
     title: "Attestation de scolarité",
-    iconColor: this.titlesBgColors[0],
-    eventColor: this.titlesColors[0],
-    details:`Attestation de scolarité de ${this.attestationScolariteArray.join(', ')}.`
+    iconColor: this.titlesBgColors[8],
+    eventColor: this.titlesColors[8],
+    details:''
   }
 
   //Banque
@@ -120,15 +120,13 @@ export class ParcoursComponent {
     title: "Déclaration sur l'honneur du célibat datée et signée",
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
-    Téléchargeable depuis le site web de la CMR.`
+    details: ''
   }
   declarationNonEmploi: Event = {
     title: "Déclaration sur l'honneur de non emploi datée et signée",
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: `Déclaration sur l'honneur de non emploi datée et signée de ${this.nonEmploiArray.join(', ')}
-    Téléchargeable depuis le site web de la CMR`
+    details: ''
   }
 
   //CMR: Délégation régionale
@@ -136,7 +134,7 @@ export class ParcoursComponent {
     title: 'Dépot du dossier de révérsion',
     iconColor: this.titlesBgColors[7],
     eventColor: this.titlesColors[7],
-    details: 'Déposer le dossier de réversion avec tous les documents préparer dans les étapes précédentes.'
+    details: 'Déposer le dossier de réversion avec tous les documents préparer dans les étapes précédentes'
   }
 
 
@@ -150,7 +148,7 @@ export class ParcoursComponent {
       titleColor: this.titlesColors[0],
       containerBgColor: this.containerBgColors[0],
       eventsLists: [
-        [this.CNIE
+        [
         ]
       ]
     },
@@ -265,8 +263,8 @@ export class ParcoursComponent {
       if (this.sharedVariablesService.isStillPartner === true) {
         let declarationNonRemariage: Event = {
           title: "Déclaration sur l'honneur de non remariage.",
-          iconColor: this.titlesBgColors[7],
-          eventColor: this.titlesColors[7],
+          iconColor: this.titlesBgColors[6],
+          eventColor: this.titlesColors[6],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom de la veuve.
           Téléchargeable depuis le site web de la CMR.`
         }
@@ -783,43 +781,57 @@ export class ParcoursComponent {
     }
 
     //Add variables events to layers
+      //CNIE
+    this.CNIE.details = `Photocopie de la CNIE de ${this.CNIEArray.join(', ')}`
+    this.layers[0].eventsLists[0].push(this.CNIE);
+
       // les RIB
     if(this.RIBArray.length > 0 ){
+      this.rib.details = `Relevé d'identité bancaire (RIB) ou chèque annulé de ${this.RIBArray.join(', ')}`;
       this.layers[6].eventsLists[0].push(this.rib);
     }
 
       // Actes de naissance
     if(this.acteDeNaissanceArray.length > 0 ){
+      this.acteDeNaissance.details = `Extrait de l'acte de naissance de ${this.acteDeNaissanceArray.join(', ')}`
       this.layers[2].eventsLists[0].push(this.acteDeNaissance);
     }
 
       //Attestations de scolarité
     if(this.attestationScolariteArray.length > 0 ){
+      this.attestationScolarite.details = `Attestation de scolarité de ${this.attestationScolariteArray.join(', ')}`
       this.layers[5].eventsLists[0].push(this.attestationScolarite);
     }
 
       //Rapports médicaux
     if(this.rapportMedicalArray.length > 0 ){
+      this.rapportMedical.details = `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}`
       this.layers[1].eventsLists[0].push(this.rapportMedical);
     }
 
       //Declaration de célibat
     if(this.celibatArray.length > 0 ){
+      this.declarationCelibat.details = `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
+      Téléchargeable depuis le site web de la CMR`
       this.layers[7].eventsLists[0].push(this.declarationCelibat);
     }
 
       //Actes de mariage
     if(this.acteMariageArray.length > 0 ){
+      this.acteDeMariage.details = `Photocopie de l'acte de mariage de ${this.acteMariageArray.join(', ')}`
       this.layers[0].eventsLists[0].push(this.acteDeMariage);
     }
 
       //Jugements
     if(this.jugementArray.length > 0 ){
+      this.jugement.details = `Copie du jugement de tutelle et Certificat de non opposition, appel ou cassation pour ${this.jugementArray.join(', ')}`
       this.layers[4].eventsLists[0].push(this.jugement);
     }
 
       //Attestation de non emploi
     if(this.nonEmploiArray.length > 0){
+      this.declarationNonEmploi.details = `Déclaration sur l'honneur de non emploi datée et signée de ${this.nonEmploiArray.join(', ')}
+      Téléchargeable depuis le site web de la CMR`
       this.layers[7].eventsLists[0].push(this.declarationNonEmploi);
     }
   }
