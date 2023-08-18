@@ -1,4 +1,4 @@
-<section class="main-container">
+<section class="main-container"  id="downloaded" #downloaded>
   <section class="header">
     <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
   </section>
@@ -9,10 +9,28 @@
       [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
     </div>
   </div>
+  <section *ngFor="let displayedIndex of displayedLayerIndices" class="details">
+    <div class="layer-details">
+      <h3>{{layers[displayedIndex].title}}</h3>
+      <div *ngFor="let event of layers[displayedIndex].eventsLists[0]" class="event-details">
+        <app-event [event]="event" class="event-title1"></app-event>
+        <div class="event-description">
+          <ng-container *ngFor="let line of event.details.split('.')" >
+            <h4 *ngIf="event.details != ''">{{"• "}}{{ line.trim() }}.</h4>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
 </section>
+
+
+
 <div class="btns">
   <button class="btn"> Retour</button>
-  <button class="btn"> Exporter PDF 
+  <button class="btn" (click)="exportToPDF()"> Exporter PDF 
     <i class="pi pi-file-pdf" style="color: #00487C"></i>
   </button>
 </div>
