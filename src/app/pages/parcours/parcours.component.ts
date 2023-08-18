@@ -872,7 +872,12 @@ export class ParcoursComponent {
 
   exportToPDF() {
     let title:string = 'parcours.pdf';
-    let pdf = new jsPDF()
+    let pdf = new jsPDF({
+      orientation: 'l',
+      unit: 'px',
+      format: [window.innerWidth, window.innerHeight],
+      putOnlyUsedFonts:false
+     })
     pdf.html(this.el.nativeElement, {
       callback: (pdf) =>{
         pdf.save(title);
