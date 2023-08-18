@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import jsPDF from 'jspdf';
 import { Event } from 'src/app/interfaces/event';
 import { Layer } from 'src/app/interfaces/layer';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
+
+
 
 @Component({
   selector: 'app-parcours',
@@ -10,7 +13,12 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
 })
 export class ParcoursComponent {
 
+  
+
   constructor(public sharedVariablesService: SharedVariablesService) { }
+
+  @ViewChild('downloaded', {static:false}) el!: ElementRef
+  display:string = 'none'
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
@@ -861,4 +869,16 @@ export class ParcoursComponent {
     );
     return age;
   }
+
+  exportToPDF() {
+    let title:string = 'parcours.pdf';
+    let pdf = new jsPDF()
+    pdf.html(this.el.nativeElement, {
+      callback: (pdf) =>{
+        pdf.save(title);
+      }
+    })
+    
+  }
+
 }
