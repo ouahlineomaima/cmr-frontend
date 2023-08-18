@@ -10,9 +10,24 @@
     </div>
   </div>
 </section>
+
+<section class="downloaded" id="downloaded" #downloaded >
+  <section class="main-container">
+    <section class="header">
+      <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
+    </section>
+    <div class="layers">
+      <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
+        <app-layer 
+        [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
+      </div>
+    </div>
+  </section>
+
+</section>
 <div class="btns">
   <button class="btn"> Retour</button>
-  <button class="btn"> Exporter PDF 
+  <button class="btn" (click)="exportToPDF()"> Exporter PDF 
     <i class="pi pi-file-pdf" style="color: #00487C"></i>
   </button>
 </div>
