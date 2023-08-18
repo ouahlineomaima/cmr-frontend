@@ -48,7 +48,7 @@ h3 {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  margin-top: 8%;
+  margin-top: 6%;
 }
 
 .btn {
@@ -77,3 +77,63 @@ h3 {
     font-size: 0.9rem;
   }
 }
+
+.details{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 2%;
+}
+
+.layer-details{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.layer-details h3{
+  text-align: start;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 0.5rem;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-bottom: 0.5rem;
+  font-size: x-large;
+}
+
+.event-details{
+  padding-left: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-top: 1px solid ;
+  border-image: linear-gradient(to right,#dddddd00,#dddddd7b, #dddddd96,#555555a5, #dddddd96, #dddddd7b, #dddddd00);
+  border-image-slice: 1;
+  padding-top: 0.2rem;
+  margin-left: 0.2rem;
+
+}
+.event-title1{
+  width: 30%;
+}
+
+
+
+.event-description {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  width: 70%; 
+}
+.event-description h4 {
+  margin: 0; 
+  color: rgba(56, 65, 82,1);
+}
+
+
+
+
+
+
+
