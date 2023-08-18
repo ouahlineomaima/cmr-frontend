@@ -28,13 +28,20 @@
   }
 
 .container {
-    width: 80%;
+    min-width: 80%;
     min-height: 50%;
     display:flex;
     flex-direction: row;
-    overflow-x: auto;
-    overflow-y: visible; 
+    /* overflow-x: auto;
+    overflow-y: visible;  */
     padding: 0.5rem; 
+    flex-grow: 3;
+    flex-basis: fit-content;
+    
+}
+.space{
+    height: 10px;
+    flex-shrink: 0;
 }
 
 .container::-webkit-scrollbar {

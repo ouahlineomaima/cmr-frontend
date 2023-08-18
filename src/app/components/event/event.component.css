@@ -2,6 +2,11 @@
 .event{
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+    /* background-color: aliceblue; */
+    /* width: max-content; */
+    height: auto;
+    width: auto;
 }
 
 i{
@@ -14,5 +19,9 @@ i{
 
 .event-title{
     margin-left: 0.5%;
+    height: 100%;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    /* white-space: nowrap; */
 }
 

@@ -132,6 +132,10 @@ export class ResultatComponent {
     this.router.navigate(['/accueil']);
   }
 
+  goParcours(){
+    this.router.navigate(['/parcours']);
+  }
+
   goBack(){ // reinitialize variables
     this.router.navigate(['/simulation-en-ligne']);
   }

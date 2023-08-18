@@ -15,6 +15,7 @@ export class LayerComponent {
     titleColor: '',
     containerBgColor: '',
     eventsLists: []
-  }   
+  } 
+  @Input() marginLeft: number = 0;  
 
 }
