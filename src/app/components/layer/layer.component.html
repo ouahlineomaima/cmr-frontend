@@ -1,6 +1,7 @@
 <div class="layer" [style.border-color]="layer.titleBgColor">
     <div class="title" [style.background-color]="layer.titleBgColor" [style.color]="layer.titleColor">{{layer.title}}</div>
     <div class="container"[style.background-color]="layer.containerBgColor" *ngFor="let events of layer.eventsLists">
+        <div class="space" [style.width.rem]="marginLeft"></div>
         <app-events-list 
         [events]="events"></app-events-list>
     </div>
