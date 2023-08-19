@@ -22,12 +22,14 @@ import { ChoixSimulationComponent } from './pages/choix-simulation/choix-simulat
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimulationEnLigneComponent } from './pages/simulation-en-ligne/simulation-en-ligne.component';
 import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
+import { DateTimePickerComponent } from './components/date-time-picker/date-time-picker.component';
+import { MatDatepickerToggleIcon } from '@angular-material-components/datetime-picker';
 
 
 
 const appRoutes : Routes = [
-  {path:'', redirectTo:'choixLangue', pathMatch:'full'},
-  {path:'choixLangue', component:ChoixLangueComponent},
+  {path:'', redirectTo:'choix-langue', pathMatch:'full'},
+  {path:'choix-langue', component:ChoixLangueComponent},
   {path:'accueil', component:AccueilComponent},
   {path:'contact', component:ContactComponent},
   {path:'resultat', component:ResultatComponent},
@@ -49,8 +51,8 @@ const appRoutes : Routes = [
     ResultatComponent,
     ChoixSimulationComponent,
     SimulationEnLigneComponent,
-    SimulationTelephoniqueComponent
-    
+    SimulationTelephoniqueComponent,
+    DateTimePickerComponent,    
   ],
   imports: [
     BrowserModule,
@@ -63,7 +65,8 @@ const appRoutes : Routes = [
     BrowserAnimationsModule,
     MatChipsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
