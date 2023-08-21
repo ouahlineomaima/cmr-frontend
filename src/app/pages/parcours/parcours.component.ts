@@ -124,7 +124,7 @@ export class ParcoursComponent {
     title: 'Demande de réversion datée et signée',
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: 'Téléchargeable depuis le site web de la CMR'
+    details: 'Téléchargeable depuis le site web de la CMR, cliquer pour se diriger vers le site'
   }
   declarationCelibat: Event = {
     title: "Déclaration sur l'honneur du célibat datée et signée",
