@@ -29,6 +29,11 @@
 </section>
   
 </section>
+<!-- Loading section -->
+<section *ngIf="exportingPDF" class="loading-section">
+  <div class="loading-spinner"></div>
+  <p>Génération du parcours...</p>
+</section>
 
 <div class="btns">
   <button class="btn"> Retour</button>

@@ -17,9 +17,7 @@ export class ParcoursComponent {
   
 
   constructor(public sharedVariablesService: SharedVariablesService) { }
-
-  el: any;
-  el2:any;
+  
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
@@ -36,6 +34,8 @@ export class ParcoursComponent {
   nonEmploiArray: Array<string> = [];
   displayedLayerIndices: number[] = [];
   marginsIndices: number[] = [];
+
+  exportingPDF = false;
 
 
 
@@ -875,6 +875,7 @@ export class ParcoursComponent {
   
 
 exportToPDF() {
+  this.exportingPDF = true;
   let title: string = 'parcours.pdf';
   let pdf = new jsPDF({
     orientation: 'l',
@@ -901,6 +902,7 @@ exportToPDF() {
         const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
         pdf.addImage(imageData2, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
         pdf.save(title);
+        this.exportingPDF = false;
       });
     });
   } else {
