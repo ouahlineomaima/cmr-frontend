@@ -899,7 +899,7 @@ exportToPDF() {
       // Render the content of the second element on the second page
       html2canvas(el2).then((canvas2) => {
         const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
-        pdf.addImage(imageData2, 'JPEG', 0, 0, el2.offsetWidth, el2.offsetHeight);
+        pdf.addImage(imageData2, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
         pdf.save(title);
       });
     });

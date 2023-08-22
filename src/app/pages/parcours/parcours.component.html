@@ -12,7 +12,8 @@
     </div>
   </section>
   
-  <section *ngFor="let displayedIndex of displayedLayerIndices" class="details" id="details" #details>
+  <section id="details" #details>
+    <section *ngFor="let displayedIndex of displayedLayerIndices" class="details" >
     <div class="layer-details">
       <h3>{{layers[displayedIndex].title}}</h3>
       <div *ngFor="let event of layers[displayedIndex].eventsLists[0]" class="event-details">
@@ -25,6 +26,8 @@
       </div>
     </div>
   </section>
+</section>
+  
 </section>
 
 <div class="btns">
