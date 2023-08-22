@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Event } from 'src/app/interfaces/event';
 import { Layer } from 'src/app/interfaces/layer';
@@ -17,8 +18,8 @@ export class ParcoursComponent {
 
   constructor(public sharedVariablesService: SharedVariablesService) { }
 
-  @ViewChild('downloaded', {static:false}) el!: ElementRef
-  display:string = 'none'
+  el: any;
+  el2:any;
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
@@ -391,6 +392,7 @@ export class ParcoursComponent {
                 if (child.infirmityType === 'mentale') {
                   if (!this.RIBArray.includes('Ex-conjointe')) {
                     this.RIBArray.push('Ex-conjointe');
+
                   }
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name);
@@ -851,7 +853,7 @@ export class ParcoursComponent {
     });
     for (let i = 0; i < this.displayedLayerIndices.length; i++) {
       this.marginsIndices.push(i);
-  }
+    }
   }
 
 
@@ -870,20 +872,40 @@ export class ParcoursComponent {
     return age;
   }
 
-  exportToPDF() {
-    let title:string = 'parcours.pdf';
-    let pdf = new jsPDF({
-      orientation: 'l',
-      unit: 'px',
-      format: [window.innerWidth, window.innerHeight],
-      putOnlyUsedFonts:false
-     })
-    pdf.html(this.el.nativeElement, {
-      callback: (pdf) =>{
+  
+
+exportToPDF() {
+  let title: string = 'parcours.pdf';
+  let pdf = new jsPDF({
+    orientation: 'l',
+    unit: 'px',
+    format: [window.innerWidth, window.innerHeight],
+    putOnlyUsedFonts: false,
+  });
+
+  // Get references to the elements within the exportToPDF function
+  const el = document.getElementById('mainContainer');
+  const el2 = document.getElementById('details');
+
+  if (el && el2) {
+    // Render the content of the first element on the first page
+    html2canvas(el).then((canvas) => {
+      const imageData = canvas.toDataURL('image/jpeg', 1.0);
+      pdf.addImage(imageData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+
+      // Add a new page for the second element
+      pdf.addPage();
+
+      // Render the content of the second element on the second page
+      html2canvas(el2).then((canvas2) => {
+        const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
+        pdf.addImage(imageData2, 'JPEG', 0, 0, el2.offsetWidth, el2.offsetHeight);
         pdf.save(title);
-      }
-    })
-    
+      });
+    });
+  } else {
+    console.error('Elements not found');
   }
+}
 
 }

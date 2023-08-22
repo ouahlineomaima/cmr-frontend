@@ -1,15 +1,18 @@
-<section class="main-container"  id="downloaded" #downloaded>
-  <section class="header">
-    <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
-  </section>
-  <h3>Découvrez le parcours de préparation de votre dossier</h3>
-  <div class="layers">
-    <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
-      <app-layer 
-      [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
+<section class="main-container"  >
+  <section id="mainContainer" #mainContainer>
+    <section class="header">
+      <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
+    </section>
+    <h3>Découvrez le parcours de préparation de votre dossier</h3>
+    <div class="layers">
+      <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
+        <app-layer 
+        [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
+      </div>
     </div>
-  </div>
-  <section *ngFor="let displayedIndex of displayedLayerIndices" class="details">
+  </section>
+  
+  <section *ngFor="let displayedIndex of displayedLayerIndices" class="details" id="details" #details>
     <div class="layer-details">
       <h3>{{layers[displayedIndex].title}}</h3>
       <div *ngFor="let event of layers[displayedIndex].eventsLists[0]" class="event-details">
@@ -23,8 +26,6 @@
     </div>
   </section>
 </section>
-
-
 
 <div class="btns">
   <button class="btn"> Retour</button>
