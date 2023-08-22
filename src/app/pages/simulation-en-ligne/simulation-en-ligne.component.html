@@ -112,8 +112,9 @@
                 <app-enfant [order]="item + 1" (inputChange)="updateButtonState()"></app-enfant>
             </div>
             <button mat-fab extended class="add_child" (click)="declareNewChild();updateButtonState();">
-                <mat-icon>plus_one</mat-icon>
+                <i class="pi pi-plus" style=" font-size: 14px;" ></i>
                 Déclarer un autre fils/fille
+                
             </button>
 
             <!-- Traitement du cas utilisateur =  veuve -->
