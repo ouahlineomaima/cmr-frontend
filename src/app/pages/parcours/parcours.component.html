@@ -20,7 +20,7 @@
         <app-event [event]="event" class="event-title1"></app-event>
         <div class="event-description">
           <ng-container *ngFor="let line of event.details.split('.')" >
-            <h4 *ngIf="event.details != ''">{{"• "}}{{ line.trim() }}.</h4>
+            <h4 *ngIf="event.details != ''">{{"• "}}{{ line.trim().replace(', cliquer pour se diriger vers le site', '') }}.</h4>
           </ng-container>
         </div>
       </div>

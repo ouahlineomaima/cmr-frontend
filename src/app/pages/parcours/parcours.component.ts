@@ -872,8 +872,6 @@ export class ParcoursComponent {
     return age;
   }
 
-
-
   exportToPDF() {
     this.exportingPDF = true;
     let title: string = 'parcours.pdf';
@@ -909,5 +907,6 @@ export class ParcoursComponent {
       console.error('Elements not found');
     }
   }
+  
 
 }
