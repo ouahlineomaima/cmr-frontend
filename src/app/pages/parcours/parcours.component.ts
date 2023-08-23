@@ -14,10 +14,10 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
 })
 export class ParcoursComponent {
 
-  
+
 
   constructor(public sharedVariablesService: SharedVariablesService) { }
-  
+
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
@@ -125,7 +125,7 @@ export class ParcoursComponent {
     title: 'Demande de réversion datée et signée',
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: 'Téléchargeable depuis le site web de la CMR, cliquer pour se diriger vers le site'
+    details: 'Téléchargeable depuis le site web de la CMR sous le nom "Formulaire de réversion", cliquer pour se diriger vers le site'
   }
   declarationCelibat: Event = {
     title: "Déclaration sur l'honneur du célibat datée et signée",
@@ -277,7 +277,7 @@ export class ParcoursComponent {
           iconColor: this.titlesBgColors[6],
           eventColor: this.titlesColors[6],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom de la veuve.
-          Téléchargeable depuis le site web de la CMR.`
+          Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non remariage', cliquer pour se diriger vers le site`
         }
 
         this.layers[7].eventsLists[0].push(declarationNonRemariage);
@@ -490,7 +490,7 @@ export class ParcoursComponent {
           iconColor: this.titlesBgColors[7],
           eventColor: this.titlesColors[7],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom du veuf.
-          Téléchargeable depuis le site web de la CMR.`
+          Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non remariage', cliquer pour se diriger vers le site`
         }
 
         this.layers[7].eventsLists[0].push(declarationNonRemariage);
@@ -817,14 +817,14 @@ export class ParcoursComponent {
 
     //Rapports médicaux
     if (this.rapportMedicalArray.length > 0) {
-      this.rapportMedical.details = `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}`
+      this.rapportMedical.details = `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}. Téléchargeable depuis le site web de la CMR sous le nom 'Dossier d’infirmité', cliquer pour se diriger vers le site`
       this.layers[1].eventsLists[0].push(this.rapportMedical);
     }
 
     //Declaration de célibat
     if (this.celibatArray.length > 0) {
       this.declarationCelibat.details = `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
-      Téléchargeable depuis le site web de la CMR`
+      Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur pour célibat', cliquer pour se diriger vers le site`
       this.layers[7].eventsLists[0].push(this.declarationCelibat);
     }
 
@@ -843,7 +843,7 @@ export class ParcoursComponent {
     //Attestation de non emploi
     if (this.nonEmploiArray.length > 0) {
       this.declarationNonEmploi.details = `Déclaration sur l'honneur de non emploi datée et signée de ${this.nonEmploiArray.join(', ')}
-      Téléchargeable depuis le site web de la CMR`
+      Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non emploi', cliquer pour se diriger vers le site`
       this.layers[7].eventsLists[0].push(this.declarationNonEmploi);
     }
     this.layers.forEach((layer, index) => {
@@ -872,42 +872,42 @@ export class ParcoursComponent {
     return age;
   }
 
-  
 
-exportToPDF() {
-  this.exportingPDF = true;
-  let title: string = 'parcours.pdf';
-  let pdf = new jsPDF({
-    orientation: 'l',
-    unit: 'px',
-    format: [window.innerWidth, window.innerHeight],
-    putOnlyUsedFonts: false,
-  });
 
-  // Get references to the elements within the exportToPDF function
-  const el = document.getElementById('mainContainer');
-  const el2 = document.getElementById('details');
-
-  if (el && el2) {
-    // Render the content of the first element on the first page
-    html2canvas(el).then((canvas) => {
-      const imageData = canvas.toDataURL('image/jpeg', 1.0);
-      pdf.addImage(imageData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-
-      // Add a new page for the second element
-      pdf.addPage();
-
-      // Render the content of the second element on the second page
-      html2canvas(el2).then((canvas2) => {
-        const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
-        pdf.addImage(imageData2, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-        pdf.save(title);
-        this.exportingPDF = false;
-      });
+  exportToPDF() {
+    this.exportingPDF = true;
+    let title: string = 'parcours.pdf';
+    let pdf = new jsPDF({
+      orientation: 'l',
+      unit: 'px',
+      format: [window.innerWidth, window.innerHeight],
+      putOnlyUsedFonts: false,
     });
-  } else {
-    console.error('Elements not found');
+
+    // Get references to the elements within the exportToPDF function
+    const el = document.getElementById('mainContainer');
+    const el2 = document.getElementById('details');
+
+    if (el && el2) {
+      // Render the content of the first element on the first page
+      html2canvas(el).then((canvas) => {
+        const imageData = canvas.toDataURL('image/jpeg', 1.0);
+        pdf.addImage(imageData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+
+        // Add a new page for the second element
+        pdf.addPage();
+
+        // Render the content of the second element on the second page
+        html2canvas(el2).then((canvas2) => {
+          const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
+          pdf.addImage(imageData2, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+          pdf.save(title);
+          this.exportingPDF = false;
+        });
+      });
+    } else {
+      console.error('Elements not found');
+    }
   }
-}
 
 }
