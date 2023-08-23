@@ -30,7 +30,7 @@ export class SimulationEnLigneComponent {
   selectedIsPartnerRetired: string | null = null;
   isButtonDisabled: boolean = true;
   childrenArray: Array<number> | null = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
-  declaredChildren: number = 1;
+  declaredChildren: number = this.sharedVariablesService.childOrder;
 
 
 
@@ -202,10 +202,18 @@ export class SimulationEnLigneComponent {
     }
   }
 
+  updateChildrenArray() {
+    this.declaredChildren--;
+    this.childrenArray = new Array(this.declaredChildren);
+    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
+    return
+
+  }
+
   declareNewChild() {
-    this.childrenArray = new Array(this.sharedVariablesService.childOrder);
-    this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
     this.declaredChildren++;
+    this.childrenArray = new Array(this.declaredChildren);
+    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
   }
 
   onSubmit() {

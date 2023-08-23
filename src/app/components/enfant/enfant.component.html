@@ -1,4 +1,7 @@
 <div class="main-container">
+    <button class="remove-button" (click)="removeComponent()">
+        <i class="pi pi-times"></i>
+      </button>
     <h3 class="title">Fils/Fille {{order}}</h3>
     <h4 class="qst">Nom complet du fils/fille:</h4>
     <input type="text" class="name" [(ngModel)]="this.childName" placeholder="Nom complet" required (ngModelChange)="updateButtonState()">
@@ -38,9 +41,4 @@
         </form>
     </div>
     <button mat-raised-button class="next" [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Déclarer</button>
-    
-
-
-
-
 </div>
