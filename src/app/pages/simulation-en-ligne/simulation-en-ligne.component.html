@@ -108,8 +108,8 @@
         <div *ngIf="sharedVariablesService.hasChildren === true" class="condition">
             <!-- Saisi d'info sur les enfants -->
             <h4 class="qst">Veuillez saisir les informations relatives aux fils/filles du défunt:</h4>
-            <div *ngFor="let item of childrenArray">
-                <app-enfant [order]="item + 1" (inputChange)="updateButtonState()"></app-enfant>
+            <div *ngFor="let item of childrenArray" >
+                <app-enfant [order]="item + 1" (inputChange)="updateButtonState();" (removeChange)="updateChildrenArray();"></app-enfant>
             </div>
             <button mat-fab extended class="add_child" (click)="declareNewChild();updateButtonState();">
                 <i class="pi pi-plus" style=" font-size: 14px;" ></i>

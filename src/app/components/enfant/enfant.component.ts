@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 export class EnfantComponent {
   @Input() order: number = 1;
   @Output() inputChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() removeChange: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(public sharedVariablesService: SharedVariablesService, private datePipe: DatePipe) { }
 
@@ -68,6 +69,18 @@ export class EnfantComponent {
     this.isButtonDisabled = true;
     this.isDeclared = true;
     this.inputChange.emit();
+  }
+
+  removeComponent() {
+    if(this.sharedVariablesService.childOrder > 1 && this.isDeclared === false){
+      this.sharedVariablesService.childOrder --;
+      console.log("ls",this.sharedVariablesService.childOrder)
+      this.removeChange.emit();
+      return;
+    }
+    console.log(this.sharedVariablesService.childOrder)
+    return;
+
   }
   
 }
