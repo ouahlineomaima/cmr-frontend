@@ -928,5 +928,8 @@ export class ParcoursComponent {
     this.router.navigate(['/accueil']);
   }
   
+  goBack(){
+    this.router.navigate(['/resultat']);
+  }
 
 }
