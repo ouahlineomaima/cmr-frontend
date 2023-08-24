@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Event } from 'src/app/interfaces/event';
@@ -16,7 +17,7 @@ export class ParcoursComponent {
 
 
 
-  constructor(public sharedVariablesService: SharedVariablesService) { }
+  constructor(public sharedVariablesService: SharedVariablesService, private router: Router) { }
 
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
@@ -906,6 +907,25 @@ export class ParcoursComponent {
     } else {
       console.error('Elements not found');
     }
+  }
+
+  goToAccueilPage() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.cin = '';
+    this.sharedVariablesService.tel = '';
+    this.sharedVariablesService.userRelationship = '';
+    this.sharedVariablesService.isRetired = null;
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
+    this.router.navigate(['/accueil']);
   }
   
 
