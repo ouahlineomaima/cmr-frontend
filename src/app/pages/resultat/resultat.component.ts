@@ -23,7 +23,7 @@ export class ResultatComponent {
   getStatus() {
     // cas de conjoint seul
     if (this.sharedVariablesService.hasChildren != true) {
-      if (this.sharedVariablesService.isValidMarriagePeriod === true) {
+      if (this.sharedVariablesService.isValidMarriagePeriod === true && this.sharedVariablesService.isStillPartner === true) {
         this.partnerPourcentage = 100;
         return;
       }
@@ -108,9 +108,6 @@ export class ResultatComponent {
     }
   }
 
-
-
-
   calculateAge(birthdateString: string | null): number {
     const currentDate = new Date();
     const birthdateParts = birthdateString?.split('/');
@@ -125,8 +122,6 @@ export class ResultatComponent {
   );
   return age;
   }
-
-
 
   goToAccueilPage() {
     // Reinitializing variables to mantain the logic
