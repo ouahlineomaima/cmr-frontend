@@ -28,7 +28,7 @@ export class EnfantComponent {
   startDate = new Date(1992, 0, 1);
 
 
-  infirmities: Array<string> = ['Physique', 'Mentale']
+  infirmities: Array<string> = ['physique', 'mentale']
 
 
   updateButtonState() {
