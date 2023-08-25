@@ -19,8 +19,7 @@
         <!-- Cas où le défunt n'a pas des enfant en charge -->
         <div *ngIf="sharedVariablesService.hasChildren === false" class="condition">
             <!-- Traitement du cas utilisateur = enfant hasChildren false -->
-            <div *ngIf="sharedVariablesService.userRelationship === 'enfant'"
-                class="condition">
+            <div *ngIf="sharedVariablesService.userRelationship === 'enfant'" class="condition">
                 <h4 class="qst">Le conjoint du défunt est-il encore en vie?</h4>
                 <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
                     <mat-chip-option *ngFor="let chip of availableBooleans"
@@ -33,7 +32,8 @@
                     <h4 class="qst">Son sexe:</h4>
                     <form>
                         <mat-form-field class="select">
-                            <mat-select [(ngModel)]="sharedVariablesService.partnerSexe" name="humans" (ngModelChange)="updateButtonState();">
+                            <mat-select [(ngModel)]="sharedVariablesService.partnerSexe" name="humans"
+                                (ngModelChange)="updateButtonState();">
                                 <mat-option *ngFor="let human of humans" [value]="human.value">
                                     {{human.viewValue}}
                                 </mat-option>
@@ -41,13 +41,13 @@
                         </mat-form-field>
                     </form>
                     <h4 class="qst">Le défunt était-il marié pour une durée de plus de 2 ans?</h4>
-            <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
-                <mat-chip-option *ngFor="let chip of availableBooleans"
-                    [color]="selectedIsValidMarriagePeriod=== chip.name ? chip.color : null"
-                    (click)="onChipClickMarriagePeriod(chip.name); updateButtonState();">
-                    {{chip.name}}
-                </mat-chip-option>
-            </mat-chip-listbox>
+                    <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                        <mat-chip-option *ngFor="let chip of availableBooleans"
+                            [color]="selectedIsValidMarriagePeriod=== chip.name ? chip.color : null"
+                            (click)="onChipClickMarriagePeriod(chip.name); updateButtonState();">
+                            {{chip.name}}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
                     <div *ngIf="sharedVariablesService.partnerSexe === 'femelle'" class="condition">
                         <h4 class="qst">Est-elle divorcée, remariée ou répudiée?</h4>
                         <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
@@ -92,15 +92,55 @@
             </div>
             <div *ngIf="sharedVariablesService.userRelationship !== 'enfant'" class="condition">
                 <h4 class="qst">Le défunt était-il marié pour une durée de plus de 2 ans?</h4>
-            <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
-                <mat-chip-option *ngFor="let chip of availableBooleans"
-                    [color]="selectedIsValidMarriagePeriod=== chip.name ? chip.color : null"
-                    (click)="onChipClickMarriagePeriod(chip.name); updateButtonState();">
-                    {{chip.name}}
-                </mat-chip-option>
-            </mat-chip-listbox>
+                <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                    <mat-chip-option *ngFor="let chip of availableBooleans"
+                        [color]="selectedIsValidMarriagePeriod=== chip.name ? chip.color : null"
+                        (click)="onChipClickMarriagePeriod(chip.name); updateButtonState();">
+                        {{chip.name}}
+                    </mat-chip-option>
+                </mat-chip-listbox>
+                <div *ngIf="sharedVariablesService.partnerSexe === 'femelle'" class="condition">
+                    <h4 class="qst">Êtes-vous divorcée, remariée ou répudiée du défunt?</h4>
+                    <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                        <mat-chip-option *ngFor="let chip of availablePartnerStatesFemale"
+                            [color]="selectedIsStillPartner=== chip.name ? chip.color : null"
+                            (click)="onChipClickStillPartnerChild(chip.name); updateButtonState();">
+                            {{chip.name}}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+                <div *ngIf="sharedVariablesService.partnerSexe === 'male'" class="condition">
+                    <h4 class="qst">Êtes-vous divorcé ou remarié?</h4>
+                    <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                        <mat-chip-option *ngFor="let chip of availablePartnerStatesMale"
+                            [color]="selectedIsStillPartner=== chip.name ? chip.color : null"
+                            (click)="onChipClickStillPartnerChild(chip.name); updateButtonState();">
+                            {{chip.name}}
+                        </mat-chip-option>
+                    </mat-chip-listbox>
+                    <div *ngIf="sharedVariablesService.partnerMarialStatus === 'veuf'" class="condition">
+                        <h4 class="qst">Êtes-vous infirme?</h4>
+                        <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                            <mat-chip-option *ngFor="let chip of availableBooleans"
+                                [color]="selectedIsPartnerInfirm=== chip.name ? chip.color : null"
+                                (click)="onChipClickPartnerInfirm(chip.name); updateButtonState();">
+                                {{chip.name}}
+                            </mat-chip-option>
+                        </mat-chip-listbox>
+                        <div *ngIf="sharedVariablesService.isPartnerInfirm === false">
+                            <h4 class="qst">Êtes-vous retraité?</h4>
+                            <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
+                                <mat-chip-option *ngFor="let chip of availableBooleans"
+                                    [color]="selectedIsPartnerRetired=== chip.name ? chip.color : null"
+                                    (click)="onChipClickPartnerRetired(chip.name); updateButtonState();">
+                                    {{chip.name}}
+                                </mat-chip-option>
+                            </mat-chip-listbox>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
+
         </div>
 
 
@@ -108,18 +148,18 @@
         <div *ngIf="sharedVariablesService.hasChildren === true" class="condition">
             <!-- Saisi d'info sur les enfants -->
             <h4 class="qst">Veuillez saisir les informations relatives aux fils/filles du défunt:</h4>
-            <div *ngFor="let item of childrenArray" >
-                <app-enfant [order]="item + 1" (inputChange)="updateButtonState();" (removeChange)="updateChildrenArray();"></app-enfant>
+            <div *ngFor="let item of childrenArray">
+                <app-enfant [order]="item + 1" (inputChange)="updateButtonState();"
+                    (removeChange)="updateChildrenArray();"></app-enfant>
             </div>
             <button mat-fab extended class="add_child" (click)="declareNewChild();updateButtonState();">
-                <i class="pi pi-plus" style=" font-size: 14px;" ></i>
+                <i class="pi pi-plus" style=" font-size: 14px;"></i>
                 Déclarer un autre fils/fille
-                
+
             </button>
 
             <!-- Traitement du cas utilisateur =  veuve -->
-            <div *ngIf="sharedVariablesService.userRelationship === 'veuve'"
-                class="condition">
+            <div *ngIf="sharedVariablesService.userRelationship === 'veuve'" class="condition">
                 <h4 class="qst">Êtes-vous divorcée, remariée ou répudiée?</h4>
                 <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
                     <mat-chip-option *ngFor="let chip of availablePartnerStatesFemale"
@@ -132,8 +172,7 @@
 
 
             <!-- Traitement du cas utilisateur = veuf -->
-            <div *ngIf="sharedVariablesService.userRelationship === 'veuf'"
-                class="condition">
+            <div *ngIf="sharedVariablesService.userRelationship === 'veuf'" class="condition">
                 <h4 class="qst">Êtes-vous divorcé, remarié?</h4>
                 <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
                     <mat-chip-option *ngFor="let chip of availablePartnerStatesMale"
@@ -168,8 +207,7 @@
 
 
             <!-- Traitement du cas utilisateur = enfant hasChildren true -->
-            <div *ngIf="sharedVariablesService.userRelationship === 'enfant'"
-                class="condition">
+            <div *ngIf="sharedVariablesService.userRelationship === 'enfant'" class="condition">
                 <h4 class="qst">Le conjoint du défunt est-il encore en vie?</h4>
                 <mat-chip-listbox class="mat-mdc-chip-set-stacked chips" aria-label="Color selection">
                     <mat-chip-option *ngFor="let chip of availableBooleans"
@@ -182,7 +220,8 @@
                     <h4 class="qst">Son sexe:</h4>
                     <form>
                         <mat-form-field class="select">
-                            <mat-select [(ngModel)]="sharedVariablesService.partnerSexe" name="humans" (ngModelChange)="updateButtonState();">
+                            <mat-select [(ngModel)]="sharedVariablesService.partnerSexe" name="humans"
+                                (ngModelChange)="updateButtonState();">
                                 <mat-option *ngFor="let human of humans" [value]="human.value">
                                     {{human.viewValue}}
                                 </mat-option>
