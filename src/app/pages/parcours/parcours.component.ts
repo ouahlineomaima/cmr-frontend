@@ -326,7 +326,7 @@ export class ParcoursComponent {
                     }
                     switch (child.infirmityType) {
                       case 'physique':
-                        if (this.RIBArray.includes(child.name)=== false) {
+                        if (this.RIBArray.includes(child.name) === false) {
                           this.RIBArray.push(child.name);
                         }
                         break;
@@ -465,7 +465,7 @@ export class ParcoursComponent {
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name)
                   }
-                  if ( this.RIBArray.includes('Ex-conjointe') === false) {
+                  if (this.RIBArray.includes('Ex-conjointe') === false) {
                     this.RIBArray.push('Ex-conjointe');
                   }
                 }
@@ -708,7 +708,7 @@ export class ParcoursComponent {
                       }
                       switch (child.infirmityType) {
                         case 'physique':
-                          if (this.RIBArray.includes(child.name)=== false) {
+                          if (this.RIBArray.includes(child.name) === false) {
                             this.RIBArray.push(child.name);
                           }
                           break;
@@ -716,7 +716,7 @@ export class ParcoursComponent {
                           if (!this.jugementArray.includes(child.name)) {
                             this.jugementArray.push(child.name)
                           }
-                          if (this.RIBArray.includes('Ex-conjointe')=== false) {
+                          if (this.RIBArray.includes('Ex-conjointe') === false) {
                             this.RIBArray.push('Ex-conjointe');
                           }
                           break;
@@ -747,7 +747,7 @@ export class ParcoursComponent {
                     }
                     switch (child.infirmityType) {
                       case 'physique':
-                        if (this.RIBArray.includes(child.name)=== false) {
+                        if (this.RIBArray.includes(child.name) === false) {
                           this.RIBArray.push(child.name);
                         }
                         break;
@@ -755,7 +755,7 @@ export class ParcoursComponent {
                         if (!this.jugementArray.includes(child.name)) {
                           this.jugementArray.push(child.name)
                         }
-                        if (this.RIBArray.includes('Ex-conjointe')=== false) {
+                        if (this.RIBArray.includes('Ex-conjointe') === false) {
                           this.RIBArray.push('Ex-conjointe');
                         }
                         break;
@@ -784,8 +784,8 @@ export class ParcoursComponent {
       if (this.sharedVariablesService.isStillPartner === true) {
         let declarationNonRemariage: Event = {
           title: "Déclaration sur l'honneur de non remariage.",
-          iconColor: this.titlesBgColors[7],
-          eventColor: this.titlesColors[7],
+          iconColor: this.titlesBgColors[6],
+          eventColor: this.titlesColors[6],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom du veuf.
           Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non remariage', cliquer pour se diriger vers le site`
         }
@@ -847,19 +847,19 @@ export class ParcoursComponent {
                     }
                     switch (child.infirmityType) {
                       case 'physique':
-                        if (this.RIBArray.includes(child.name)=== false) {
+                        if (this.RIBArray.includes(child.name) === false) {
                           this.RIBArray.push(child.name);
                         }
                         break;
                       case 'mentale':
-                        if (this.RIBArray.includes('veuf')=== false) {
+                        if (this.RIBArray.includes('veuf') === false) {
                           this.RIBArray.push('veuf');
                         }
                         break;
                     }
                   }
                   else {
-                    if (this.RIBArray.includes(child.name)=== false) {
+                    if (this.RIBArray.includes(child.name) === false) {
                       this.RIBArray.push(child.name);
                     }
                   }
@@ -1137,7 +1137,7 @@ export class ParcoursComponent {
                 if (!this.jugementArray.includes(child.name)) {
                   this.jugementArray.push(child.name)
                 }
-                if (this.RIBArray.includes('Ex-conjoint')=== false) {
+                if (this.RIBArray.includes('Ex-conjoint') === false) {
                   this.RIBArray.push('Ex-conjoint');
                 }
 
@@ -1149,7 +1149,7 @@ export class ParcoursComponent {
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name)
                   }
-                  if (this.RIBArray.includes('Ex-conjoint')=== false) {
+                  if (this.RIBArray.includes('Ex-conjoint') === false) {
                     this.RIBArray.push('Ex-conjoint');
                   }
                 }
@@ -1556,28 +1556,47 @@ export class ParcoursComponent {
     let pdf = new jsPDF({
       orientation: 'l',
       unit: 'px',
-      format: [window.innerWidth, window.innerHeight],
+      format: [2000, 2000],
       putOnlyUsedFonts: false,
     });
-
+  
+    const originalElement = document.getElementById('mainContainer');
+    const originalElement2 = document.getElementById('details');
+    console.log(originalElement?.clientWidth)
+  
     // Get references to the elements within the exportToPDF function
-    const el = document.getElementById('mainContainer');
-    const el2 = document.getElementById('details');
-
+    const el = originalElement?.cloneNode(true) as HTMLElement;
+    const el2 = originalElement2?.cloneNode(true) as HTMLElement;
+  
     if (el && el2) {
-      // Render the content of the first element on the first page
+      el.style.width = '1080px';
+      el2.style.width = '100px';
+      console.log(originalElement?.clientWidth)
+      el.id = 'cloned1';
+      el2.id = 'cloned2';
+  
+      // Create a container element to hold the cloned elements
+      const container = document.createElement('div');
+      container.appendChild(el);
+      container.appendChild(el2);
+      document.body.appendChild(container);
+  
+      // Render the content of the first element on the first page with zoom
       html2canvas(el).then((canvas) => {
         const imageData = canvas.toDataURL('image/jpeg', 1.0);
-        pdf.addImage(imageData, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-
-        // Add a new page for the second element
+        pdf.addImage(imageData, 'JPEG', 0, 0, canvas.width, canvas.height);
+  
+        
+  
+        // Add a new page for the second element with zoom
         pdf.addPage();
-
-        // Render the content of the second element on the second page
         html2canvas(el2).then((canvas2) => {
           const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
-          pdf.addImage(imageData2, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+          pdf.addImage(imageData2, 'JPEG', 0, 0, canvas2.width, canvas2.height);
           pdf.save(title);
+          // Remove the container after rendering
+        document.body.removeChild(container);
+  
           this.exportingPDF = false;
         });
       });
@@ -1585,6 +1604,8 @@ export class ParcoursComponent {
       console.error('Elements not found');
     }
   }
+  
+
 
   goToAccueilPage() {
     // Reinitializing variables to mantain the logic
