@@ -1556,55 +1556,38 @@ export class ParcoursComponent {
     let pdf = new jsPDF({
       orientation: 'l',
       unit: 'px',
-      format: [2000, 2000],
+      format: [5000, 5000],
       putOnlyUsedFonts: false,
     });
-  
+
     const originalElement = document.getElementById('mainContainer');
-    const originalElement2 = document.getElementById('details');
-    console.log(originalElement?.clientWidth)
-  
+
     // Get references to the elements within the exportToPDF function
     const el = originalElement?.cloneNode(true) as HTMLElement;
-    const el2 = originalElement2?.cloneNode(true) as HTMLElement;
-  
-    if (el && el2) {
+
+    if (el) {
       el.style.width = '1080px';
-      el2.style.width = '100px';
-      console.log(originalElement?.clientWidth)
       el.id = 'cloned1';
-      el2.id = 'cloned2';
-  
+
       // Create a container element to hold the cloned elements
       const container = document.createElement('div');
       container.appendChild(el);
-      container.appendChild(el2);
       document.body.appendChild(container);
-  
-      // Render the content of the first element on the first page with zoom
+
+      // Render the content of the element
       html2canvas(el).then((canvas) => {
         const imageData = canvas.toDataURL('image/jpeg', 1.0);
         pdf.addImage(imageData, 'JPEG', 0, 0, canvas.width, canvas.height);
-  
-        
-  
-        // Add a new page for the second element with zoom
-        pdf.addPage();
-        html2canvas(el2).then((canvas2) => {
-          const imageData2 = canvas2.toDataURL('image/jpeg', 1.0);
-          pdf.addImage(imageData2, 'JPEG', 0, 0, canvas2.width, canvas2.height);
-          pdf.save(title);
-          // Remove the container after rendering
+        pdf.save(title);
+        // Remove the container after rendering
         document.body.removeChild(container);
-  
-          this.exportingPDF = false;
-        });
+        this.exportingPDF = false;
       });
     } else {
       console.error('Elements not found');
     }
   }
-  
+
 
 
   goToAccueilPage() {

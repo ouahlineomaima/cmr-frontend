@@ -118,8 +118,6 @@ h3 {
   width: 30%;
 }
 
-
-
 .event-description {
   display: flex;
   flex-direction: column;
@@ -142,6 +140,11 @@ h3 {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+}
+@media screen and (max-width: 500px) {
+  .loading-section {
+    height: 100%;
+  }
 }
 
 .loading-spinner {
