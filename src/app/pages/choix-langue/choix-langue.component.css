@@ -32,8 +32,8 @@ button{
 }
 
 .intro-text{
-    width: 318px;
-    height: 2px;
+    width: 19.875rem;
+    height: 2.625rem;
     flex-shrink: 0;
     color: #000;
     font-family: itim;
@@ -44,6 +44,8 @@ button{
     text-align: center;    
 
     margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     
 }
 

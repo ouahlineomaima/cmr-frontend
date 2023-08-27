@@ -20,6 +20,7 @@ export class ResultatComponent {
     this.getStatus();
   }
 
+  
   getStatus() {
     // cas de conjoint seul
     if (this.sharedVariablesService.hasChildren != true) {
