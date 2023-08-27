@@ -23,15 +23,17 @@
     "@angular/router": "^16.0.0",
     "html-to-pdfmake": "^2.4.23",
     "jspdf": "^2.5.1",
+    "moment": "^2.29.4",
     "pdfmake": "^0.2.7",
     "primeicons": "^6.0.1",
+    "randombytes": "^2.1.0",
     "rxjs": "~7.8.0",
     "timelinejs": "^2.35.6",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.0.4",
+    "@angular-devkit/build-angular": "^16.2.0",
     "@angular/cli": "~16.0.4",
     "@angular/compiler-cli": "^16.0.0",
     "@angular/localize": "^16.1.5",
