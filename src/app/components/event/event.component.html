@@ -1,6 +1,15 @@
 <div class="event">
     <i class="pi pi-file" [style.color]="event.iconColor" style="font-size: 1.5rem"></i>
-    <h3 class="event-title" [style.color]="event.eventColor">
-        {{event.title}}</h3>
+    <!-- Insertion du lien des documents dans le site de la CMR -->
+    <h3 class="event-title link-style"
+        [style.color]="event.eventColor"
+        *ngIf="event.details.includes('Téléchargeable depuis le site web de la CMR')"
+        (click)="openLinkInNewTab('https://www.cmr.gov.ma/wps/portal/PortalCMR/Accueil/formulaire-utiles/!ut/p/b1/vZRJcqswFEXXkgU4SKIfisb0jcEGw4RygwlgjA04NKv_JJUMUiknfxRppKrz6tx3ByJiIlowgKdojqJ4YkvEl91rnu26vL7szm_vmEnAUjEdBBjAaTIPNF6xdBqYkCPZGYjegAcHg_d5CIAvCBADRVwjoEkrQ2FZgMQ18zH_A_DFr7AumP2AYxTDAZQIP_2Pga9-S5OBtl7pnr2h53yQCIlI-BbiG_V_JTwKgX6bD4n45z3RJ_BDz--A_LmDY7AArDTNCyDHIEBBwlbrKiWiGWMfZhEAsSa2gEr8YrxqUzl5xeRZfhNYVgmduQm9naTAXi9Nn_dhK3k6lALHLmyjK4eZKSf7uHWPgbcRsMDzhpL8ItTJvxbCPxYK6E0oHW6DVOtYwtJqT6o1Mtc79ZYW1rWN-lFoDwoJ5CKzInfgTyenKJorOZZxV5j6VvJkXpCdLmrNRaRpNyPObOMaHhgzaehS7jhx40Y0M7x2jDDRfMd5IcUd1fUNLlL3cokzhU9hMW6pFgN1v2BVxPr30-aJ0Ik431fP_aF6Bs-Q5kiaRIhnSUCRLCIC97DjpRL3MpayeFIPow3bQamHKGyv1XlI-vLSsP5GIZP1S25bL3LVZrXu-fE-bM53EbeVneDDZmpksZHzwLVlweQUg6Pc_ixSNC6OQbviLwhD4WJfwimR1TRfaMuBDvYAP73ny871fv6GAjXq5_6sfu7v1N_FAakWiZqzH2xDvM-XkSxWQ73AN87tFDJkKGcYBtRO43KV17C7qc4pSGVe9Or7gO9pJnbSy3SsIoXLGyV6LegeyRTuSFHV7JStuS1wRdjfIHtAfnLf6-OuaFYl2rhGp4WKnd4X_TKV7OOGqOLzcmmO-aL0OPv0cens6R-hSDQu/dl4/d5/L2dBISEvZ0FBIS9nQSEh/')">
+        {{event.title}}
+    </h3>
+    <h3 class="event-title"
+        [style.color]="event.eventColor"
+        *ngIf="!event.details.includes('Téléchargeable depuis le site web de la CMR')">
+        {{event.title}}
+    </h3>
 </div>
-
