@@ -30,7 +30,7 @@ export class SimulationEnLigneComponent {
   selectedIsPartnerRetired: string | null = null;
   isButtonDisabled: boolean = true;
   childrenArray: Array<number> | null = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
-  declaredChildren: number = 1;
+  declaredChildren: number = this.sharedVariablesService.childOrder;
 
 
 
@@ -185,12 +185,27 @@ export class SimulationEnLigneComponent {
 
   // Buttons functions
   goToAccueilPage() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.cin = '';
+    this.sharedVariablesService.tel = '';
+    this.sharedVariablesService.userRelationship = '';
+    this.sharedVariablesService.isRetired = null;
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
     this.router.navigate(['/accueil']);
   }
 
   updateButtonState() {
     this.isButtonDisabled = true;
-    if (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null) {
+    if ((this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'femelle' && this.sharedVariablesService.isStillPartner !=null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === false) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === false && this.sharedVariablesService.isPartnerRetired != null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === true)) {
       this.isButtonDisabled = false;
       return;
     }
@@ -202,10 +217,18 @@ export class SimulationEnLigneComponent {
     }
   }
 
+  updateChildrenArray() {
+    this.declaredChildren--;
+    this.childrenArray = new Array(this.declaredChildren);
+    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
+    return
+
+  }
+
   declareNewChild() {
-    this.childrenArray = new Array(this.sharedVariablesService.childOrder);
-    this.childrenArray = Array.from({ length: this.sharedVariablesService.childOrder }, (_, index) => index);
     this.declaredChildren++;
+    this.childrenArray = new Array(this.declaredChildren);
+    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
   }
 
   onSubmit() {

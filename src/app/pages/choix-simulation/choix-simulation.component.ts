@@ -44,8 +44,24 @@ export class ChoixSimulationComponent {
   
   constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
   goToAccueilPage() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.cin = '';
+    this.sharedVariablesService.tel = '';
+    this.sharedVariablesService.userRelationship = '';
+    this.sharedVariablesService.isRetired = null;
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
     this.router.navigate(['/accueil']);
   }
+
   onChipClick(chipName: string) {
     
     this.selectedSimulationType = this.selectedSimulationType === chipName ? null : chipName;
@@ -56,6 +72,16 @@ export class ChoixSimulationComponent {
     this.selectedBooleanIsRetired = this.selectedBooleanIsRetired === chipName ? null : chipName;
     this.sharedVariablesService.isRetired = this.selectedBooleanIsRetired === 'Oui' ? true : false;
     
+  }
+  updatePartnerSex(){
+    switch(this.sharedVariablesService.userRelationship){
+      case 'veuf':
+        this.sharedVariablesService.partnerSexe = 'male';
+        break;
+      case 'veuve':
+        this.sharedVariablesService.partnerSexe = 'femelle'
+        break;
+    }
   }
   updateButtonState() {
     this.isButtonDisabled = !(this.sharedVariablesService.cin && this.sharedVariablesService.tel && this.sharedVariablesService.userRelationship && this.selectedSimulationType && this.selectedBooleanIsRetired);
