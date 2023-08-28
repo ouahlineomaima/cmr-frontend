@@ -82,28 +82,20 @@ export class ResultatComponent {
             }
             if (this.sharedVariablesService.isPartnerInfirm === false) {
               if (this.sharedVariablesService.isPartnerRetired === true) {
-                if (x == true) {
-                  this.partnerPourcentage = 50;
-                  this.childrenPourcentage = 50;
-                  break;
-                }
-                else {
-                  this.partnerPourcentage = 100;
-                  this.childrenPourcentage = 0;
-                  break;
-                }
+                this.partnerPourcentage = x == true ? 50 : 100;
+                this.childrenPourcentage = x == true ? 50 : 0;
               }
               else {
-                this.childrenPourcentage = x === true ? 50:0;
+                this.childrenPourcentage = x === true ? 50 : 0;
                 this.partnerPourcentage = -1;
                 break;
               }
             }
         }
       }
-      else{
+      else {
         this.partnerPourcentage = 0;
-        this.childrenPourcentage = x === true ? 100:0;
+        this.childrenPourcentage = x === true ? 100 : 0;
       }
     }
   }
@@ -117,10 +109,10 @@ export class ResultatComponent {
 
     const birthdate = new Date(birthYear, birthMonth, birthDay);
     const age = currentDate.getFullYear() - birthdate.getFullYear() - (
-      (currentDate.getMonth() < birthdate.getMonth() || 
-      (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
-  );
-  return age;
+      (currentDate.getMonth() < birthdate.getMonth() ||
+        (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
+    );
+    return age;
   }
 
   goToAccueilPage() {
@@ -142,11 +134,11 @@ export class ResultatComponent {
     this.router.navigate(['/accueil']);
   }
 
-  goParcours(){
+  goParcours() {
     this.router.navigate(['/parcours']);
   }
 
-  goBack(){ // reinitialize variables
+  goBack() { // reinitialize variables
     this.router.navigate(['/simulation-en-ligne']);
   }
 }
