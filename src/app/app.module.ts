@@ -42,6 +42,7 @@ import { EventComponent } from './components/event/event.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { EventPackComponent } from './components/event-pack/event-pack.component';
 import { EventsListComponent } from './components/events-list/events-list.component';
+import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
 
 
 
@@ -53,8 +54,8 @@ const appRoutes : Routes = [
   {path:'resultat', component:ResultatComponent},
   {path:'simulation-en-ligne', component:SimulationEnLigneComponent},
   {path:'choix-simulation', component:ChoixSimulationComponent},
-  {path:'parcours', component:ParcoursComponent}
-
+  {path:'parcours', component:ParcoursComponent},
+  {path:'simulation-telephonique', component:SimulationTelephoniqueComponent},
 ]
 
 @NgModule({
@@ -74,7 +75,8 @@ const appRoutes : Routes = [
     EventComponent,
     EventDetailsComponent,
     EventPackComponent,
-    EventsListComponent
+    EventsListComponent,
+    SimulationTelephoniqueComponent
     
   ],
   imports: [
