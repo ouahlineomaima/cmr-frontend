@@ -69,14 +69,14 @@
     margin-top: 29px;
     margin-left: 10px;
     width: 115px;
-height: 16px;
-flex-shrink: 0;
-color: #00487C;
-font-family: Itim;
-font-size: 15px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+    height: 16px;
+    flex-shrink: 0;
+    color: #00487C;
+    font-family: Itim;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .eligibilite-text{
