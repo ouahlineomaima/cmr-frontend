@@ -1,3 +1,4 @@
+<div>
 <p>Bienvenue dans votre application CMR-Wassini, pour prendre un rendez-vous de simulation vueillez choisir les journees convenable ainsi que les heures dont vous etes disponibles.</p>
 <mat-form-field>
     <mat-label>Enter a date range</mat-label>
@@ -8,5 +9,22 @@
     <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
-  
+</mat-form-field>
+
+
+   <div class="ngx-timepicker-field-example">
+    <ngx-timepicker-field [(ngModel)]="selectedTimeStart" [format]="24" [min]="'09:00'" [max]="'15:00'" [defaultTime]="'09:00'"></ngx-timepicker-field>
+</div>
+
+<div class="ngx-timepicker-field-example">
+    <ngx-timepicker-field [(ngModel)]="selectedTimeEnd" [format]="24" [min]="'09:00'" [max]="'15:00'" [defaultTime]="'15:00'"></ngx-timepicker-field>
+</div>
+
+<p>Selected Time: from {{ selectedTimeStart }} to {{selectedTimeEnd}}</p>
+
+<button mat-raised-button class="next" [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Déclarer</button>
+
+</div>
+  <!-- <input [ngxTimepicker]="picker">
+<ngx-material-timepicker #picker></ngx-material-timepicker>
+   -->
