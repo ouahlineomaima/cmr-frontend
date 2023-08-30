@@ -1,30 +1,78 @@
-<div>
-<p>Bienvenue dans votre application CMR-Wassini, pour prendre un rendez-vous de simulation vueillez choisir les journees convenable ainsi que les heures dont vous etes disponibles.</p>
-<mat-form-field>
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate placeholder="Start date">
-      <input matEndDate placeholder="End date">
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-</mat-form-field>
+<div >
+    <section class="header">
+        <img (click)="goToAccueilPage()" class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png"
+            alt="Wassini-logo-without-bg">
+    </section>
+    <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
+    <div class="main-container" >
+        <div class="intro_text">Merci de saisir les informations suivantes pour vous contactez</div>
+        <h4 class="qst">Votre nom complet</h4>
+        <input matInput placeholder="Nom Complet" required class="nom">
+        <!-- <mat-error>Name is required</mat-error> -->
+        <h4 class="qst">La plage des dates convenables </h4>
+        <mat-form-field class="date-range">
+            <mat-label>plage des dates</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Date début" [(ngModel)]="startDate">
+            <input matEndDate placeholder="Date fin" [(ngModel)]="endDate">
+            </mat-date-range-input>
+            <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
 
 
-   <div class="ngx-timepicker-field-example">
-    <ngx-timepicker-field [(ngModel)]="selectedTimeStart" [format]="24" [min]="'09:00'" [max]="'15:00'" [defaultTime]="'09:00'"></ngx-timepicker-field>
-</div>
+        <h4 class="qst">La plage horaire convenable</h4>
+        <div class="hour">
+            <mat-form-field>
+                <input matInput
+                       name="selected_time_B"
+                       [format]="24"
+                       [(ngModel)]="selectedTimeStart"
+                       [ngxMatTimepicker]="pickerB"
+                       placeholder="09:00"
+                       [min]="minTime"
+                        [max]="maxTime"
+                        />
+                <mat-icon matSuffix
+                          (click)="pickerB.open()">
+                    watch_later
+                </mat-icon>
+            </mat-form-field>
+            <ngx-mat-timepicker color="accent" #pickerB ></ngx-mat-timepicker>
+        </div>
 
-<div class="ngx-timepicker-field-example">
-    <ngx-timepicker-field [(ngModel)]="selectedTimeEnd" [format]="24" [min]="'09:00'" [max]="'15:00'" [defaultTime]="'15:00'"></ngx-timepicker-field>
-</div>
+        <div class="hour">
+            <mat-form-field>
+                <input matInput
+                       name="selected_time_C"
+                       [format]="24"
+                       [(ngModel)]="selectedTimeEnd"
+                       [ngxMatTimepicker]="pickerC"
+                       placeholder="15:30"
+                       [min]="'09:00'"
+                       [max]="'15:30'"
+                        />
+                <mat-icon matSuffix
+                          (click)="pickerC.open()">
+                    watch_later
+                </mat-icon>
+            </mat-form-field>
+            <ngx-mat-timepicker color="accent" #pickerC></ngx-mat-timepicker>
+        </div>
+       
 
-<p>Selected Time: from {{ selectedTimeStart }} to {{selectedTimeEnd}}</p>
+        <p>Selected Time: from {{ selectedTimeStart }} to {{selectedTimeEnd}}</p>
 
-<button mat-raised-button class="next" [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Déclarer</button>
 
-</div>
-  <!-- <input [ngxTimepicker]="picker">
-<ngx-material-timepicker #picker></ngx-material-timepicker>
+        </div>
+        <!-- <input [ngxTimepicker]="picker">
+        <ngx-material-timepicker #picker></ngx-material-timepicker>
    -->
+    </div>
+
+    <section class="footer">
+        <button mat-raised-button class="next" (click)="goBack()">Retour</button>
+        <button mat-raised-button class="next"  color="primary"
+            (click)="onSubmit()">Valider</button>
+    </section>

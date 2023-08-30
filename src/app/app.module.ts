@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 
 // import {NgModule} from '@angular/core';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -44,6 +45,7 @@ import { EventDetailsComponent } from './components/event-details/event-details.
 import { EventPackComponent } from './components/event-pack/event-pack.component';
 import { EventsListComponent } from './components/events-list/events-list.component';
 import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
+import { ResultTelComponent } from './pages/result-tel/result-tel.component';
 
 
 
@@ -78,7 +80,7 @@ const appRoutes : Routes = [
     EventPackComponent,
     EventsListComponent,
     SimulationTelephoniqueComponent,
-
+    ResultTelComponent,
     
   ],
   imports: [
@@ -99,9 +101,8 @@ const appRoutes : Routes = [
     MatTableModule,
     MatCardModule,
     CommonModule,
-    NgxMaterialTimepickerModule,
-
-    
+    NgxMaterialTimepickerModule,  
+    NgxMatTimepickerModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},
