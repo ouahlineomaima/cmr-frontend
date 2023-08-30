@@ -25,11 +25,13 @@ export class SharedVariablesService {
   isPartnerRetired: boolean | null = null;
   partnerMarialStatus: string | null = null;
   partnerSexe: string | null = null;
-  reservationTel: object {
-    startTime: string | null =null;
-    endTime:string|null =null;}
-  }
-  
+  reservation:Object={
+    startDate: Date,
+    endDate: Date,
+    startHour:String,
+    endHour: String
+  };
+  static reservation: { startHour: string; endHour: string; startDate: Date | null; endDate: Date | null; };
 
   constructor() { }
 }

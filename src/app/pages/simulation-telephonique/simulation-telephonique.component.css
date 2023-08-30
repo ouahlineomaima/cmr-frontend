@@ -1,0 +1,83 @@
+
+.intro_text{
+    margin: 1rem;
+    color: #000;
+text-align: center;
+font-family: Itim;
+font-size: 1.25rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+width: 19.875rem;
+height: 2.625rem;
+flex-shrink: 0;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo {
+    width: 5.8125rem;
+    height: 3.75rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.qst {
+    margin-top: 3%;
+    align-self: flex-start;
+    margin-left: 7%;
+}
+
+h4 {
+    color: #00487C;
+    font-family: Itim;
+    font-size: 1.1875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
+.next{
+    margin: 0 5%;
+}
+
+.nom{
+    border-radius: 0.625rem;
+border: 1px solid #000;
+background: #FFF;
+width: 17.5625rem;
+height: 2.8125rem;
+flex-shrink: 0;
+
+color: rgba(109, 108, 108, 0.89);
+font-family: Itim;
+font-size: 1.1875rem;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+text-align: center;
+margin-bottom: 1rem;
+}
+
+.date-range{
+    margin-bottom: 1rem;
+}
+/* 
+.hour{
+    margin-bottom: rem;
+} */
