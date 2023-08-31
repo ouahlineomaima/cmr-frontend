@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SimulationType } from '../enums/SimulationType';
 import { Child } from '../interfaces/child';
+import { Reservation } from '../interfaces/reservation';
 
 
 @Injectable({
@@ -25,8 +26,7 @@ export class SharedVariablesService {
   isPartnerRetired: boolean | null = null;
   partnerMarialStatus: string | null = null;
   partnerSexe: string | null = null;
-
-  
+  reservations: Array<Reservation>=[]
 
   constructor() { }
 }
