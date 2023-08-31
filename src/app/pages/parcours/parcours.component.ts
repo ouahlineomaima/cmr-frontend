@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Event } from 'src/app/interfaces/event';
 import { Layer } from 'src/app/interfaces/layer';
@@ -13,12 +15,10 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
 })
 export class ParcoursComponent {
 
-  
 
-  constructor(public sharedVariablesService: SharedVariablesService) { }
 
-  @ViewChild('downloaded', {static:false}) el!: ElementRef
-  display:string = 'none'
+  constructor(public sharedVariablesService: SharedVariablesService, private router: Router) { }
+
 
   titles: Array<string> = ['chez-soi', "District: Bureau d'état civil", "Adoul", "Banque", "Hôpital", "Tribunal", "CMR: site web", "CMR: Délégation régionale", "Ecole"];
   titlesBgColors: Array<string> = ['#FFF28C', '#6DE7B6', '#7ED3FC', '#C5B5FC', '#FEB974', '#904C77', "#0B7189", '#03045E', '#CEB5A7'];
@@ -35,6 +35,8 @@ export class ParcoursComponent {
   nonEmploiArray: Array<string> = [];
   displayedLayerIndices: number[] = [];
   marginsIndices: number[] = [];
+
+  exportingPDF = false;
 
 
 
@@ -115,7 +117,7 @@ export class ParcoursComponent {
     title: "Relevé d'identité bancaire (RIB) ou chèque annulé",
     iconColor: this.titlesBgColors[3],
     eventColor: this.titlesColors[3],
-    details: `Relevé d'identité bancaire (RIB) ou chèque annulé de ${this.RIBArray.join(', ')}`
+    details: ``
   }
 
 
@@ -124,7 +126,7 @@ export class ParcoursComponent {
     title: 'Demande de réversion datée et signée',
     iconColor: this.titlesBgColors[6],
     eventColor: this.titlesColors[6],
-    details: 'Téléchargeable depuis le site web de la CMR'
+    details: 'Téléchargeable depuis le site web de la CMR sous le nom "Formulaire de réversion", cliquer pour se diriger vers le site'
   }
   declarationCelibat: Event = {
     title: "Déclaration sur l'honneur du célibat datée et signée",
@@ -268,6 +270,7 @@ export class ParcoursComponent {
   //Fonction pour mettre à jour les événements des emplacements
   updateLayers() {
     // Cas d'un conjoint femelle
+
     if (this.sharedVariablesService.partnerSexe === 'femelle') {
       // Cas d'un conjoint femelle still partner
       if (this.sharedVariablesService.isStillPartner === true) {
@@ -276,57 +279,154 @@ export class ParcoursComponent {
           iconColor: this.titlesBgColors[6],
           eventColor: this.titlesColors[6],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom de la veuve.
-          Téléchargeable depuis le site web de la CMR.`
+          Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non remariage', cliquer pour se diriger vers le site`
         }
 
         this.layers[7].eventsLists[0].push(declarationNonRemariage);
         this.CNIEArray.push("veuve");
         this.acteMariageArray.push("veuve");
-        if (!this.RIBArray.includes('veuve')) {
-          this.RIBArray.push('veuve');
-        }
+
         if (this.sharedVariablesService.hasChildren === true) {
+
+          // la veuve a de la pension s'il a au moins un enfant
+          if (this.RIBArray.includes('veuve') === false) {
+            this.RIBArray.push('veuve');
+          }
+
           for (let child of this.sharedVariablesService.children) {
             const age = this.calculateAge(child.dateOfBirth);
             if (age < 16) {
               this.acteDeNaissanceArray.push(child.name);
+              if (child.isInfirm === true) {
+                this.rapportMedicalArray.push(child.name);
+              }
             }
             else if (age < 18) {
               this.acteDeNaissanceArray.push(child.name);
               if (child.isCurrentlyStudying === true) {
                 this.attestationScolariteArray.push(child.name)
               }
-            }
-            else if (age < 21) {
-              this.CNIEArray.push(child.name);
-              if (child.isCurrentlyStudying === true) {
-                this.attestationScolariteArray.push(child.name);
-                if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                  if (!this.RIBArray.includes(child.name)) {
-                    this.RIBArray.push(child.name);
-                  }
-                }
-              }
-              if (child.marialStatus === 'non marié') {
-                this.celibatArray.push(child.name);
-                if (child.infirmityType === 'physique') {
-                  if (!this.RIBArray.includes(child.name)) {
-                    this.RIBArray.push(child.name);
-                  }
-                }
-              }
-              else {
-                this.acteMariageArray.push(child.name);
-              }
-            }
-            if (child.isInfirm === true) {
-              this.rapportMedicalArray.push(child.name)
-              if (age > 16) {
+              if (child.isInfirm === true) {
+                this.rapportMedicalArray.push(child.name);
                 if (!this.nonEmploiArray.includes(child.name)) {
                   this.nonEmploiArray.push(child.name);
                 }
               }
             }
+            else if (age < 21) {
+              this.CNIEArray.push(child.name);
+              if (child.isCurrentlyStudying === true) {
+                this.attestationScolariteArray.push(child.name);
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (this.RIBArray.includes('veuve') === false) {
+                          this.RIBArray.push('veuve');
+                        }
+                        break;
+                    }
+                  }
+                  else {
+                    if (this.RIBArray.includes(child.name) === false) {
+                      this.RIBArray.push(child.name);
+                    }
+                  }
+                }
+                else if (child.marialStatus === 'marié') {
+                  this.acteMariageArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                  }
+                }
+              }
+              else if (child.isCurrentlyStudying === false) {
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (this.RIBArray.includes('veuve') === false) {
+                          this.RIBArray.push('veuve');
+                        }
+                        break;
+                    }
+                  }
+
+                }
+                else if (child.marialStatus === 'marié') {
+                  this.acteMariageArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                  }
+                }
+
+              }
+            }
+            else {
+              this.CNIEArray.push(child.name);
+              if (child.isInfirm === true) {
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  switch (child.infirmityType) {
+                    case 'physique':
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                      break;
+                    case 'mentale':
+                      if (this.RIBArray.includes('veuve') === false) {
+                        this.RIBArray.push('veuve');
+                      }
+                      break;
+                  }
+
+                }
+                else if (child.marialStatus === 'marié') {
+                  if (child.isInfirm === true) {
+                    this.acteMariageArray.push(child.name);
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        else if (this.sharedVariablesService.isValidMarriagePeriod === true) {
+          if (this.RIBArray.includes('veuve') === false) {
+            this.RIBArray.push('veuve');
           }
         }
       }
@@ -347,19 +447,37 @@ export class ParcoursComponent {
               const age = this.calculateAge(child.dateOfBirth);
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                }
                 if (!this.jugementArray.includes(child.name)) {
                   this.jugementArray.push(child.name)
                 }
-                if (!this.RIBArray.includes('Ex-conjointe')) {
+                if (this.RIBArray.includes('Ex-conjointe') === false) {
                   this.RIBArray.push('Ex-conjointe');
                 }
+
               }
               else if (age < 18) {
                 this.acteDeNaissanceArray.push(child.name);
-                this.jugementArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name)
-                  if (!this.RIBArray.includes('Ex-conjointe')) {
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjointe') === false) {
+                    this.RIBArray.push('Ex-conjointe');
+                  }
+                }
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjointe') === false) {
                     this.RIBArray.push('Ex-conjointe');
                   }
                 }
@@ -368,41 +486,122 @@ export class ParcoursComponent {
                 this.CNIEArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name);
-                  if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjointe') === false) {
+                            this.RIBArray.push('Ex-conjointe');
+                          }
+                          break;
+                      }
+                    }
+                    else {
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                    }
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
                 }
-                if (child.marialStatus === 'non marié') {
-                  this.celibatArray.push(child.name);
-                  if (child.infirmityType === 'physique') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                else if (child.isCurrentlyStudying === false) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjointe') === false) {
+                            this.RIBArray.push('Ex-conjointe');
+                          }
+                          break;
+                      }
+                    }
+
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
-                }
-                else {
-                  this.acteMariageArray.push(child.name);
+
                 }
               }
-              if (child.isInfirm === true) {
-                this.rapportMedicalArray.push(child.name)
-                if (child.infirmityType === 'mentale') {
-                  if (!this.RIBArray.includes('Ex-conjointe')) {
-                    this.RIBArray.push('Ex-conjointe');
+              else {
+                this.CNIEArray.push(child.name);
+                if (child.isInfirm === true) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (!this.jugementArray.includes(child.name)) {
+                          this.jugementArray.push(child.name)
+                        }
+                        if (this.RIBArray.includes('Ex-conjointe') === false) {
+                          this.RIBArray.push('Ex-conjointe');
+                        }
+                        break;
+                    }
+
                   }
-                  if (!this.jugementArray.includes(child.name)) {
-                    this.jugementArray.push(child.name);
-                  }
-                }
-                if (age > 16) {
-                  if (!this.nonEmploiArray.includes(child.name)) {
-                    this.nonEmploiArray.push(child.name);
+                  else if (child.marialStatus === 'marié') {
+                    if (child.isInfirm === true) {
+                      this.acteMariageArray.push(child.name);
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                    }
                   }
                 }
               }
             }
+
           }
         }
 
@@ -421,17 +620,37 @@ export class ParcoursComponent {
               const age = this.calculateAge(child.dateOfBirth);
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
-                this.jugementArray.push(child.name);
-                if (!this.RIBArray.includes('Ex-conjointe')) {
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                }
+                if (!this.jugementArray.includes(child.name)) {
+                  this.jugementArray.push(child.name)
+                }
+                if (this.RIBArray.includes('Ex-conjointe') === false) {
                   this.RIBArray.push('Ex-conjointe');
                 }
+
               }
               else if (age < 18) {
                 this.acteDeNaissanceArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name)
-                  this.jugementArray.push(child.name);
-                  if (!this.RIBArray.includes('Ex-conjointe')) {
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjointe') === false) {
+                    this.RIBArray.push('Ex-conjointe');
+                  }
+                }
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjointe') === false) {
                     this.RIBArray.push('Ex-conjointe');
                   }
                 }
@@ -440,37 +659,117 @@ export class ParcoursComponent {
                 this.CNIEArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
                   this.attestationScolariteArray.push(child.name);
-                  if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjointe') === false) {
+                            this.RIBArray.push('Ex-conjointe');
+                          }
+                          break;
+                      }
+                    }
+                    else {
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                    }
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
                 }
-                if (child.marialStatus === 'non marié') {
-                  this.celibatArray.push(child.name);
-                  if (child.infirmityType === 'physique') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                else if (child.isCurrentlyStudying === false) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjointe') === false) {
+                            this.RIBArray.push('Ex-conjointe');
+                          }
+                          break;
+                      }
+                    }
+
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
-                }
-                else {
-                  this.acteMariageArray.push(child.name);
+
                 }
               }
-              if (child.isInfirm === true) {
-                this.rapportMedicalArray.push(child.name)
-                if (child.infirmityType === 'mentale' && child.marialStatus === 'non marié') {
-                  if (!this.jugementArray.includes(child.name)) {
-                    this.jugementArray.push(child.name);
+              else {
+                this.CNIEArray.push(child.name);
+                if (child.isInfirm === true) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (!this.jugementArray.includes(child.name)) {
+                          this.jugementArray.push(child.name)
+                        }
+                        if (this.RIBArray.includes('Ex-conjointe') === false) {
+                          this.RIBArray.push('Ex-conjointe');
+                        }
+                        break;
+                    }
+
                   }
-                  if (!this.RIBArray.includes('Ex-conjointe')) {
-                    this.RIBArray.push('Ex-conjointe');
-                  }
-                }
-                if (age > 16) {
-                  if (!this.nonEmploiArray.includes(child.name)) {
-                    this.nonEmploiArray.push(child.name);
+                  else if (child.marialStatus === 'marié') {
+                    if (child.isInfirm === true) {
+                      this.acteMariageArray.push(child.name);
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                    }
                   }
                 }
               }
@@ -485,10 +784,10 @@ export class ParcoursComponent {
       if (this.sharedVariablesService.isStillPartner === true) {
         let declarationNonRemariage: Event = {
           title: "Déclaration sur l'honneur de non remariage.",
-          iconColor: this.titlesBgColors[7],
-          eventColor: this.titlesColors[7],
+          iconColor: this.titlesBgColors[6],
+          eventColor: this.titlesColors[6],
           details: `Déclaration sur l'honneur de non remariage depuis la date du décès du défunt datée et signée portant le nom du veuf.
-          Téléchargeable depuis le site web de la CMR.`
+          Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non remariage', cliquer pour se diriger vers le site`
         }
 
         this.layers[7].eventsLists[0].push(declarationNonRemariage);
@@ -496,12 +795,12 @@ export class ParcoursComponent {
         this.acteMariageArray.push("veuf");
         if (this.sharedVariablesService.isPartnerInfirm === true) {
           this.rapportMedicalArray.push('veuf');
-          if (!this.RIBArray.includes('veuf')) {
+          if (this.RIBArray.includes('veuf') === false) {
             this.RIBArray.push('veuf');
           }
         }
         else if (this.sharedVariablesService.isPartnerRetired === true) {
-          if (!this.RIBArray.includes('veuf')) {
+          if (this.RIBArray.includes('veuf') === false) {
             this.RIBArray.push('veuf');
           }
         }
@@ -510,55 +809,137 @@ export class ParcoursComponent {
             const age = this.calculateAge(child.dateOfBirth);
             if (age < 16) {
               this.acteDeNaissanceArray.push(child.name);
-              if (!this.RIBArray.includes('veuf')) {
+              if (this.RIBArray.includes('veuf') === false) {
                 this.RIBArray.push('veuf');
+              }
+              if (child.isInfirm === true) {
+                this.rapportMedicalArray.push(child.name);
               }
             }
             else if (age < 18) {
               this.acteDeNaissanceArray.push(child.name);
               if (child.isCurrentlyStudying === true) {
-                this.attestationScolariteArray.push(child.name);
-                if (!this.RIBArray.includes('veuf')) {
+                this.attestationScolariteArray.push(child.name)
+                if (this.RIBArray.includes('veuf') === false) {
                   this.RIBArray.push('veuf');
+                }
+              }
+              if (child.isInfirm === true) {
+                if (this.RIBArray.includes('veuf') === false) {
+                  this.RIBArray.push('veuf');
+                }
+                this.rapportMedicalArray.push(child.name);
+                if (!this.nonEmploiArray.includes(child.name)) {
+                  this.nonEmploiArray.push(child.name);
                 }
               }
             }
             else if (age < 21) {
               this.CNIEArray.push(child.name);
               if (child.isCurrentlyStudying === true) {
-                this.attestationScolariteArray.push(child.name)
-                if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                  if (!this.RIBArray.includes(child.name)) {
-                    this.RIBArray.push(child.name);
+                this.attestationScolariteArray.push(child.name);
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (this.RIBArray.includes('veuf') === false) {
+                          this.RIBArray.push('veuf');
+                        }
+                        break;
+                    }
+                  }
+                  else {
+                    if (this.RIBArray.includes(child.name) === false) {
+                      this.RIBArray.push(child.name);
+                    }
+                  }
+                }
+                else if (child.marialStatus === 'marié') {
+                  this.acteMariageArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
                   }
                 }
               }
-              if (child.marialStatus === 'non marié') {
-                this.celibatArray.push(child.name);
-                if (child.infirmityType === 'physique') {
-                  if (!this.RIBArray.includes(child.name)) {
-                    this.RIBArray.push(child.name);
+              else if (child.isCurrentlyStudying === false) {
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (this.RIBArray.includes('veuf') === false) {
+                          this.RIBArray.push('veuf');
+                        }
+                        break;
+                    }
+                  }
+
+                }
+                else if (child.marialStatus === 'marié') {
+                  this.acteMariageArray.push(child.name);
+                  if (child.isInfirm === true) {
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
                   }
                 }
-              }
-              else {
-                this.acteMariageArray.push(child.name);
+
               }
             }
-            if (child.isInfirm === true) {
-              this.rapportMedicalArray.push(child.name);
-              if (child.infirmityType === 'mentale') {
-                if (!this.RIBArray.includes('veuf')) {
-                  this.RIBArray.push('veuf');
-                }
-              }
-              if (age > 16) {
+            else {
+              this.CNIEArray.push(child.name);
+              if (child.isInfirm === true) {
+                this.rapportMedicalArray.push(child.name);
                 if (!this.nonEmploiArray.includes(child.name)) {
                   this.nonEmploiArray.push(child.name);
                 }
+                if (child.marialStatus === 'non marié') {
+                  this.celibatArray.push(child.name);
+                  switch (child.infirmityType) {
+                    case 'physique':
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                      break;
+                    case 'mentale':
+                      if (this.RIBArray.includes('veuf') === false) {
+                        this.RIBArray.push('veuf');
+                      }
+                      break;
+                  }
+
+                }
+                else if (child.marialStatus === 'marié') {
+                  if (child.isInfirm === true) {
+                    this.acteMariageArray.push(child.name);
+
+                  }
+                }
               }
             }
-
           }
         }
       }
@@ -579,12 +960,16 @@ export class ParcoursComponent {
               const age = this.calculateAge(child.dateOfBirth);
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                }
                 if (!this.jugementArray.includes(child.name)) {
                   this.jugementArray.push(child.name)
                 }
-                if (!this.RIBArray.includes('Ex-conjoint')) {
+                if (this.RIBArray.includes('Ex-conjoint') === false) {
                   this.RIBArray.push('Ex-conjoint');
                 }
+
               }
               else if (age < 18) {
                 this.acteDeNaissanceArray.push(child.name);
@@ -593,7 +978,19 @@ export class ParcoursComponent {
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name)
                   }
-                  if (!this.RIBArray.includes('Ex-conjoint')) {
+                  if (this.RIBArray.includes('Ex-conjoint') === false) {
+                    this.RIBArray.push('Ex-conjoint');
+                  }
+                }
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjoint') === false) {
                     this.RIBArray.push('Ex-conjoint');
                   }
                 }
@@ -601,42 +998,121 @@ export class ParcoursComponent {
               else if (age < 21) {
                 this.CNIEArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
-                  this.attestationScolariteArray.push(child.name)
-                  if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                  this.attestationScolariteArray.push(child.name);
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjoint') === false) {
+                            this.RIBArray.push('Ex-conjoint');
+                          }
+                          break;
+                      }
+                    }
+                    else {
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                    }
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
                 }
-                if (child.marialStatus === 'non marié') {
-                  this.celibatArray.push(child.name);
-                  if (child.infirmityType === 'physique') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                else if (child.isCurrentlyStudying === false) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjoint') === false) {
+                            this.RIBArray.push('Ex-conjoint');
+                          }
+                          break;
+                      }
                     }
-                  }
-                }
-                else {
-                  this.acteMariageArray.push(child.name);
-                }
-              }
-              if (child.isInfirm === true) {
-                this.rapportMedicalArray.push(child.name)
-                if (child.infirmityType === 'mentale' && child.marialStatus != 'marié') {
-                  if (!this.RIBArray.includes('Ex-conjoint')) {
-                    this.RIBArray.push('Ex-conjoint');
-                  }
-                  if (!this.jugementArray.includes(child.name)) {
-                    this.jugementArray.push(child.name);
-                  }
-                }
-                if (age > 16) {
-                  if (!this.nonEmploiArray.includes(child.name)) {
-                    this.nonEmploiArray.push(child.name);
-                  }
-                }
-              }
 
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                    }
+                  }
+
+                }
+              }
+              else {
+                this.CNIEArray.push(child.name);
+                if (child.isInfirm === true) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (!this.jugementArray.includes(child.name)) {
+                          this.jugementArray.push(child.name)
+                        }
+                        if (this.RIBArray.includes('Ex-conjoint') === false) {
+                          this.RIBArray.push('Ex-conjoint');
+                        }
+                        break;
+                    }
+
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    if (child.isInfirm === true) {
+                      this.acteMariageArray.push(child.name);
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -655,12 +1131,16 @@ export class ParcoursComponent {
               const age = this.calculateAge(child.dateOfBirth);
               if (age < 16) {
                 this.acteDeNaissanceArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                }
                 if (!this.jugementArray.includes(child.name)) {
                   this.jugementArray.push(child.name)
                 }
-                if (!this.RIBArray.includes('Ex-conjoint')) {
+                if (this.RIBArray.includes('Ex-conjoint') === false) {
                   this.RIBArray.push('Ex-conjoint');
                 }
+
               }
               else if (age < 18) {
                 this.acteDeNaissanceArray.push(child.name);
@@ -669,7 +1149,19 @@ export class ParcoursComponent {
                   if (!this.jugementArray.includes(child.name)) {
                     this.jugementArray.push(child.name)
                   }
-                  if (!this.RIBArray.includes('Ex-conjoint')) {
+                  if (this.RIBArray.includes('Ex-conjoint') === false) {
+                    this.RIBArray.push('Ex-conjoint');
+                  }
+                }
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  if (!this.jugementArray.includes(child.name)) {
+                    this.jugementArray.push(child.name)
+                  }
+                  if (this.RIBArray.includes('Ex-conjoint') === false) {
                     this.RIBArray.push('Ex-conjoint');
                   }
                 }
@@ -677,38 +1169,118 @@ export class ParcoursComponent {
               else if (age < 21) {
                 this.CNIEArray.push(child.name);
                 if (child.isCurrentlyStudying === true) {
-                  this.attestationScolariteArray.push(child.name)
-                  if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                  this.attestationScolariteArray.push(child.name);
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjoint') === false) {
+                            this.RIBArray.push('Ex-conjoint');
+                          }
+                          break;
+                      }
+                    }
+                    else {
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                    }
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
                 }
-                if (child.marialStatus === 'non marié') {
-                  this.celibatArray.push(child.name);
-                  if (child.infirmityType === 'physique') {
-                    if (!this.RIBArray.includes(child.name)) {
-                      this.RIBArray.push(child.name);
+                else if (child.isCurrentlyStudying === false) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                      switch (child.infirmityType) {
+                        case 'physique':
+                          if (this.RIBArray.includes(child.name) === false) {
+                            this.RIBArray.push(child.name);
+                          }
+                          break;
+                        case 'mentale':
+                          if (!this.jugementArray.includes(child.name)) {
+                            this.jugementArray.push(child.name)
+                          }
+                          if (this.RIBArray.includes('Ex-conjoint') === false) {
+                            this.RIBArray.push('Ex-conjoint');
+                          }
+                          break;
+                      }
+                    }
+
+                  }
+                  else if (child.marialStatus === 'marié') {
+                    this.acteMariageArray.push(child.name);
+                    if (child.isInfirm === true) {
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
                     }
                   }
-                }
-                else {
-                  this.acteMariageArray.push(child.name);
+
                 }
               }
-              if (child.isInfirm === true) {
-                this.rapportMedicalArray.push(child.name)
-                if (child.infirmityType === 'mentale' && child.marialStatus != 'marié') {
-                  if (!this.jugementArray.includes(child.name)) {
-                    this.jugementArray.push(child.name);
+              else {
+                this.CNIEArray.push(child.name);
+                if (child.isInfirm === true) {
+                  if (child.marialStatus === 'non marié') {
+                    this.celibatArray.push(child.name);
+                    this.rapportMedicalArray.push(child.name);
+                    if (!this.nonEmploiArray.includes(child.name)) {
+                      this.nonEmploiArray.push(child.name);
+                    }
+                    switch (child.infirmityType) {
+                      case 'physique':
+                        if (this.RIBArray.includes(child.name) === false) {
+                          this.RIBArray.push(child.name);
+                        }
+                        break;
+                      case 'mentale':
+                        if (!this.jugementArray.includes(child.name)) {
+                          this.jugementArray.push(child.name)
+                        }
+                        if (this.RIBArray.includes('Ex-conjoint') === false) {
+                          this.RIBArray.push('Ex-conjoint');
+                        }
+                        break;
+                    }
+
                   }
-                  if (!this.RIBArray.includes('Ex-conjoint')) {
-                    this.RIBArray.push('Ex-conjoint');
-                  }
-                }
-                if (age > 16) {
-                  if (!this.nonEmploiArray.includes(child.name)) {
-                    this.nonEmploiArray.push(child.name);
+                  else if (child.marialStatus === 'marié') {
+                    if (child.isInfirm === true) {
+                      this.acteMariageArray.push(child.name);
+                      this.rapportMedicalArray.push(child.name);
+                      if (!this.nonEmploiArray.includes(child.name)) {
+                        this.nonEmploiArray.push(child.name);
+                      }
+                    }
                   }
                 }
               }
@@ -724,65 +1296,173 @@ export class ParcoursComponent {
           const age = this.calculateAge(child.dateOfBirth);
           if (age < 16) {
             this.acteDeNaissanceArray.push(child.name);
-            this.jugementArray.push(child.name);
             if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
               this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
             }
-            if (!this.RIBArray.includes(`tuteur(rice) de ${child.name}`)) {
+            if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
               this.RIBArray.push(`tuteur(rice) de ${child.name}`);
+            }
+            if (!this.jugementArray.includes(child.name)) {
+              this.jugementArray.push(child.name);
+            }
+            if (child.isInfirm === true) {
+              this.rapportMedicalArray.push(child.name);
             }
           }
           else if (age < 18) {
             this.acteDeNaissanceArray.push(child.name);
-            this.jugementArray.push(child.name);
-            if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
-              this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
-            }
             if (child.isCurrentlyStudying === true) {
               this.attestationScolariteArray.push(child.name)
-              if (!this.RIBArray.includes(`tuteur(rice) de ${child.name}`)) {
-                this.RIBArray.push(`tuteur(rice) de ${child.name}`);
-              }
-            }
-          }
-          else if (age < 21) {
-            this.CNIEArray.push(child.name);
-            if (child.isCurrentlyStudying === true) {
-              this.attestationScolariteArray.push(child.name)
-              if (child.marialStatus === 'non marié' && child.infirmityType != 'mentale') {
-                if (!this.RIBArray.includes(child.name)) {
-                  this.RIBArray.push(child.name);
-                }
-              }
-            }
-            if (child.marialStatus === 'non marié') {
-              this.celibatArray.push(child.name);
-              if (child.infirmityType === 'physique') {
-                if (!this.RIBArray.includes(child.name)) {
-                  this.RIBArray.push(child.name);
-                }
-              }
-            }
-            else {
-              this.acteMariageArray.push(child.name);
-            }
-          }
-          if (child.isInfirm === true) {
-            this.rapportMedicalArray.push(child.name)
-            if (child.infirmityType === 'mentale' && child.marialStatus === 'non marié') {
               if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
                 this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
               }
-              if (!this.RIBArray.includes(`tuteur(rice) de ${child.name}`)) {
+              if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
                 this.RIBArray.push(`tuteur(rice) de ${child.name}`);
               }
               if (!this.jugementArray.includes(child.name)) {
                 this.jugementArray.push(child.name);
               }
             }
-            if (age > 16) {
+            if (child.isInfirm === true) {
+              this.rapportMedicalArray.push(child.name);
               if (!this.nonEmploiArray.includes(child.name)) {
                 this.nonEmploiArray.push(child.name);
+              }
+              if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
+                this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
+              }
+              if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
+                this.RIBArray.push(`tuteur(rice) de ${child.name}`);
+              }
+              if (!this.jugementArray.includes(child.name)) {
+                this.jugementArray.push(child.name);
+              }
+            }
+          }
+          else if (age < 21) {
+            this.CNIEArray.push(child.name);
+            if (child.isCurrentlyStudying === true) {
+              this.attestationScolariteArray.push(child.name);
+              if (child.marialStatus === 'non marié') {
+                this.celibatArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  switch (child.infirmityType) {
+                    case 'physique':
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                      break;
+                    case 'mentale':
+                      if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
+                        this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
+                      }
+                      if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
+                        this.RIBArray.push(`tuteur(rice) de ${child.name}`);
+                      }
+                      if (!this.jugementArray.includes(child.name)) {
+                        this.jugementArray.push(child.name);
+                      }
+                      break;
+                  }
+                }
+                else {
+                  if (this.RIBArray.includes(child.name) === false) {
+                    this.RIBArray.push(child.name);
+                  }
+                }
+              }
+              else if (child.marialStatus === 'marié') {
+                this.acteMariageArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                }
+              }
+            }
+            else if (child.isCurrentlyStudying === false) {
+              if (child.marialStatus === 'non marié') {
+                this.celibatArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                  switch (child.infirmityType) {
+                    case 'physique':
+                      if (this.RIBArray.includes(child.name) === false) {
+                        this.RIBArray.push(child.name);
+                      }
+                      break;
+                    case 'mentale':
+                      if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
+                        this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
+                      }
+                      if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
+                        this.RIBArray.push(`tuteur(rice) de ${child.name}`);
+                      }
+                      if (!this.jugementArray.includes(child.name)) {
+                        this.jugementArray.push(child.name);
+                      }
+                      break;
+                  }
+                }
+
+              }
+              else if (child.marialStatus === 'marié') {
+                this.acteMariageArray.push(child.name);
+                if (child.isInfirm === true) {
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                }
+              }
+
+            }
+          }
+          else {
+            this.CNIEArray.push(child.name);
+            if (child.isInfirm === true) {
+              if (child.marialStatus === 'non marié') {
+                this.celibatArray.push(child.name);
+                this.rapportMedicalArray.push(child.name);
+                if (!this.nonEmploiArray.includes(child.name)) {
+                  this.nonEmploiArray.push(child.name);
+                }
+                switch (child.infirmityType) {
+                  case 'physique':
+                    if (this.RIBArray.includes(child.name) === false) {
+                      this.RIBArray.push(child.name);
+                    }
+                    break;
+                  case 'mentale':
+                    if (!this.CNIEArray.includes(`tuteur(rice) de ${child.name}`)) {
+                      this.CNIEArray.push(`tuteur(rice) de ${child.name}`)
+                    }
+                    if (this.RIBArray.includes(`tuteur(rice) de ${child.name}`) === false) {
+                      this.RIBArray.push(`tuteur(rice) de ${child.name}`);
+                    }
+                    if (!this.jugementArray.includes(child.name)) {
+                      this.jugementArray.push(child.name);
+                    }
+                    break;
+                }
+
+              }
+              else if (child.marialStatus === 'marié') {
+                if (child.isInfirm === true) {
+                  this.acteMariageArray.push(child.name);
+                  this.rapportMedicalArray.push(child.name);
+                  if (!this.nonEmploiArray.includes(child.name)) {
+                    this.nonEmploiArray.push(child.name);
+                  }
+                }
               }
             }
           }
@@ -815,14 +1495,14 @@ export class ParcoursComponent {
 
     //Rapports médicaux
     if (this.rapportMedicalArray.length > 0) {
-      this.rapportMedical.details = `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}`
+      this.rapportMedical.details = `Rapport médical et contre visite, homologués par la commission médicale provinciale dont relève lieu de résidence de ${this.rapportMedicalArray.join(', ')}. Téléchargeable depuis le site web de la CMR sous le nom 'Dossier d’infirmité', cliquer pour se diriger vers le site`
       this.layers[1].eventsLists[0].push(this.rapportMedical);
     }
 
     //Declaration de célibat
     if (this.celibatArray.length > 0) {
       this.declarationCelibat.details = `Déclaration sur l'honneur du célibat datée et signée de ${this.celibatArray.join(', ')}.
-      Téléchargeable depuis le site web de la CMR`
+      Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur pour célibat', cliquer pour se diriger vers le site`
       this.layers[7].eventsLists[0].push(this.declarationCelibat);
     }
 
@@ -841,7 +1521,7 @@ export class ParcoursComponent {
     //Attestation de non emploi
     if (this.nonEmploiArray.length > 0) {
       this.declarationNonEmploi.details = `Déclaration sur l'honneur de non emploi datée et signée de ${this.nonEmploiArray.join(', ')}
-      Téléchargeable depuis le site web de la CMR`
+      Téléchargeable depuis le site web de la CMR sous le nom 'Déclaration sur l'honneur du non emploi', cliquer pour se diriger vers le site`
       this.layers[7].eventsLists[0].push(this.declarationNonEmploi);
     }
     this.layers.forEach((layer, index) => {
@@ -851,7 +1531,7 @@ export class ParcoursComponent {
     });
     for (let i = 0; i < this.displayedLayerIndices.length; i++) {
       this.marginsIndices.push(i);
-  }
+    }
   }
 
 
@@ -871,19 +1551,66 @@ export class ParcoursComponent {
   }
 
   exportToPDF() {
-    let title:string = 'parcours.pdf';
+    this.exportingPDF = true;
+    let title: string = 'parcours.pdf';
     let pdf = new jsPDF({
       orientation: 'l',
       unit: 'px',
-      format: [window.innerWidth, window.innerHeight],
-      putOnlyUsedFonts:false
-     })
-    pdf.html(this.el.nativeElement, {
-      callback: (pdf) =>{
+      format: [5000, 5000],
+      putOnlyUsedFonts: false,
+    });
+
+    const originalElement = document.getElementById('mainContainer');
+
+    // Get references to the elements within the exportToPDF function
+    const el = originalElement?.cloneNode(true) as HTMLElement;
+
+    if (el) {
+      el.style.width = '1080px';
+      el.id = 'cloned1';
+
+      // Create a container element to hold the cloned elements
+      const container = document.createElement('div');
+      container.appendChild(el);
+      document.body.appendChild(container);
+
+      // Render the content of the element
+      html2canvas(el).then((canvas) => {
+        const imageData = canvas.toDataURL('image/jpeg', 1.0);
+        pdf.addImage(imageData, 'JPEG', 0, 0, canvas.width, canvas.height);
         pdf.save(title);
-      }
-    })
-    
+        // Remove the container after rendering
+        document.body.removeChild(container);
+        this.exportingPDF = false;
+      });
+    } else {
+      console.error('Elements not found');
+    }
+  }
+
+
+
+  goToAccueilPage() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.cin = '';
+    this.sharedVariablesService.tel = '';
+    this.sharedVariablesService.userRelationship = '';
+    this.sharedVariablesService.isRetired = null;
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
+    this.router.navigate(['/accueil']);
+  }
+
+  goBack() {
+    this.router.navigate(['/resultat']);
   }
 
 }

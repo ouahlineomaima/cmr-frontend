@@ -1,36 +1,47 @@
-<section class="main-container"  id="downloaded" #downloaded>
-  <section class="header">
-    <img class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png" alt="Wassini-logo-without-bg">
-  </section>
-  <h3>Découvrez le parcours de préparation de votre dossier</h3>
-  <div class="layers">
-    <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
-      <app-layer 
-      [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
-    </div>
-  </div>
-  <section *ngFor="let displayedIndex of displayedLayerIndices" class="details">
-    <div class="layer-details">
-      <h3>{{layers[displayedIndex].title}}</h3>
-      <div *ngFor="let event of layers[displayedIndex].eventsLists[0]" class="event-details">
-        <app-event [event]="event" class="event-title1"></app-event>
-        <div class="event-description">
-          <ng-container *ngFor="let line of event.details.split('.')" >
-            <h4 *ngIf="event.details != ''">{{"• "}}{{ line.trim() }}.</h4>
-          </ng-container>
-        </div>
+<section class="main-container">
+
+  <section id="mainContainer" #mainContainer>
+    <section class="header">
+      <img (click)="goToAccueilPage()" class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png"
+        alt="Wassini-logo-without-bg">
+    </section>
+    <h3>Découvrez le parcours de préparation de votre dossier</h3>
+    <div class="layers">
+      <div *ngFor="let displayedIndex of displayedLayerIndices; let index = index">
+        <app-layer [layer]="layers[displayedIndex]" [marginLeft]="marginsIndices[index]*1.5"></app-layer>
       </div>
     </div>
+    <section id="details" #details>
+      <section *ngFor="let displayedIndex of displayedLayerIndices" class="details">
+        <div class="layer-details">
+          <h3>{{layers[displayedIndex].title}}</h3>
+          <div *ngFor="let event of layers[displayedIndex].eventsLists[0]" class="event-details">
+            <app-event [event]="event" class="event-title1"></app-event>
+            <div class="event-description">
+              <ng-container *ngFor="let line of event.details.split('.')">
+                <h4 *ngIf="event.details != ''">{{"• "}}{{ line.trim().replace(', cliquer pour se diriger vers le site',
+                  '') }}.</h4>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
   </section>
+
   
-  
+
 </section>
 
-
+<!-- Loading section -->
+<section *ngIf="exportingPDF" class="loading-section">
+  <div class="loading-spinner"></div>
+  <p>Génération du parcours...</p>
+</section>
 
 <div class="btns">
   <button class="btn"> Retour</button>
-  <button class="btn" (click)="exportToPDF()"> Exporter PDF 
+  <button class="btn" (click)="exportToPDF()"> Exporter PDF
     <i class="pi pi-file-pdf" style="color: #00487C"></i>
   </button>
 </div>
