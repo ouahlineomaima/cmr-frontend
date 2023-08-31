@@ -51,6 +51,8 @@ export class EnfantComponent {
 
   formatDate() {
     this.selectedDateOfBirth = this.selectedDateOfBirthRaw?.toDate();
+    console.log(this.selectedDateOfBirthRaw?.toDate())
+    console.log("child birthday ", this.selectedDateOfBirth)
   }
 
   onSubmit() {
@@ -62,6 +64,7 @@ export class EnfantComponent {
       isInfirm: this.selectedIsInfirm === 'true',
       infirmityType: this.selectedInfirmityType
     }
+    console.log('submit ', child.dateOfBirth)
     this.sharedVariablesService.children.push(child)
     this.sharedVariablesService.childOrder += 1;
     this.isButtonDisabled = true;

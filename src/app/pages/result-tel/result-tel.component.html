@@ -1,1 +1,22 @@
-<p>result-tel works!</p>
+<div class="container">
+    <section class="header">
+        <img (click)="goToAccueilPage()" class="logo" src="https://i.ibb.co/F5YWMQD/Wassini-logo-without-bg.png"
+            alt="Wassini-logo-without-bg">
+    </section>
+    <app-timeline [classNames]="classNamesForTimeline"></app-timeline>
+    <div class="container-pop">
+        
+        <div class="pop-up">
+            <mat-icon class="close">
+                close
+            </mat-icon>
+            <div class="text1 text">
+                Merci d’avoir utiliser notre simulateur ! 
+            </div>  
+                
+            <div class="text2 text">
+                Nos agents vous contacteront dans les plus brefs délais.
+            </div>  
+            </div>
+    </div>   
+</div>

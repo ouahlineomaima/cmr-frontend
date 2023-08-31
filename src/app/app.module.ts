@@ -59,6 +59,8 @@ const appRoutes : Routes = [
   {path:'choix-simulation', component:ChoixSimulationComponent},
   {path:'parcours', component:ParcoursComponent},
   {path:'simulation-telephonique', component:SimulationTelephoniqueComponent},
+  {path:'resultat-telephonique', component:ResultTelComponent},
+
 ]
 
 @NgModule({

@@ -15,20 +15,14 @@ import { DateTime } from 'luxon';
 })
 export class SimulationTelephoniqueComponent {
 
+
   classNamesForTimeline: Array<string> = ['done', 'current-item', 'comming'];
-
-  // minTime: DateTime = DateTime.fromObject({ hour: 8, minute: 0 });
-  // maxTime: DateTime = DateTime.fromObject({ hour: 18, minute: 0 });
-  // selectedDateRange:Date
-
-  minTime: string = '07:00';
-  maxTime: string = '15:30';
-
-  // minTime: any = this.timepickerService.getValidTime({ minute: 0, hour: 8 });
-  // maxTime: any = this.timepickerService.getValidTime({ minute: 0, hour: 18 });
+  nomComplet:string=""
   selectedTimeStart:string|""="";
   selectedTimeEnd : string|"" = "" ;
-  startDate: Date | any =null;
+  selectedDateStart: Object |any =null;
+  selectedDateEnd: Object | any = null;
+  startDate: Date | null =null;
   endDate: Date | null = null;
   @Output() inputChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -40,13 +34,36 @@ export class SimulationTelephoniqueComponent {
 
   constructor(private router: Router, public sharedVariablesService: SharedVariablesService) { }
 
-  onSubmit() {
-
-    console.log("start date", this.startDate._i.date.toString(), "type of ", typeof(this.startDate))
-    console.log("end date", this.endDate)
-    // this.isDeclared = true;
-    // this.inputChange.emit();
+  formatDateStart() {
+    this.startDate=this.selectedDateStart?.toDate()
   }
+
+  formatDateEnd() {
+    this.endDate=this.selectedDateEnd?.toDate()
+  }
+
+  onSubmit() {
+    let reservation: Reservation ={
+      nomComplet: this.nomComplet,
+      CIN: this.sharedVariablesService.cin,
+      tel: this.sharedVariablesService.tel,
+      userRelationship:this.sharedVariablesService.userRelationship,
+      startDate: `${this.startDate?.getDate().toString().padStart(2, '0')}/${(this.startDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.startDate?.getFullYear()}`,
+      endDate: `${this.endDate?.getDate().toString().padStart(2, '0')}/${(this.endDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.endDate?.getFullYear()}`,
+      startHour:this.selectedTimeStart,
+      endHour:this.selectedTimeEnd
+    }
+    console.log("object reser ",reservation)
+    console.log("before push ", this.sharedVariablesService.reservations)
+    this.sharedVariablesService.reservations.push(reservation)
+    console.log("after push ", this.sharedVariablesService.reservations)
+
+    this.inputChange.emit();
+    this.router.navigate(['/resultat-telephonique']);
+
+  }
+
+  
 
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
@@ -57,4 +74,5 @@ export class SimulationTelephoniqueComponent {
     // Reinitializing variables to mantain the logic
     this.router.navigate(['/choix-simulation']);
   }
+
 }
