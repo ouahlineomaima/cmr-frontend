@@ -103,6 +103,7 @@ export class ChoixSimulationComponent {
       this.router.navigate(['/non-retraite'])
     }
 
+
   }
 
 }
