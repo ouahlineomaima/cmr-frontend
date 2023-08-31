@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 
 @Component({
   selector: 'app-result-tel',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class ResultTelComponent {
 
+  classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
+
+  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) { }
+
+
+
+  goToAccueilPage() {
+    this.router.navigate(['/accueil']);
+  }
 }
