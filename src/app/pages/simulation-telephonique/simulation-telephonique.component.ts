@@ -2,10 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Reservation } from 'src/app/interfaces/reservation';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { Router } from '@angular/router';
-import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
-import { DateTime } from 'luxon';
 import { DataService } from 'src/app/services/data.service';
-import { Reservations } from 'src/app/Data/Reservation';
 // import { NgxMatTimepickerService } from 'ngx-mat-timepicker/lib/services/ngx-mat-timepicker.service';
 
 
