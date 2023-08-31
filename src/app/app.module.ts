@@ -47,6 +47,7 @@ import { EventsListComponent } from './components/events-list/events-list.compon
 import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
 import { ResultTelComponent } from './pages/result-tel/result-tel.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PasDeRetraiteComponent } from './pages/pas-de-retraite/pas-de-retraite.component';
 
 
 
@@ -61,6 +62,7 @@ const appRoutes : Routes = [
   {path:'parcours', component:ParcoursComponent},
   {path:'simulation-telephonique', component:SimulationTelephoniqueComponent},
   {path:'resultat-telephonique', component:ResultTelComponent},
+  {path:'non-retraite', component:PasDeRetraiteComponent},
 
 ]
 
@@ -84,6 +86,7 @@ const appRoutes : Routes = [
     EventsListComponent,
     SimulationTelephoniqueComponent,
     ResultTelComponent,
+    PasDeRetraiteComponent,
     
   ],
   imports: [
