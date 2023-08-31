@@ -20,7 +20,9 @@ import { MatTableModule } from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 
-
+// import {NgModule} from '@angular/core';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,6 +44,9 @@ import { EventComponent } from './components/event/event.component';
 import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { EventPackComponent } from './components/event-pack/event-pack.component';
 import { EventsListComponent } from './components/events-list/events-list.component';
+import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
+import { ResultTelComponent } from './pages/result-tel/result-tel.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -53,7 +58,9 @@ const appRoutes : Routes = [
   {path:'resultat', component:ResultatComponent},
   {path:'simulation-en-ligne', component:SimulationEnLigneComponent},
   {path:'choix-simulation', component:ChoixSimulationComponent},
-  {path:'parcours', component:ParcoursComponent}
+  {path:'parcours', component:ParcoursComponent},
+  {path:'simulation-telephonique', component:SimulationTelephoniqueComponent},
+  {path:'resultat-telephonique', component:ResultTelComponent},
 
 ]
 
@@ -74,7 +81,9 @@ const appRoutes : Routes = [
     EventComponent,
     EventDetailsComponent,
     EventPackComponent,
-    EventsListComponent
+    EventsListComponent,
+    SimulationTelephoniqueComponent,
+    ResultTelComponent,
     
   ],
   imports: [
@@ -94,7 +103,10 @@ const appRoutes : Routes = [
     MatRadioModule,
     MatTableModule,
     MatCardModule,
-    CommonModule
+    CommonModule,
+    NgxMaterialTimepickerModule,  
+    NgxMatTimepickerModule,
+    HttpClientModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},
