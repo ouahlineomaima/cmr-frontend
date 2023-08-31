@@ -8,6 +8,7 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
   styleUrls: ['./resultat.component.css']
 })
 export class ResultatComponent {
+
   childrenPourcentage: number = 0;
   partnerPourcentage: number = 0;
   childrenNames: string[] = [];
@@ -134,6 +135,10 @@ export class ResultatComponent {
     this.sharedVariablesService.partnerSexe = null;
     this.router.navigate(['/accueil']);
   }
+
+  goToSimTelephonique() {
+    this.router.navigate(['simulation-telephonique'])
+    }
 
   goParcours() {
     this.router.navigate(['/parcours']);
