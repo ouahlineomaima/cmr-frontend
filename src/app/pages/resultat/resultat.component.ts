@@ -24,7 +24,7 @@ export class ResultatComponent {
   getStatus() {
     // cas de conjoint seul
     if (this.sharedVariablesService.hasChildren != true) {
-      if (this.sharedVariablesService.isValidMarriagePeriod === true) {
+      if (this.sharedVariablesService.isValidMarriagePeriod === true && this.sharedVariablesService.isStillPartner === true) {
         this.partnerPourcentage = 100;
         return;
       }
@@ -83,34 +83,23 @@ export class ResultatComponent {
             }
             if (this.sharedVariablesService.isPartnerInfirm === false) {
               if (this.sharedVariablesService.isPartnerRetired === true) {
-                if (x == true) {
-                  this.partnerPourcentage = 50;
-                  this.childrenPourcentage = 50;
-                  break;
-                }
-                else {
-                  this.partnerPourcentage = 100;
-                  this.childrenPourcentage = 0;
-                  break;
-                }
+                this.partnerPourcentage = x == true ? 50 : 100;
+                this.childrenPourcentage = x == true ? 50 : 0;
               }
               else {
-                this.childrenPourcentage = x === true ? 50:0;
+                this.childrenPourcentage = x === true ? 50 : 0;
                 this.partnerPourcentage = -1;
                 break;
               }
             }
         }
       }
-      else{
+      else {
         this.partnerPourcentage = 0;
-        this.childrenPourcentage = x === true ? 100:0;
+        this.childrenPourcentage = x === true ? 100 : 0;
       }
     }
   }
-
-
-
 
   calculateAge(birthdateString: string | null): number {
     const currentDate = new Date();
@@ -121,23 +110,36 @@ export class ResultatComponent {
 
     const birthdate = new Date(birthYear, birthMonth, birthDay);
     const age = currentDate.getFullYear() - birthdate.getFullYear() - (
-      (currentDate.getMonth() < birthdate.getMonth() || 
-      (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
-  );
-  return age;
+      (currentDate.getMonth() < birthdate.getMonth() ||
+        (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) ? 1 : 0
+    );
+    return age;
   }
 
-
-
   goToAccueilPage() {
+    // Reinitializing variables to mantain the logic
+    this.sharedVariablesService.cin = '';
+    this.sharedVariablesService.tel = '';
+    this.sharedVariablesService.userRelationship = '';
+    this.sharedVariablesService.isRetired = null;
+    this.sharedVariablesService.hasChildren = null;
+    this.sharedVariablesService.isValidMarriagePeriod = null;
+    this.sharedVariablesService.children = [];
+    this.sharedVariablesService.childOrder = 1;
+    this.sharedVariablesService.isStillPartner = null;
+    this.sharedVariablesService.isPartnerAlive = null;
+    this.sharedVariablesService.isPartnerInfirm = null;
+    this.sharedVariablesService.isPartnerRetired = null;
+    this.sharedVariablesService.partnerMarialStatus = null;
+    this.sharedVariablesService.partnerSexe = null;
     this.router.navigate(['/accueil']);
   }
 
-  goParcours(){
+  goParcours() {
     this.router.navigate(['/parcours']);
   }
 
-  goBack(){ // reinitialize variables
+  goBack() { // reinitialize variables
     this.router.navigate(['/simulation-en-ligne']);
   }
 }

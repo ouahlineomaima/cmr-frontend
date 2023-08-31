@@ -100,6 +100,9 @@ h3 {
   margin-block-end: 0;
   margin-bottom: 0.5rem;
   font-size: x-large;
+  border-bottom: 1px solid ;
+  border-image: linear-gradient(to right,#dddddd00,#dddddd7b, #dddddd96,#555555a5, #dddddd96, #dddddd7b, #dddddd00);
+  border-image-slice: 1;
 }
 
 .event-details{
@@ -107,9 +110,6 @@ h3 {
   display: flex;
   flex-direction: row;
   width: 100%;
-  border-top: 1px solid ;
-  border-image: linear-gradient(to right,#dddddd00,#dddddd7b, #dddddd96,#555555a5, #dddddd96, #dddddd7b, #dddddd00);
-  border-image-slice: 1;
   padding-top: 0.2rem;
   margin-left: 0.2rem;
 
@@ -117,8 +117,6 @@ h3 {
 .event-title1{
   width: 30%;
 }
-
-
 
 .event-description {
   display: flex;
@@ -130,6 +128,40 @@ h3 {
   margin: 0; 
   color: rgba(56, 65, 82,1);
 }
+
+.loading-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+@media screen and (max-width: 500px) {
+  .loading-section {
+    height: 100%;
+  }
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 
 
