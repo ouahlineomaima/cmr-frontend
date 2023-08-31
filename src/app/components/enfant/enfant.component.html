@@ -1,5 +1,8 @@
 <div class="main-container">
-    <h3 class="title">Fils/Fille {{this.sharedVariablesService.childOrder}}</h3>
+    <button class="remove-button" (click)="removeComponent()">
+        <i class="pi pi-times"></i>
+      </button>
+    <h3 class="title">Fils/Fille {{order}}</h3>
     <h4 class="qst">Nom complet du fils/fille:</h4>
     <input type="text" class="name" [(ngModel)]="this.childName" placeholder="Nom complet" required (ngModelChange)="updateButtonState()">
     <h4 class="qst">Date de naissance:</h4>
@@ -7,7 +10,7 @@
         <mat-label>JJ/MM/AAAA</mat-label>
         <input id="dob" matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirthRaw" (dateChange)="updateButtonState(); formatDate()"> 
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
     </mat-form-field>
     <h4 class="qst">Le fils/la fille poursuit-il(elle) actuellement ses études ?</h4>
     <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsCurrentlyStudying" color="primary" (change)="updateButtonState()">
@@ -38,9 +41,4 @@
         </form>
     </div>
     <button mat-raised-button class="next" [disabled]="isButtonDisabled" color="primary" (click)="onSubmit()">Déclarer</button>
-    
-
-
-
-
 </div>

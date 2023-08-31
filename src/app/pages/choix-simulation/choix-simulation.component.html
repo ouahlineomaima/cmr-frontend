@@ -10,9 +10,10 @@
         <input type="tel" [(ngModel)]="sharedVariablesService.tel" placeholder="Votre numéro de téléphone" required (ngModelChange)="updateButtonState()">
         <h4 class="qst">Vous êtes:</h4>
         <form>
+
             <mat-form-field class="select">
                 <mat-label>Vous êtes</mat-label>
-                <mat-select [(ngModel)]="sharedVariablesService.userRelationship" name="humans" (ngModelChange)="updateButtonState()">
+                <mat-select [(ngModel)]="sharedVariablesService.userRelationship" name="humans" (ngModelChange)="updateButtonState(); updatePartnerSex();">
                     <mat-option *ngFor="let human of humans" [value]="human.value">
                         {{human.viewValue}}
                     </mat-option>
