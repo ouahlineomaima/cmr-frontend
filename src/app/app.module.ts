@@ -46,6 +46,7 @@ import { EventPackComponent } from './components/event-pack/event-pack.component
 import { EventsListComponent } from './components/events-list/events-list.component';
 import { SimulationTelephoniqueComponent } from './pages/simulation-telephonique/simulation-telephonique.component';
 import { ResultTelComponent } from './pages/result-tel/result-tel.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -105,6 +106,7 @@ const appRoutes : Routes = [
     CommonModule,
     NgxMaterialTimepickerModule,  
     NgxMatTimepickerModule,
+    HttpClientModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr'},
