@@ -91,6 +91,9 @@ export class ChoixSimulationComponent {
     if(this.sharedVariablesService.simulationType === SimulationType.enLigne && this.sharedVariablesService.isRetired === true){
       this.router.navigate(['/simulation-en-ligne']);
     } 
+    else if(this.sharedVariablesService.simulationType === SimulationType.telephonique && this.sharedVariablesService.isRetired === true){
+      this.router.navigate(['/simulation-telephonique'])
+    }
 
   }
 
