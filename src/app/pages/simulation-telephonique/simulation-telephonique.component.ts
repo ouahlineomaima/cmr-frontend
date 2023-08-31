@@ -4,6 +4,8 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
 import { Router } from '@angular/router';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
 import { DateTime } from 'luxon';
+import { DataService } from 'src/app/services/data.service';
+import { Reservations } from 'src/app/Data/Reservation';
 // import { NgxMatTimepickerService } from 'ngx-mat-timepicker/lib/services/ngx-mat-timepicker.service';
 
 
@@ -30,9 +32,11 @@ export class SimulationTelephoniqueComponent {
 
   isButtonDisabled: boolean = true;
   isDeclared: boolean = false;
+  
+  reservations : Reservation[] = []
 
 
-  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) { }
+  constructor(private router: Router, public dataService: DataService, public sharedVariablesService: SharedVariablesService) { }
 
   formatDateStart() {
     this.startDate=this.selectedDateStart?.toDate()
@@ -53,21 +57,41 @@ export class SimulationTelephoniqueComponent {
       startHour:this.selectedTimeStart,
       endHour:this.selectedTimeEnd
     }
-    console.log("object reser ",reservation)
-    console.log("before push ", this.sharedVariablesService.reservations)
-    this.sharedVariablesService.reservations.push(reservation)
-    console.log("after push ", this.sharedVariablesService.reservations)
+    // console.log("object reser ",reservation)
+    // console.log("before push ", this.sharedVariablesService.reservations)
+    // this.sharedVariablesService.reservations.push(reservation)
+    // console.log("after push ", this.sharedVariablesService.reservations)
 
+    this.dataService.writeData(reservation).subscribe(() => {
+      console.log('Data saved successfully.');
+    });
+
+    this.dataService.readData().subscribe((data) => {
+      console.log('Loaded data:', data);
+    });
+    
     this.inputChange.emit();
     this.router.navigate(['/resultat-telephonique']);
 
   }
 
-  
+
+
+  // ngOnInit(){
+
+  //   this.deleteReservation("75981f7d-5536-4a94-b421-27cb0e2d1f23")
+  // }
 
   goToAccueilPage() {
     this.router.navigate(['/accueil']);
+    
   }
+
+  deleteReservation(id:any){
+    this.dataService.deleteData(id).subscribe(()=>{
+      console.log("deleted successfully")
+    })
+  } 
 
   
   goBack() {
