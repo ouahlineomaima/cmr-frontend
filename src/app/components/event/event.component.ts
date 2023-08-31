@@ -20,4 +20,10 @@ export class EventComponent {
     eventColor: '',
     details: ''
   }
+
+  openLinkInNewTab(linkUrl: string) {
+    window.open(linkUrl, '_blank');
+  }
 }
+
+
