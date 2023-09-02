@@ -8,6 +8,9 @@ import { SharedVariablesService } from 'src/app/services/shared-variables.servic
   styleUrls: ['./result-tel.component.css']
 })
 export class ResultTelComponent {
+goToChoixSimulation() {
+  this.router.navigate(['/choix-simulation'])
+}
 
   classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
 

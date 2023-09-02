@@ -12,9 +12,9 @@
         <h4 class="qst">La plage des dates convenables </h4>
         <mat-form-field class="date-range">
             <mat-label>plage des dates</mat-label>
-            <mat-date-range-input [rangePicker]="picker" >
-            <input matStartDate placeholder="Date début" [(ngModel)]="selectedDateStart" (dateChange)="formatDateStart()">
-            <input matEndDate placeholder="Date fin" [(ngModel)]="selectedDateEnd" (dateChange)="formatDateEnd()">
+            <mat-date-range-input [rangePicker]="picker" [min]="minDate" >
+            <input matStartDate #minInput placeholder="Date début"  [(ngModel)]="selectedDateStart" (dateChange)="formatDateStart()" >
+            <input matEndDate placeholder="Date fin" [(ngModel)]="selectedDateEnd" (dateChange)="formatDateEnd()" >
             </mat-date-range-input>
             <mat-hint>JJ/MM/AAAA – JJ/MM/AAAA</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker" class="color-icon"></mat-datepicker-toggle>

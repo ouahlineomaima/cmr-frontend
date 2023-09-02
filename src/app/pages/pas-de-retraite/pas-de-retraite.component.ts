@@ -8,13 +8,16 @@ import { Route, Router } from '@angular/router';
 
 })
 export class PasDeRetraiteComponent {
+goToChoixSimulation() {
+  this.router.navigate(['/choix-simulation'])
+}
 goToAccueilPage() {
   this.router.navigate(['/non-retraite']) 
 }
-classNamesForTimeline: Array<string> = ['current-item', 'comming', 'comming'];
+classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
+
 
   constructor(private router:Router){}
-  
   
 
   closeDialog(){

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
 import { SimulationType } from 'src/app/enums/SimulationType';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { PasDeRetraiteComponent } from '../pas-de-retraite/pas-de-retraite.component';
 
 interface Human {
