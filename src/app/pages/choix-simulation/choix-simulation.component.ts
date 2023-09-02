@@ -104,5 +104,9 @@ export class ChoixSimulationComponent {
     else if(this.sharedVariablesService.simulationType === SimulationType.telephonique && this.sharedVariablesService.isRetired === false){
       this.router.navigate(['/non-retraite']);
   }
+
+
+
+  
   }
 }
