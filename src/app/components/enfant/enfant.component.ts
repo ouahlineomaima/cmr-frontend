@@ -26,6 +26,7 @@ export class EnfantComponent {
   isButtonDisabled: boolean = true;
   isDeclared: boolean = false;
   startDate = new Date(1992, 0, 1);
+  maxDate:Date = new Date();
 
 
   infirmities: Array<string> = ['physique', 'mentale']

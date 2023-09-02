@@ -8,9 +8,9 @@
     <h4 class="qst">Date de naissance:</h4>
     <mat-form-field>
         <mat-label>JJ/MM/AAAA</mat-label>
-        <input id="dob" matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirthRaw" (dateChange)="updateButtonState(); formatDate()"> 
+        <input id="dob" matInput [matDatepicker]="picker" [(ngModel)]="selectedDateOfBirthRaw" (dateChange)="updateButtonState(); formatDate()" [max]="maxDate"> 
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
+        <mat-datepicker #picker startView="multi-year" [startAt]="startDate" ></mat-datepicker>
     </mat-form-field>
     <h4 class="qst">Le fils/la fille poursuit-il(elle) actuellement ses études ?</h4>
     <mat-radio-group class='radio-button' aria-label="Select an option" [(ngModel)]="selectedIsCurrentlyStudying" color="primary" (change)="updateButtonState()">
