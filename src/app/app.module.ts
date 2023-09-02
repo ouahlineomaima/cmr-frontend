@@ -51,6 +51,7 @@ import { PasDeRetraiteComponent } from './pages/pas-de-retraite/pas-de-retraite.
 
 
 
+
 const appRoutes : Routes = [
   {path:'', redirectTo:'choixLangue', pathMatch:'full'},
   {path:'choixLangue', component:ChoixLangueComponent},
@@ -63,6 +64,7 @@ const appRoutes : Routes = [
   {path:'simulation-telephonique', component:SimulationTelephoniqueComponent},
   {path:'resultat-telephonique', component:ResultTelComponent},
   {path:'non-retraite', component:PasDeRetraiteComponent},
+
 
 ]
 
@@ -87,6 +89,7 @@ const appRoutes : Routes = [
     SimulationTelephoniqueComponent,
     ResultTelComponent,
     PasDeRetraiteComponent,
+
     
   ],
   imports: [

@@ -5,7 +5,7 @@
         <!-- Cas d'une pension conjoint + enfant -->
             <!-- 50% 50% -->
         <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage > 0">
-            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de{{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}}, </span>. 
+            Vous bénificiez d'une pension de {{partnerPourcentage}}% pour le conjoint du défunt et de {{childrenPourcentage}}% pour <span *ngFor="let name of childrenNames">{{name}}, </span>. 
         </div>
             <!-- 50% réservée -->
         <div class="text-result" *ngIf="sharedVariablesService.hasChildren === true && childrenPourcentage > 0 && partnerPourcentage === -1">
