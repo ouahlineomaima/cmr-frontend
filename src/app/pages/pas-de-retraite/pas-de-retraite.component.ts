@@ -16,9 +16,11 @@ goToAccueilPage() {
 }
 classNamesForTimeline: Array<string> = ['done', 'done', 'current-item'];
 
+
   constructor(private router:Router){}
   
-  
 
-
+  closeDialog(){
+    this.router.navigate(["/choix-simulation"])
+  }
 }
