@@ -27,6 +27,6 @@ export class SharedVariablesService {
   partnerMarialStatus: string | null = null;
   partnerSexe: string | null = null;
   reservations: Array<Reservation>=[]
-
+  
   constructor() { }
 }

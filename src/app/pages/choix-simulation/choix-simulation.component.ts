@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
 import { SimulationType } from 'src/app/enums/SimulationType';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
+import { PasDeRetraiteComponent } from '../pas-de-retraite/pas-de-retraite.component';
 
 interface Human {
   value: string;
@@ -18,6 +19,7 @@ interface ChipColor {
   selector: 'app-choix-simulation',
   templateUrl: './choix-simulation.component.html',
   styleUrls: ['./choix-simulation.component.css'],
+  
 })
 
 
@@ -100,10 +102,9 @@ export class ChoixSimulationComponent {
     } 
 
     else if(this.sharedVariablesService.simulationType === SimulationType.telephonique && this.sharedVariablesService.isRetired === false){
-      this.router.navigate(['/non-retraite'])
-    }
+      this.router.navigate(['/non-retraite']);
+  }
 
 
   }
-
 }

@@ -17,7 +17,7 @@
             <input matEndDate placeholder="Date fin" [(ngModel)]="selectedDateEnd" (dateChange)="formatDateEnd()">
             </mat-date-range-input>
             <mat-hint>JJ/MM/AAAA – JJ/MM/AAAA</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matIconSuffix [for]="picker" class="color-icon"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
 
@@ -34,12 +34,12 @@
                        [min]="'09:00'"
                        [max]="'15:30'"
                         />
-                <mat-icon matSuffix
+                <mat-icon matSuffix class="color-icon"
                           (click)="pickerB.open()">
                     watch_later
                 </mat-icon>
             </mat-form-field>
-            <ngx-mat-timepicker color="accent" #pickerB ></ngx-mat-timepicker>
+            <ngx-mat-timepicker class="color-time" #pickerB ></ngx-mat-timepicker>
         </div>
 
         <div class="hour">
@@ -52,17 +52,19 @@
                        placeholder="heure fin "
                        [min]="'09:00'"
                        [max]="'15:30'"
+                       
                         />
-                <mat-icon matSuffix
+                <mat-icon matSuffix class="color-icon"
                           (click)="pickerC.open()">
                     watch_later
                 </mat-icon>
             </mat-form-field>
-            <ngx-mat-timepicker color="accent" #pickerC></ngx-mat-timepicker>
+            <ngx-mat-timepicker  class="color-time" #pickerC></ngx-mat-timepicker>
         </div>
        
+        
 
-        <p>Selected Time: from {{ selectedTimeStart }} to {{selectedTimeEnd}}</p>
+        <!-- <p>Selected Time: from {{ selectedTimeStart }} to {{selectedTimeEnd}}</p> -->
 
 
         </div>

@@ -81,3 +81,23 @@ margin-bottom: 1rem;
 .hour{
     margin-bottom: rem;
 } */
+
+.color-time{
+    color: indigo;
+    background: #000;
+    background-color: #000;
+}
+/* 
+.mat-toolbar-single-row{
+    background: #000;
+} */
+
+
+/* .mat-toolbar.mat-accent {
+    --mat-toolbar-container-background-color: #000;
+    --mat-toolbar-container-text-color: white;
+} */
+
+.color-icon{
+    color: #00487C;
+}
