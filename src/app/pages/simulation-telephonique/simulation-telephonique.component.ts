@@ -31,10 +31,17 @@ export class SimulationTelephoniqueComponent {
   isDeclared: boolean = false;
   
   reservations : Reservation[] = []
+  minDate:Date|null=null
 
+  constructor(private router: Router, public dataService: DataService, public sharedVariablesService: SharedVariablesService) { 
+    this.minDate=new Date()
+  }
 
-  constructor(private router: Router, public dataService: DataService, public sharedVariablesService: SharedVariablesService) { }
+  ngOnInit(){
 
+    
+
+  }
   formatDateStart() {
     this.startDate=this.selectedDateStart?.toDate()
   }
