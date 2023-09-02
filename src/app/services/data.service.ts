@@ -15,15 +15,15 @@ const httpOptions ={
 export class DataService {
 
  
-  private dataUrl = 'http://localhost:5000/reservations'; // Update the path to your JSON file
+  private dataUrl = 'http://localhost:8080/api/reservations'; // Update the path to your JSON file
 
   constructor(private http: HttpClient) { }
 
-  writeData(data: Reservation): Observable<Reservation> {
-    return this.http.post<Reservation>(this.dataUrl, data, httpOptions);
+  createReservation(reservation: Reservation): Observable<Reservation> {
+    return this.http.post<Reservation>(this.dataUrl, reservation, httpOptions);
   }
 
-  readData(): Observable<Reservation[]> {
+  getAllReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.dataUrl).pipe(
       catchError((error)=>{
         console.log("orss mayaghn ghaya ",error);

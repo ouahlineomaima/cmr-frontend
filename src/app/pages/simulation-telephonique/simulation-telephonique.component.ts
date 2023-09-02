@@ -53,7 +53,8 @@ export class SimulationTelephoniqueComponent {
   onSubmit() {
     let reservation: Reservation ={
       nomComplet: this.nomComplet,
-      CIN: this.sharedVariablesService.cin,
+      nomCompletAr:" ",
+      cinDefunt: this.sharedVariablesService.cin,
       tel: this.sharedVariablesService.tel,
       userRelationship:this.sharedVariablesService.userRelationship,
       startDate: `${this.startDate?.getDate().toString().padStart(2, '0')}/${(this.startDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.startDate?.getFullYear()}`,
@@ -66,12 +67,13 @@ export class SimulationTelephoniqueComponent {
     // this.sharedVariablesService.reservations.push(reservation)
     // console.log("after push ", this.sharedVariablesService.reservations)
 
-    this.dataService.writeData(reservation).subscribe(() => {
+    this.dataService.createReservation(reservation).subscribe(() => {
       console.log('Data saved successfully.');
     });
 
-    this.dataService.readData().subscribe((data) => {
+    this.dataService.getAllReservations().subscribe((data) => {
       console.log('Loaded data:', data);
+      this.sharedVariablesService.reservations=data;
     });
     
     this.inputChange.emit();
