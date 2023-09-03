@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
 import { SimulationType } from 'src/app/enums/SimulationType';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
+
 import { PasDeRetraiteComponent } from '../pas-de-retraite/pas-de-retraite.component';
 
 interface Human {
@@ -44,7 +45,7 @@ export class ChoixSimulationComponent {
     {name: 'Non', color: 'primary'}
   ];
   
-  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
+  constructor(public dialog: MatDialogRef<PasDeRetraiteComponent>,private router: Router, public sharedVariablesService: SharedVariablesService) {}
   goToAccueilPage() {
     // Reinitializing variables to mantain the logic
     this.sharedVariablesService.cin = '';
@@ -103,10 +104,8 @@ export class ChoixSimulationComponent {
 
     else if(this.sharedVariablesService.simulationType === SimulationType.telephonique && this.sharedVariablesService.isRetired === false){
       this.router.navigate(['/non-retraite']);
+
   }
 
-
-
-  
   }
 }
