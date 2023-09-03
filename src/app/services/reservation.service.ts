@@ -12,7 +12,7 @@ const httpOptions ={
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class ReservationService {
 
  
   private dataUrl = 'http://localhost:8080/api/reservations'; // Update the path to your JSON file

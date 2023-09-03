@@ -1,6 +1,6 @@
 export interface Reservation{
     nomComplet: string,
-    nomCompletAr:string,
+    nomCompletArabe:string,
     cinDefunt:string,
     tel:string,
     userRelationship:string,

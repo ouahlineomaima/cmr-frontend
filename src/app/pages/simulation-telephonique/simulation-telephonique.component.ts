@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Reservation } from 'src/app/interfaces/reservation';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/data.service';
+import { ReservationService } from 'src/app/services/reservation.service';
 // import { NgxMatTimepickerService } from 'ngx-mat-timepicker/lib/services/ngx-mat-timepicker.service';
 
 
@@ -33,7 +33,7 @@ export class SimulationTelephoniqueComponent {
   reservations : Reservation[] = []
   minDate:Date|null=null
 
-  constructor(private router: Router, public dataService: DataService, public sharedVariablesService: SharedVariablesService) { 
+  constructor(private router: Router, public reservationService: ReservationService, public sharedVariablesService: SharedVariablesService) { 
     this.minDate=new Date()
   }
 
@@ -53,12 +53,13 @@ export class SimulationTelephoniqueComponent {
   onSubmit() {
     let reservation: Reservation ={
       nomComplet: this.nomComplet,
-      nomCompletAr:" ",
+      nomCompletArabe:" ",
       cinDefunt: this.sharedVariablesService.cin,
       tel: this.sharedVariablesService.tel,
       userRelationship:this.sharedVariablesService.userRelationship,
       startDate: `${this.startDate?.getDate().toString().padStart(2, '0')}/${(this.startDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.startDate?.getFullYear()}`,
       endDate: `${this.endDate?.getDate().toString().padStart(2, '0')}/${(this.endDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.endDate?.getFullYear()}`,
+
       startHour:this.selectedTimeStart,
       endHour:this.selectedTimeEnd
     }
@@ -67,11 +68,11 @@ export class SimulationTelephoniqueComponent {
     // this.sharedVariablesService.reservations.push(reservation)
     // console.log("after push ", this.sharedVariablesService.reservations)
 
-    this.dataService.createReservation(reservation).subscribe(() => {
+    this.reservationService.createReservation(reservation).subscribe(() => {
       console.log('Data saved successfully.');
     });
 
-    this.dataService.getAllReservations().subscribe((data) => {
+    this.reservationService.getAllReservations().subscribe((data) => {
       console.log('Loaded data:', data);
       this.sharedVariablesService.reservations=data;
     });
@@ -94,7 +95,7 @@ export class SimulationTelephoniqueComponent {
   }
 
   deleteReservation(id:any){
-    this.dataService.deleteData(id).subscribe(()=>{
+    this.reservationService.deleteData(id).subscribe(()=>{
       console.log("deleted successfully")
     })
   } 
