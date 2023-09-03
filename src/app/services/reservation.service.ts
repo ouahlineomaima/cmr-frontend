@@ -15,16 +15,16 @@ const httpOptions ={
 export class ReservationService {
 
  
-  private dataUrl = 'http://localhost:8080/api/reservations'; // Update the path to your JSON file
+  private apiUrl = 'http://localhost:8080/api/reservations'; // Update the path to your JSON file
 
   constructor(private http: HttpClient) { }
 
   createReservation(reservation: Reservation): Observable<Reservation> {
-    return this.http.post<Reservation>(this.dataUrl, reservation, httpOptions);
+    return this.http.post<Reservation>(this.apiUrl, reservation, httpOptions);
   }
 
   getAllReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.dataUrl).pipe(
+    return this.http.get<Reservation[]>(this.apiUrl).pipe(
       catchError((error)=>{
         console.log("orss mayaghn ghaya ",error);
         throw error
@@ -32,8 +32,12 @@ export class ReservationService {
     )
   }
 
+  updateReservation(reservation: Reservation): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${reservation.cinDefunt}`, reservation);
+}
+
   deleteData(id:string):Observable<Reservation>{
-    return  this.http.delete<Reservation>(`${this.dataUrl}/${id}`);
+    return  this.http.delete<Reservation>(`${this.apiUrl}/${id}`);
   }
   
 }
