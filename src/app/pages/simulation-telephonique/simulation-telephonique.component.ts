@@ -68,7 +68,7 @@ export class SimulationTelephoniqueComponent {
     // this.sharedVariablesService.reservations.push(reservation)
     // console.log("after push ", this.sharedVariablesService.reservations)
 
-    this.reservationService.createReservation(reservation).subscribe(() => {
+    this.reservationService.updateReservation(reservation).subscribe(() => {
       console.log('Data saved successfully.');
     });
 

@@ -45,7 +45,7 @@ export class ChoixSimulationComponent {
     {name: 'Non', color: 'primary'}
   ];
   
-  constructor(public dialog: MatDialogRef<PasDeRetraiteComponent>,private router: Router, public sharedVariablesService: SharedVariablesService) {}
+  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) {}
   goToAccueilPage() {
     // Reinitializing variables to mantain the logic
     this.sharedVariablesService.cin = '';
