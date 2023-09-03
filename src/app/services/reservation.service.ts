@@ -36,6 +36,16 @@ export class ReservationService {
     return this.http.put(`${this.apiUrl}/${reservation.cinDefunt}`, reservation);
 }
 
+  createOrUpdateReservation(reservation: Reservation):Observable<any>{
+    if (reservation.cinDefunt) {
+      // Check if reservation with the given cinDefunt exists
+      return this.http.put(`${this.apiUrl}/${reservation.cinDefunt}`, reservation);
+  } else {
+      // No cinDefunt provided, create a new reservation
+      return this.http.post(this.apiUrl, reservation);
+  }
+  }
+
   deleteData(id:string):Observable<Reservation>{
     return  this.http.delete<Reservation>(`${this.apiUrl}/${id}`);
   }

@@ -68,7 +68,12 @@ export class SimulationTelephoniqueComponent {
     // this.sharedVariablesService.reservations.push(reservation)
     // console.log("after push ", this.sharedVariablesService.reservations)
 
-    this.reservationService.updateReservation(reservation).subscribe(() => {
+    // this.reservationService.createOrUpdateReservation(reservation).subscribe(() => {
+    //   console.log('Data saved successfully.');
+    // });
+
+    
+    this.reservationService.createReservation(reservation).subscribe(() => {
       console.log('Data saved successfully.');
     });
 
@@ -82,6 +87,10 @@ export class SimulationTelephoniqueComponent {
 
   }
 
+
+  updateButtonChange(){
+    this.isButtonDisabled=!(this.nomComplet&&this.selectedTimeStart&&this.selectedTimeEnd&&this.startDate&&this.endDate)
+  }
 
 
   // ngOnInit(){
