@@ -1,6 +1,7 @@
 export interface Reservation{
     nomComplet: string,
-    CIN:string,
+    nomCompletArabe:string,
+    cinDefunt:string,
     tel:string,
     userRelationship:string,
     startDate: String,
