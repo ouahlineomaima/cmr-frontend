@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, pipe } from 'rxjs';
 import { Reservation } from '../interfaces/reservation';
+import { environment } from 'src/environments/environment';
 
 const httpOptions ={
   headers: new HttpHeaders({
@@ -15,7 +16,7 @@ const httpOptions ={
 export class ReservationService {
 
  
-  private apiUrl = 'http://localhost:8080/api/reservations'; // Update the path to your JSON file
+  private apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
