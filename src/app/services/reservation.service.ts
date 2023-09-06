@@ -16,21 +16,22 @@ const httpOptions ={
 export class ReservationService {
 
  
-  private apiUrl = "http://localhost:8080/api/reservations";
+  private apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
-  createReservation(reservation: Reservation): Observable<Reservation> {
-    return this.http.post<Reservation>(this.apiUrl, reservation, httpOptions).pipe(
-      catchError((error)=>{
-        console.log("Post is not working", error);
-        throw error
-      })
-    );
+  createReservation(reservation: Reservation, cin: String): Observable<Reservation> {
+    return this.http.post<Reservation>(`${this.apiUrl}/defunts/${cin}/reservations`, reservation)
+    // .pipe(
+    //   catchError((error)=>{
+    //     console.log("Post is not working", error);
+    //     throw error
+    //   })
+    // );
   }
 
   getAllReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.apiUrl).pipe(
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations`).pipe(
       catchError((error)=>{
         console.log("Get is not working ",error);
         throw error
@@ -38,19 +39,6 @@ export class ReservationService {
     )
   }
 
-  updateReservation(reservation: Reservation): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${reservation.cinDefunt}`, reservation);
-}
-
-  createOrUpdateReservation(reservation: Reservation):Observable<any>{
-    if (reservation.cinDefunt) {
-      // Check if reservation with the given cinDefunt exists
-      return this.http.put(`${this.apiUrl}/${reservation.cinDefunt}`, reservation);
-  } else {
-      // No cinDefunt provided, create a new reservation
-      return this.http.post(this.apiUrl, reservation);
-  }
-  }
 
   deleteData(id:string):Observable<Reservation>{
     return  this.http.delete<Reservation>(`${this.apiUrl}/${id}`);

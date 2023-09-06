@@ -3,6 +3,9 @@ import { Reservation } from 'src/app/interfaces/reservation';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { Router } from '@angular/router';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { Defunt } from 'src/app/interfaces/defunt';
+import { DefuntService } from 'src/app/services/defunt.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 
@@ -26,19 +29,29 @@ export class SimulationTelephoniqueComponent {
 
 
 
+
   isButtonDisabled: boolean = true;
   isDeclared: boolean = false;
   
   reservations : Reservation[] = []
   minDate:Date|null=null
 
-  constructor(private router: Router, public reservationService: ReservationService, public sharedVariablesService: SharedVariablesService) { 
+  cin:string="";
+  tel:string="";
+  userRelationship:string=""
+
+  constructor(private router: Router, public reservationService: ReservationService, public sharedVariablesService: SharedVariablesService,  private defuntService: DefuntService ) { 
     this.minDate=new Date()
   }
 
   ngOnInit(){
 
-    
+    console.log("cin after", this.sharedVariablesService.cin)
+    console.log("relation after", this.sharedVariablesService.userRelationship)
+    console.log("tel after", this.sharedVariablesService.tel)
+    this.cin=this.sharedVariablesService.cin;
+    this.tel=this.sharedVariablesService.tel;
+    this.userRelationship=this.sharedVariablesService.userRelationship
 
   }
   formatDateStart() {
@@ -50,36 +63,42 @@ export class SimulationTelephoniqueComponent {
   }
 
   onSubmit() {
-    let reservation: Reservation ={
-      nomComplet: this.nomComplet,
-      nomCompletArabe:" ",
-      cinDefunt: this.sharedVariablesService.cin,
-      tel: this.sharedVariablesService.tel,
-      userRelationship:this.sharedVariablesService.userRelationship,
-      startDate: `${this.startDate?.getDate().toString().padStart(2, '0')}/${(this.startDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.startDate?.getFullYear()}`,
-      endDate: `${this.endDate?.getDate().toString().padStart(2, '0')}/${(this.endDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.endDate?.getFullYear()}`,
-
-      startHour:this.selectedTimeStart,
-      endHour:this.selectedTimeEnd
+    let defunt: Defunt = {
+      cin: this.sharedVariablesService.cin,
+      hasChildren: this.sharedVariablesService.hasChildren,
+      retired: this.sharedVariablesService.isRetired
     }
-    // console.log("object reser ",reservation)
-    // console.log("before push ", this.sharedVariablesService.reservations)
-    // this.sharedVariablesService.reservations.push(reservation)
-    // console.log("after push ", this.sharedVariablesService.reservations)
+    console.log(defunt)
 
-    // this.reservationService.createOrUpdateReservation(reservation).subscribe(() => {
-    //   console.log('Data saved successfully.');
-    // });
+    this.defuntService.addDefunt(defunt).subscribe(
+      (response: Defunt) => {
+        console.log("response de defuntService",response)
+        let reservation: Reservation ={
+          nomComplet: this.nomComplet,
+          nomCompletArabe:" ",
+          tel: this.tel,
+          userRelationship:this.userRelationship,
+          startDate: `${this.startDate?.getDate().toString().padStart(2, '0')}/${(this.startDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.startDate?.getFullYear()}`,
+          endDate: `${this.endDate?.getDate().toString().padStart(2, '0')}/${(this.endDate!.getMonth() + 1).toString().padStart(2, '0')}/${this.endDate?.getFullYear()}`,
+          startHour:this.selectedTimeStart,
+          endHour:this.selectedTimeEnd
+        }
+        console.log("cin ", this.sharedVariablesService.cin)
+        this.reservationService.createReservation(reservation, defunt.cin).subscribe(
+          (response: Reservation) => { console.log(response) },
+          (error: HttpErrorResponse) => {
+            console.log(error)
+          }
+        );
 
+         this.reservationService.getAllReservations().subscribe((data) => {
+          console.log('Loaded data:', data);
+          this.sharedVariablesService.reservations=data;
+        });
+      })
     
-    this.reservationService.createReservation(reservation).subscribe(() => {
-      console.log('Data saved successfully.');
-    });
 
-    this.reservationService.getAllReservations().subscribe((data) => {
-      console.log('Loaded data:', data);
-      this.sharedVariablesService.reservations=data;
-    });
+   
     
     this.inputChange.emit();
     //initializing variables
