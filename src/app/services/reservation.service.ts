@@ -16,18 +16,23 @@ const httpOptions ={
 export class ReservationService {
 
  
-  private apiUrl = environment.apiBaseUrl;
+  private apiUrl = "http://localhost:8080/api/reservations";
 
   constructor(private http: HttpClient) { }
 
   createReservation(reservation: Reservation): Observable<Reservation> {
-    return this.http.post<Reservation>(this.apiUrl, reservation, httpOptions);
+    return this.http.post<Reservation>(this.apiUrl, reservation, httpOptions).pipe(
+      catchError((error)=>{
+        console.log("Post is not working", error);
+        throw error
+      })
+    );
   }
 
   getAllReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.apiUrl).pipe(
       catchError((error)=>{
-        console.log("orss mayaghn ghaya ",error);
+        console.log("Get is not working ",error);
         throw error
       })
     )

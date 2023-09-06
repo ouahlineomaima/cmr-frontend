@@ -3,7 +3,6 @@ import { Reservation } from 'src/app/interfaces/reservation';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { Router } from '@angular/router';
 import { ReservationService } from 'src/app/services/reservation.service';
-// import { NgxMatTimepickerService } from 'ngx-mat-timepicker/lib/services/ngx-mat-timepicker.service';
 
 
 
@@ -83,6 +82,10 @@ export class SimulationTelephoniqueComponent {
     });
     
     this.inputChange.emit();
+    //initializing variables
+    this.sharedVariablesService.cin="";
+    this.sharedVariablesService.tel="";
+    this.sharedVariablesService.userRelationship=""
     this.router.navigate(['/resultat-telephonique']);
 
   }
