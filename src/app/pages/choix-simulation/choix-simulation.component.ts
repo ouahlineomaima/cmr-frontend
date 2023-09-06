@@ -91,6 +91,9 @@ export class ChoixSimulationComponent {
   }
 
   onSubmit(){
+    console.log("cin", this.sharedVariablesService.cin)
+    console.log("relationship", this.sharedVariablesService.userRelationship)
+    console.log("tel", this.sharedVariablesService.tel)
     if(this.sharedVariablesService.simulationType === SimulationType.enLigne && this.sharedVariablesService.isRetired === true){
       this.router.navigate(['/simulation-en-ligne']);
     } 

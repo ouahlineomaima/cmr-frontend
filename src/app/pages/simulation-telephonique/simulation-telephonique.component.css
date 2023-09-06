@@ -65,13 +65,13 @@ height: 2.8125rem;
 flex-shrink: 0;
 
 color: rgba(109, 108, 108, 0.89);
-font-family: Itim;
 font-size: 1.1875rem;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
 text-align: center;
 margin-bottom: 1rem;
+font-family: "roboto";
 }
 
 .date-range{

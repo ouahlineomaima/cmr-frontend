@@ -7,25 +7,29 @@
 
 .container-contact{
     margin-left: 30px;
-    width: 300px;
-    height: 16px;
+    /* width: 300px;
+    height: 16px; */
     /* flex-shrink: 0; */
     color: #00487C;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 1.5rem;
     font-style: normal;
-    font-weight: 700;
+    /* font-weight: 200; */
     line-height: normal;
 }
 
 .title{
-    width: 16.125rem;
-height: 2.625rem;
+    /* width: 16.125rem;
+height: 2.625rem; */
 flex-shrink: 0;
 color: #00487C;
 font-family: Itim;
-font-size: 1.1875rem;
+font-size: 2rem;
 font-style: normal;
 font-weight: 400;
 line-height: normal;
 }
+
+.contact{
+    display: flex;
+    flex-direction: row;}
