@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChildActivationEnd, Router } from '@angular/router';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { ThemePalette } from '@angular/material/core';
+import { DefuntService } from 'src/app/services/defunt.service';
+import { Defunt } from 'src/app/interfaces/defunt';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EnfantService } from 'src/app/services/enfant.service';
+import { Child } from 'src/app/interfaces/child';
+import { Enfant } from 'src/app/interfaces/enfant';
+import { Conjoint } from 'src/app/interfaces/conjoint';
+import { ConjointService } from 'src/app/services/conjoint.service';
 
 
 interface ChipColor {
@@ -62,7 +70,7 @@ export class SimulationEnLigneComponent {
     { value: 'femelle', viewValue: 'Femelle' },
   ];
 
-  constructor(private router: Router, public sharedVariablesService: SharedVariablesService) { }
+  constructor(private router: Router, public sharedVariablesService: SharedVariablesService, private defuntService: DefuntService, private enfantService: EnfantService, private conjointService:ConjointService) { }
 
 
   // Material UI functions
@@ -205,7 +213,7 @@ export class SimulationEnLigneComponent {
 
   updateButtonState() {
     this.isButtonDisabled = true;
-    if ((this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'femelle' && this.sharedVariablesService.isStillPartner !=null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === false) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === false && this.sharedVariablesService.isPartnerRetired != null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === true) || (this.sharedVariablesService.hasChildren === false && this.sharedVariablesService.userRelationship === 'enfant' && this.sharedVariablesService.isPartnerAlive === false)) {
+    if ((this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'femelle' && this.sharedVariablesService.isStillPartner != null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === false) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === false && this.sharedVariablesService.isPartnerRetired != null) || (this.sharedVariablesService.hasChildren == false && this.sharedVariablesService.isValidMarriagePeriod != null && this.sharedVariablesService.partnerSexe === 'male' && this.sharedVariablesService.isStillPartner === true && this.sharedVariablesService.isPartnerInfirm === true) || (this.sharedVariablesService.hasChildren === false && this.sharedVariablesService.userRelationship === 'enfant' && this.sharedVariablesService.isPartnerAlive === false)) {
       this.isButtonDisabled = false;
       return;
     }
@@ -220,7 +228,7 @@ export class SimulationEnLigneComponent {
   updateChildrenArray() {
     this.declaredChildren--;
     this.childrenArray = new Array(this.declaredChildren);
-    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
+    this.childrenArray = Array.from({ length: this.declaredChildren }, (_, index) => index);
     return
 
   }
@@ -228,10 +236,67 @@ export class SimulationEnLigneComponent {
   declareNewChild() {
     this.declaredChildren++;
     this.childrenArray = new Array(this.declaredChildren);
-    this.childrenArray = Array.from({ length: this.declaredChildren}, (_, index) => index);
+    this.childrenArray = Array.from({ length: this.declaredChildren }, (_, index) => index);
   }
 
   onSubmit() {
+    let defunt: Defunt = {
+      cin: this.sharedVariablesService.cin,
+      hasChildren: this.sharedVariablesService.hasChildren,
+      retired: this.sharedVariablesService.isRetired
+    }
+    console.log(defunt)
+    this.defuntService.addDefunt(defunt).subscribe(
+      (response: Defunt) => {
+        console.log(response);
+        let conjoint: Conjoint = {
+          tel : this.sharedVariablesService.userRelationship !== 'enfant'? this.sharedVariablesService.tel:null,
+          hasValidMarriagePeriod: this.sharedVariablesService.hasChildren === true?null:this.sharedVariablesService.isValidMarriagePeriod,
+          marialStatus: this.sharedVariablesService.partnerMarialStatus,
+          sexe: this.sharedVariablesService.partnerSexe,
+          alive: this.sharedVariablesService.isPartnerAlive,
+          retired: this.sharedVariablesService.partnerSexe === 'femelle'? null:this.sharedVariablesService.isPartnerRetired,
+          infirm: this.sharedVariablesService.partnerSexe === 'femelle'? null: this.sharedVariablesService.isPartnerInfirm
+
+        
+        }
+        this.conjointService.addConjoint(conjoint, this.sharedVariablesService.cin).subscribe(
+          (response: Conjoint) => { console.log(response) },
+          (error: HttpErrorResponse) => {
+            console.log(error)
+          }
+        )
+
+
+        for (let child of this.sharedVariablesService.children) {
+          let enfant: Enfant = {
+            nom: child.name,
+            nomeArabe: null,
+            dateOfBirth: child.dateOfBirth,
+            infirmityType: child.infirmityType,
+            currentlyStudying: child.isCurrentlyStudying,
+            infirm: child.isInfirm,
+            married: child.marialStatus === 'marié'?true:false
+          }
+          this.enfantService.addEnfant(enfant, this.sharedVariablesService.cin).subscribe(
+            (response: Enfant) => { console.log(response) },
+            (error: HttpErrorResponse) => {
+              console.log(error)
+            }
+          )
+
+
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error)
+      }
+    );
+
+
+
+
+
     this.router.navigate(['/resultat']);
 
   }
