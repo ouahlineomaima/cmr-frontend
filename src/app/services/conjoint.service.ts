@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Enfant } from '../interfaces/enfant';
-import { Conjoint } from '../interfaces/conjoint';
+import { Enfant } from '../models/enfant';
+import { Conjoint } from '../models/conjoint';
 
 @Injectable({
   providedIn: 'root'

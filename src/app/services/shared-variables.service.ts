@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SimulationType } from '../enums/SimulationType';
-import { Child } from '../interfaces/child';
-import { Reservation } from '../interfaces/reservation';
+import { Child } from '../models/child';
+import { Reservation } from '../models/reservation';
 
 
 @Injectable({

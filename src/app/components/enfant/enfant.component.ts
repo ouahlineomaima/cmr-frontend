@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
-import { Child } from 'src/app/interfaces/child';
+import { Child } from 'src/app/models/child';
 import { DatePipe } from '@angular/common';
 
 @Component({

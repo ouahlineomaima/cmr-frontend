@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Defunt } from '../interfaces/defunt';
-import { Child } from '../interfaces/child';
-import { Enfant } from '../interfaces/enfant';
+import { Defunt } from '../models/defunt';
+import { Child } from '../models/child';
+import { Enfant } from '../models/enfant';
 
 @Injectable({
   providedIn: 'root'

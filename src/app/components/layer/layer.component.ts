@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Layer } from 'src/app/interfaces/layer';
+import { Layer } from 'src/app/models/layer';
 
 
 @Component({

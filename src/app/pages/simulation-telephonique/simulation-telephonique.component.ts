@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Reservation } from 'src/app/interfaces/reservation';
+import { Reservation } from 'src/app/models/reservation';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { Router } from '@angular/router';
 import { ReservationService } from 'src/app/services/reservation.service';
-import { Defunt } from 'src/app/interfaces/defunt';
+import { Defunt } from 'src/app/models/defunt';
 import { DefuntService } from 'src/app/services/defunt.service';
 import { HttpErrorResponse } from '@angular/common/http';
 

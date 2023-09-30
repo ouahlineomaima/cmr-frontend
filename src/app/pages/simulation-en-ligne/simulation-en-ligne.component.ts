@@ -3,12 +3,12 @@ import { ChildActivationEnd, Router } from '@angular/router';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 import { ThemePalette } from '@angular/material/core';
 import { DefuntService } from 'src/app/services/defunt.service';
-import { Defunt } from 'src/app/interfaces/defunt';
+import { Defunt } from 'src/app/models/defunt';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EnfantService } from 'src/app/services/enfant.service';
-import { Child } from 'src/app/interfaces/child';
-import { Enfant } from 'src/app/interfaces/enfant';
-import { Conjoint } from 'src/app/interfaces/conjoint';
+import { Child } from 'src/app/models/child';
+import { Enfant } from 'src/app/models/enfant';
+import { Conjoint } from 'src/app/models/conjoint';
 import { ConjointService } from 'src/app/services/conjoint.service';
 
 

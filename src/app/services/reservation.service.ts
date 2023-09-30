@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, pipe } from 'rxjs';
-import { Reservation } from '../interfaces/reservation';
+import { Reservation } from '../models/reservation';
 import { environment } from 'src/environments/environment';
 
 const httpOptions ={

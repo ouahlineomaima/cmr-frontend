@@ -2,8 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Event } from 'src/app/interfaces/event';
-import { Layer } from 'src/app/interfaces/layer';
+import { Event } from 'src/app/models/event';
+import { Layer } from 'src/app/models/layer';
 import { SharedVariablesService } from 'src/app/services/shared-variables.service';
 
 
